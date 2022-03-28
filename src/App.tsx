@@ -41,6 +41,9 @@ body{
 a{
   text-decoration: none;
 }
+button{
+  cursor: pointer;
+}
 `;
 
 function App() {
