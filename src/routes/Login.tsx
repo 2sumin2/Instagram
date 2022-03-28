@@ -12,7 +12,13 @@ const Container = styled.div`
         margin:10px;
     }
 `;
-const LogoBox = styled.img`
+const LogoBox = styled.div`
+    margin-top:-10px;
+    position:relative;
+    width: 400px;
+    height: 500px;
+`;
+const LogoImg = styled.img`
     width: 400px;
     height: 500px;
 `;
@@ -30,8 +36,20 @@ const LoginBox = styled.div`
         margin:5px;
     }
 `;
-const Title = styled.img`
+const Title = styled.span`
     margin: 10px 50px ;
+    text-align: center;
+    font-family: 'Hurricane', cursive;
+    color:black;
+    font-size: 60px;
+`;
+const InnerTitle = styled(Title)`
+    position:absolute;
+    color:white;
+    margin: 0 ;
+    top: 50%;
+    left: 50%;
+    transform: translate(-43%, 0%);
 `;
 const Form = styled.form`
     display: flex;
@@ -71,9 +89,12 @@ function Login() {
     console.log(isLogin);
     return (
         <Container>
-            <LogoBox src={logoImg} alt="INSPACEGRAM" />
+            <LogoBox>
+                <InnerTitle>Inspacegram</InnerTitle>
+                <LogoImg src={logoImg} alt=" " />
+            </LogoBox>
             <LoginBox>
-                <Title src={titleImg} alt="INSPACEGRAM" />
+                <Title>Inspacegram</Title>
                 {isLogin ?
                     (
                         <>
