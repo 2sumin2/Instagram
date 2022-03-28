@@ -42,5 +42,10 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://2sumin2.github.io/Instagram"
+  "homepage": "https://2sumin2.github.io/Instagram",
+  "devDependencies": {
+    "@types/styled-components": "^5.1.24",
+    "react-router-dom": "^6.2.2",
+    "styled-components": "^5.3.5"
+  }
 }
