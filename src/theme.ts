@@ -3,5 +3,5 @@ import { DefaultTheme } from "styled-components";
 export const lightTheme: DefaultTheme = {
     bgColor: "whitesmoke",
     textColor: "black",
-    accentColor: "#ff6b6b",
+    accentColor: "#5d2e74",
 };
