@@ -72,7 +72,7 @@ const LoginBtn = styled.button`
     background-color: #5d2e74;
     color:whitesmoke;
 `;
-const ToggleForm = styled.form`
+const ToggleForm = styled.div`
     display: flex;
     margin: 10px 50px;
     justify-content: center;
@@ -94,7 +94,7 @@ const Message = styled.span`
 
 function Login() {
     const [isLogin, setIsLogin] = useState(true);
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setIsLogin(value => !value);
         setValue("email", "");
@@ -144,9 +144,9 @@ function Login() {
                                 <LoginBtn type="submit">로그인</LoginBtn>
                                 <Message>{errors?.email ? errors?.email?.message : errors?.password?.message}</Message>
                             </Form>
-                            <ToggleForm onSubmit={onSubmit}>
+                            <ToggleForm>
                                 <span>계정이 없으신가요?</span>
-                                <ToggleBtn type="submit"> 회원가입</ToggleBtn>
+                                <ToggleBtn onClick={onClick} type="submit"> 회원가입</ToggleBtn>
                             </ToggleForm>
                         </>
                     ) : (
@@ -190,9 +190,9 @@ function Login() {
                                         errors?.statement ? errors?.statement?.message : (
                                             errors?.username ? errors?.username?.message : errors?.password?.message))}</Message>
                             </Form>
-                            <ToggleForm onSubmit={onSubmit}>
+                            <ToggleForm>
                                 <span>계정이 있으신가요?</span>
-                                <ToggleBtn type="submit">로그인</ToggleBtn>
+                                <ToggleBtn onClick={onClick} type="submit">로그인</ToggleBtn>
                             </ToggleForm>
                         </>
                     )}
