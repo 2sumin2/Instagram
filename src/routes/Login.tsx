@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import titleImg from '../image/title.png';
 import logoImg from '../image/logo2.png';
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const Container = styled.div`
     display:flex;
@@ -51,19 +51,26 @@ const InnerTitle = styled(Title)`
     left: 50%;
     transform: translate(-43%, 0%);
 `;
-const Form = styled.form`
+interface IForm {
+    email?: string;
+    password?: string;
+    statement?: string;
+    username?: string;
+}
+const Form = styled.form<IForm>`
     display: flex;
     margin: 20px 50px;
     flex-direction: column;
+    align-items:stretch;
 `;
 const Input = styled.input`
     padding-left: 5px;
-    background-color: ${props => props.theme.bgColor};
-    color : ${props => props.theme.textColor};
+    background-color: whitesmoke;
+    color: black;
 `;
 const LoginBtn = styled.button`
-    background-color: ${props => props.theme.accentColor};
-    color:${props => props.theme.bgColor};
+    background-color: #5d2e74;
+    color:whitesmoke;
 `;
 const ToggleForm = styled.form`
     display: flex;
@@ -72,12 +79,17 @@ const ToggleForm = styled.form`
     align-items: center;
 `;
 const ToggleBtn = styled.button`
-    color:${props => props.theme.accentColor};
+    color:#5d2e74;
     font-weight: bold;
     width:80px;
     border: 0;
     background-color: transparent;
     font-size:15px;
+`;
+const Message = styled.span`
+    font-size:13px;
+    color:red;
+    text-align:center;
 `;
 
 function Login() {
@@ -85,8 +97,24 @@ function Login() {
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsLogin(value => !value);
+        setValue("email", "");
+        setValue("statement", "");
+        setValue("username", "");
+        setValue("password", "");
     };
-    console.log(isLogin);
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<IForm>();
+    const onLogin = (data: IForm) => {
+        setValue("email", "");
+        setValue("password", "");
+        console.log(data);
+    };
+    const onValid2 = (data: IForm) => {
+        setValue("email", "");
+        setValue("statement", "");
+        setValue("username", "");
+        setValue("password", "");
+        console.log(data);
+    };
     return (
         <Container>
             <LogoBox>
@@ -98,18 +126,23 @@ function Login() {
                 {isLogin ?
                     (
                         <>
-                            <Form>
+                            <Form onSubmit={handleSubmit(onLogin)}>
                                 <Input
-                                    id="loginID"
-                                    name="loginID"
-                                    type="text"
+                                    {...register("email", {
+                                        required: '이메일을 입력하세요.',
+                                        pattern: {
+                                            value: /^[A-Za-z0-9._%+-]+@naver.com$/,
+                                            message: "올바르지 않은 이메일 형식입니다."
+                                        }
+                                    })}
                                     placeholder="이메일 주소" />
                                 <Input
-                                    id="loginPW"
-                                    name="password"
-                                    type="password"
+                                    {...register("password", {
+                                        required: '비밀번호를 입력하세요.',
+                                    })}
                                     placeholder="비밀번호" />
                                 <LoginBtn type="submit">로그인</LoginBtn>
+                                <Message>{errors?.email ? errors?.email?.message : errors?.password?.message}</Message>
                             </Form>
                             <ToggleForm onSubmit={onSubmit}>
                                 <span>계정이 없으신가요?</span>
@@ -118,28 +151,44 @@ function Login() {
                         </>
                     ) : (
                         <>
-                            <Form>
+                            <Form onSubmit={handleSubmit(onValid2)}>
                                 <Input
-                                    id="signupID"
-                                    name="signupID"
-                                    type="text"
+                                    {...register("email", {
+                                        required: '이메일을 입력하세요.',
+                                        pattern: {
+                                            value: /^[A-Za-z0-9._%+-]+@naver.com$/,
+                                            message: "올바르지 않은 이메일 형식입니다."
+                                        }
+                                    })}
                                     placeholder="이메일 주소" />
                                 <Input
-                                    id="signupSTATEMENT"
-                                    name="signupSTATEMENT"
-                                    type="text"
+                                    {...register("statement", {
+                                        required: '성명을 입력하세요.',
+                                    })}
                                     placeholder="성명" />
                                 <Input
-                                    id="signupNAME"
-                                    name="signupNAME"
-                                    type="text"
+                                    {...register("username", {
+                                        required: '사용자 이름을 입력하세요.',
+                                        pattern: {
+                                            value: /^[A-Za-z0-9._]/,
+                                            message: "사용자 이름에는 문자, 숫자, 밑줄 및 마침표만 사용할 수 있습니다."
+                                        }
+                                    })}
                                     placeholder="사용자 이름" />
                                 <Input
-                                    id="signupPW"
-                                    name="password"
-                                    type="password"
+                                    {...register("password", {
+                                        required: '비밀번호를 입력하세요.',
+                                        minLength: {
+                                            value: 6,
+                                            message: "보안을 위해 비밀번호는 6자 이상이어야 합니다."
+                                        }
+                                    })}
                                     placeholder="비밀번호" />
                                 <LoginBtn type="submit">회원가입</LoginBtn>
+                                <Message>{
+                                    errors?.email ? errors?.email?.message : (
+                                        errors?.statement ? errors?.statement?.message : (
+                                            errors?.username ? errors?.username?.message : errors?.password?.message))}</Message>
                             </Form>
                             <ToggleForm onSubmit={onSubmit}>
                                 <span>계정이 있으신가요?</span>
