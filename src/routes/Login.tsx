@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import logoImg from '../image/logo2.png';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Container = styled.div`
@@ -115,12 +115,26 @@ function Login() {
         setValue("password", "");
         console.log(data);
     };
+
+    const getWidth = () => {
+        const { innerWidth: width } = window;
+        return width;
+    };
+    const [width, setWidth] = useState(getWidth());
+    useEffect(() => {
+        getWidth();
+        console.log(getWidth());
+    }, []);
+    const resizeHandler = () => {
+        setWidth(getWidth());
+    };
+    window.addEventListener('resize', resizeHandler);
     return (
         <Container>
-            <LogoBox>
+            {width > 880 ? (<LogoBox>
                 <InnerTitle>Inspacegram</InnerTitle>
                 <LogoImg src={logoImg} alt=" " />
-            </LogoBox>
+            </LogoBox>) : null}
             <LoginBox>
                 <Title>Inspacegram</Title>
                 {isLogin ?
