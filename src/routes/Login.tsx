@@ -94,28 +94,16 @@ const Message = styled.span`
 
 function Login() {
     const [isLogin, setIsLogin] = useState(true);
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<IForm>();
     const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setIsLogin(value => !value);
-        setValue("email", "");
-        setValue("statement", "");
-        setValue("username", "");
-        setValue("password", "");
+        reset();
     };
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm<IForm>();
-    const onLogin = (data: IForm) => {
-        setValue("email", "");
-        setValue("password", "");
+    const onSubmit = (data: IForm) => {
+        reset();
         console.log(data);
     };
-    const onValid2 = (data: IForm) => {
-        setValue("email", "");
-        setValue("statement", "");
-        setValue("username", "");
-        setValue("password", "");
-        console.log(data);
-    };
-
     const getWidth = () => {
         const { innerWidth: width } = window;
         return width;
@@ -131,7 +119,7 @@ function Login() {
     window.addEventListener('resize', resizeHandler);
     return (
         <Container>
-            {width > 880 ? (<LogoBox>
+            {width > 900 ? (<LogoBox>
                 <InnerTitle>Inspacegram</InnerTitle>
                 <LogoImg src={logoImg} alt=" " />
             </LogoBox>) : null}
@@ -140,7 +128,7 @@ function Login() {
                 {isLogin ?
                     (
                         <>
-                            <Form onSubmit={handleSubmit(onLogin)}>
+                            <Form onSubmit={handleSubmit(onSubmit)}>
                                 <Input
                                     {...register("email", {
                                         required: '이메일을 입력하세요.',
@@ -165,7 +153,7 @@ function Login() {
                         </>
                     ) : (
                         <>
-                            <Form onSubmit={handleSubmit(onValid2)}>
+                            <Form onSubmit={handleSubmit(onSubmit)}>
                                 <Input
                                     {...register("email", {
                                         required: '이메일을 입력하세요.',
