@@ -143,7 +143,7 @@ function Login() {
                                     {...register("email", {
                                         required: '이메일을 입력하세요.',
                                         pattern: {
-                                            value: /^[A-Za-z0-9._%+-]+@+[A-Za-z0-9]+.+[a-z]$/,
+                                            value: /^[A-Za-z0-9._%+-]+@+[A-Za-z0-9]+\.[a-zA-Z]+$/,
                                             message: "올바르지 않은 이메일 형식입니다."
                                         }
                                     })}
@@ -169,7 +169,7 @@ function Login() {
                                     {...register("email", {
                                         required: '이메일을 입력하세요.',
                                         pattern: {
-                                            value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9]+.+[a-z]$/,
+                                            value: /^[A-Za-z0-9._%+-]+@+[A-Za-z0-9]+\.[a-zA-Z]+$/,
                                             message: "올바르지 않은 이메일 형식입니다."
                                         }
                                     })}
