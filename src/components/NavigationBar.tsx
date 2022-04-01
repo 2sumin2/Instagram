@@ -16,7 +16,6 @@ const ContainerBox = styled.div`
     align-items:center;
     width: 100%;
     height: 60px;
-    border: 0.1px solid #dfdfdf;
 `;
 const Container = styled.div`
     width: 900px;
@@ -42,8 +41,10 @@ const Title = styled.span`
 const Icon = styled.img`
     height:25px;
     width:25px;
-    cursor: pointer;
     margin: 0 10px;
+    :nth-child(1), :nth-last-child(1){
+        cursor: pointer;
+    }
 `;
 const Input = styled.input`
     align-self: stretch;
@@ -53,7 +54,7 @@ const Input = styled.input`
     width: 250px;;
     background-color: #ececec;
     border: 0;
-    border-radius: 5px;;
+    border-radius: 5px;
 `;
 const SwitchBox = styled.div`
     display:flex;
@@ -77,7 +78,7 @@ function NavigationBar() {
                 </ItemContainer>
                 <ItemContainer>
                     <form>
-                        <Input type="text" placeholder="검색" />
+                        <Input disabled type="text" placeholder="검색" />
                     </form>
                 </ItemContainer>
                 <ItemContainer>
