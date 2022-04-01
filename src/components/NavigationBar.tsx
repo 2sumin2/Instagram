@@ -5,6 +5,9 @@ import userIcon from "../image/user.png";
 import sendIcon from "../image/send.png";
 import plusIcon from "../image/plus.png";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { isLightAtom } from "../atoms";
+import Switch from "react-switch";
 
 const ContainerBox = styled.div`
     background: linear-gradient(45deg, #020e31, #562b74, #f97375);;
@@ -22,7 +25,6 @@ const Container = styled.div`
     align-items: center;
 `;
 const ItemContainer = styled.div`
-    margin: 0 10px;
     display:flex;
     align-items:center;
     :nth-last-child(1){
@@ -52,8 +54,18 @@ const Input = styled.input`
     border: 0;
     border-radius: 5px;;
 `;
+const SwitchBox = styled.div`
+    display:flex;
+    justify-content: right;
+    align-items: center;
+    margin: 0 5px;
+`;
 
 function NavigationBar() {
+    const [isLight, setLightAtom] = useRecoilState(isLightAtom);
+    const onChange = () => {
+        setLightAtom((props) => !props);
+    };
     return (
         <ContainerBox>
             <Container>
@@ -75,6 +87,19 @@ function NavigationBar() {
                     <Link to="/user">
                         <Icon src={userIcon} />
                     </Link>
+                    <SwitchBox>
+                        <Switch
+                            onChange={onChange}
+                            checked={isLight}
+                            handleDiameter={13}
+                            height={18}
+                            width={35}
+                            onColor={"#f8c3c7"}
+                            offColor={"#341941"}
+                            uncheckedIcon={false}
+                            checkedIcon={false}
+                        />
+                    </SwitchBox>
                 </ItemContainer>
             </Container>
         </ContainerBox>

@@ -1,7 +1,9 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { isLightAtom } from './atoms';
 import Router from './Router';
-import { lightTheme } from './theme';
+import { darkTheme, lightTheme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Hurricane&family=Red+Hat+Mono:wght@300&display=swap');
@@ -47,9 +49,10 @@ button{
 `;
 
 function App() {
+  const isLight = useRecoilValue(isLightAtom);
   return (
     <>
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={isLight ? lightTheme : darkTheme}>
         <GlobalStyle />
         <Router />
       </ThemeProvider>
