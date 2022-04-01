@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import logoImg from '../image/logo2.png';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
 
 const Container = styled.div`
     display:flex;
@@ -114,19 +115,17 @@ function Login() {
         reset();
         console.log(data);
     };
+    const [width, setWidth] = useState(window.innerWidth);
     const getWidth = () => {
-        const { innerWidth: width } = window;
-        return width;
+        setWidth(window.innerWidth);
     };
-    const [width, setWidth] = useState(getWidth());
-    useEffect(() => {
-        getWidth();
-        console.log(getWidth());
-    }, []);
-    const resizeHandler = () => {
-        setWidth(getWidth());
-    };
-    window.addEventListener('resize', resizeHandler);
+    useQuery(
+        "windowSize",
+        () => getWidth(),
+        {
+            refetchInterval: 100,
+        }
+    );
     return (
         <Container>
             {width > 900 ? (<LogoBox>
