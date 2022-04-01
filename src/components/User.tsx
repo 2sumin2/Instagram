@@ -10,6 +10,7 @@ const Title = styled.span`
 function User() {
     return (
         <>
+            <NavigationBar />
             <Title>user page</Title>
         </>
     );

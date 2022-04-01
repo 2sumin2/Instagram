@@ -10,6 +10,7 @@ const Title = styled.span`
 function Home() {
     return (
         <div>
+            <NavigationBar />
             <Title>home page</Title>
         </div>
     );
