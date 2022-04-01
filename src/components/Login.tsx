@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import logoImg from '../image/logo2.png';
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     display:flex;
@@ -15,7 +16,9 @@ const Container = styled.div`
 const LogoBox = styled.div`
     margin-top:-10px;
     position:relative;
-    width: 400px;
+    width: 80vw;
+    max-width:400px;
+    min-width:300px;
     height: 500px;
 `;
 const LogoImg = styled.img`
@@ -27,7 +30,9 @@ const LoginBox = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    width: 400px;
+    width: 80vw;
+    max-width:400px;
+    min-width:300px;
     height: 500px;
     border:1px solid silver;
     background-color : white;
@@ -93,14 +98,19 @@ const Message = styled.span`
 `;
 
 function Login() {
+    const navigate = useNavigate();
     const [isLogin, setIsLogin] = useState(true);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IForm>();
-    const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
+    const onClick = () => {
         setIsLogin(value => !value);
         reset();
     };
-    const onSubmit = (data: IForm) => {
+    const onLogIn = (data: IForm) => {
+        reset();
+        console.log(data);
+        navigate('/home');
+    };
+    const onSignUp = (data: IForm) => {
         reset();
         console.log(data);
     };
@@ -128,7 +138,7 @@ function Login() {
                 {isLogin ?
                     (
                         <>
-                            <Form onSubmit={handleSubmit(onSubmit)}>
+                            <Form onSubmit={handleSubmit(onLogIn)}>
                                 <Input
                                     {...register("email", {
                                         required: '이메일을 입력하세요.',
@@ -154,7 +164,7 @@ function Login() {
                         </>
                     ) : (
                         <>
-                            <Form onSubmit={handleSubmit(onSubmit)}>
+                            <Form onSubmit={handleSubmit(onSignUp)}>
                                 <Input
                                     {...register("email", {
                                         required: '이메일을 입력하세요.',
@@ -196,7 +206,7 @@ function Login() {
                             </Form>
                             <ToggleForm>
                                 <span>계정이 있으신가요?</span>
-                                <ToggleBtn onClick={onClick} type="submit">로그인</ToggleBtn>
+                                <ToggleBtn onClick={onClick}>로그인</ToggleBtn>
                             </ToggleForm>
                         </>
                     )}
