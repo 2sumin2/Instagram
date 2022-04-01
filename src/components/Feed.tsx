@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import tagIcon from "../image/tag.png";
+import commentIcon from "../image/comment.png";
 
 const Container = styled.div`
     background-color: ${props => props.theme.bgColor};
@@ -51,17 +53,19 @@ const TagBox = styled.div`
     background-color: whitesmoke;
     border: 1px solid lightgray;
     display: flex;
-    justify-content: center;
-    align-items: center;
     grid-area: tag;
+    padding: 5px;
+`;
+const Icon = styled.img`
+    height:25px;
+    width:25px;
 `;
 const CommentsBox = styled.div`
     background-color: whitesmoke;
     border: 1px solid lightgray;
     display: flex;
-    justify-content: center;
-    align-items: center;
     grid-area: comment;
+    padding: 5px;
 `;
 
 function Feed() {
@@ -72,9 +76,13 @@ function Feed() {
                 <UserName>username</UserName>
             </UserBox>
             <ContentBox>
-                <ImgBox>(example)</ImgBox>
-                <TagBox>(example)</TagBox>
-                <CommentsBox>(example)</CommentsBox>
+                <ImgBox>(image: example)</ImgBox>
+                <TagBox>
+                    <Icon src={tagIcon} />
+                    (tag: example)</TagBox>
+                <CommentsBox>
+                    <Icon src={commentIcon} />
+                    (comment: example)</CommentsBox>
             </ContentBox>
         </Container>
     );
