@@ -10,7 +10,7 @@ import { isLightAtom } from "../atoms";
 import Switch from "react-switch";
 
 const ContainerBox = styled.div`
-    background: linear-gradient(45deg, #020e31, #562b74, #f97375);;
+    background: linear-gradient(45deg, #020e31, #562b74, #f97375);
     display:flex;
     justify-content:center;
     align-items:center;

@@ -6,7 +6,6 @@ import Router from './Router';
 import { darkTheme, lightTheme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Hurricane&family=Red+Hat+Mono:wght@300&display=swap');
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -26,6 +25,7 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 /* HTML5 hidden-attribute fix for newer browsers */
 *[hidden] {
