@@ -37,6 +37,7 @@ const Title = styled.span`
     color:black;
     font-size: 37px;
     color:white;
+    cursor:pointer;
 `;
 const Icon = styled.img`
     height:25px;
@@ -70,7 +71,9 @@ function NavigationBar() {
         <ContainerBox>
             <Container>
                 <ItemContainer>
-                    <Title>Inspacegram</Title>
+                    <Link to="/home">
+                        <Title>Inspacegram</Title>
+                    </Link>
                 </ItemContainer>
                 <ItemContainer>
                     <form>
