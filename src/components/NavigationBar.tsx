@@ -58,7 +58,7 @@ const SwitchBox = styled.div`
     display:flex;
     justify-content: right;
     align-items: center;
-    margin: 0 5px;
+    margin-left: 5px;
 `;
 
 function NavigationBar() {
@@ -93,11 +93,13 @@ function NavigationBar() {
                             checked={isLight}
                             handleDiameter={13}
                             height={18}
-                            width={35}
-                            onColor={"#f8c3c7"}
+                            width={40}
+                            onColor={"#fcedee"}
                             offColor={"#341941"}
                             uncheckedIcon={false}
                             checkedIcon={false}
+                            onHandleColor={"#341941"}
+                            offHandleColor={"#fcedee"}
                         />
                     </SwitchBox>
                 </ItemContainer>
