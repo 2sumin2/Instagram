@@ -133,7 +133,7 @@ function Login() {
                                     {...register("email", {
                                         required: '이메일을 입력하세요.',
                                         pattern: {
-                                            value: /^[A-Za-z0-9._%+-]+@naver.com$/,
+                                            value: /^[A-Za-z0-9._%+-]+@+[A-Za-z0-9]+.+[a-z]$/,
                                             message: "올바르지 않은 이메일 형식입니다."
                                         }
                                     })}
@@ -142,6 +142,7 @@ function Login() {
                                     {...register("password", {
                                         required: '비밀번호를 입력하세요.',
                                     })}
+                                    type="password"
                                     placeholder="비밀번호" />
                                 <LoginBtn type="submit">로그인</LoginBtn>
                                 <Message>{errors?.email ? errors?.email?.message : errors?.password?.message}</Message>
@@ -158,7 +159,7 @@ function Login() {
                                     {...register("email", {
                                         required: '이메일을 입력하세요.',
                                         pattern: {
-                                            value: /^[A-Za-z0-9._%+-]+@naver.com$/,
+                                            value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9]+.+[a-z]$/,
                                             message: "올바르지 않은 이메일 형식입니다."
                                         }
                                     })}
@@ -185,6 +186,7 @@ function Login() {
                                             message: "보안을 위해 비밀번호는 6자 이상이어야 합니다."
                                         }
                                     })}
+                                    type="password"
                                     placeholder="비밀번호" />
                                 <LoginBtn type="submit">회원가입</LoginBtn>
                                 <Message>{
