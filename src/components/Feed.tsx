@@ -4,7 +4,6 @@ import commentIcon from "../image/comment.png";
 import blackHeart from "../image/blackheart.png";
 import whiteHeart from "../image/whiteheart.png";
 import redHeart from "../image/redheart.png";
-import { useState } from "react";
 import { useQuery } from "react-query";
 import { isLightAtom } from "../atoms";
 import { useRecoilValue } from "recoil";
@@ -16,7 +15,7 @@ const Container = styled.div<IContainer>`
     background-color: ${props => props.theme.bgColor};
     max-width:950px;
     width: 100%;
-    height:630px;
+    height:550px;
     border: 1px solid ${props => props.theme.textColor};
     color: black;
     display:flex;
@@ -24,17 +23,20 @@ const Container = styled.div<IContainer>`
 `;
 const ImgContainer = styled.div`
     background-color: lightgray;
-    max-width:630px;
     min-height:400px;
-    width:100%;
+    width:100vw;
     display: flex;
     justify-content: center;
     align-items: center;
 `;
-const SideContainer = styled.div`
-    max-width:320px;
+interface ISideContainer {
+    'maxWidth': string,
+    'height': string
+}
+const SideContainer = styled.div<ISideContainer>`
+    max-width:${props => props.maxWidth};
     width: 100%;
-    min-height:400px;
+    height: ${props => props.height};
     display: flex;
     flex-direction: column;
 `;
@@ -43,7 +45,7 @@ const UserInfoBox = styled.div`
     display: flex;
     width:100%;
     align-items: center;
-    padding-left:10px;
+    padding:10px;
     justify-content: flex-start;
 `;
 const UserImg = styled.div`
@@ -62,24 +64,23 @@ const PhotoInfoBox = styled.div`
     background-color: white;
     border: 1px solid lightgray;
     padding: 5px;
+    width:100%;
     height:100%;
     display:flex;
     flex-direction: column;
 `;
 const CommentBox = styled.div`
-    border: 1px solid lightgray;
     padding: 5px;
     height: 100%;
 `;
 const TagBox = styled.div`
-    border: 1px solid lightgray;
     display: flex;
     padding: 5px;
-    min-height: 100px;
+    height: max-content;
 `;
 const Icon = styled.img`
-    height:25px;
-    width:25px;
+    height:20px;
+    width:20px;
     margin-right:10px;
 `;
 const Form = styled.form`
@@ -88,7 +89,7 @@ const Form = styled.form`
     display: flex;
 `;
 const Input = styled.input`
-    padding: 0 10px;
+    padding: 10px 10px;
     border:0;
     width:100%;
 `;
@@ -118,22 +119,23 @@ function Feed() {
                 width > 800 ? (
                     <Container flex-direction={`row`}>
                         <ImgContainer>(image: example)</ImgContainer>
-                        <SideContainer>
+                        <SideContainer maxWidth="320px" height="100%">
                             <UserInfoBox>
                                 <UserImg />
                                 <UserName>username</UserName>
                                 <Icon src={isLight ? blackHeart : whiteHeart} />
                             </UserInfoBox>
                             <PhotoInfoBox>
-                                <Icon src={commentIcon} />
-                                <CommentBox>
-                                    (comment: example)
-                                </CommentBox>
                                 <TagBox>
                                     <Icon src={tagIcon} />
-                                    (tag: example)
+                                    # example
                                 </TagBox>
-                                <Form>♡
+                                <CommentBox>
+                                    <Icon src={commentIcon} />
+                                    (comment: example)
+                                </CommentBox>
+
+                                <Form>
                                     <Input placeholder="댓글 달기" />
                                     <Button>게시</Button>
                                 </Form>
@@ -141,7 +143,30 @@ function Feed() {
                         </SideContainer>
                     </Container>
                 ) : (
-                    null
+                    <Container flex-direction={`column`}>
+                        <UserInfoBox>
+                            <UserImg />
+                            <UserName>username</UserName>
+                            <Icon src={isLight ? blackHeart : whiteHeart} />
+                        </UserInfoBox>
+                        <ImgContainer>(image: example)</ImgContainer>
+                        <SideContainer maxWidth="100%" height="200px">
+                            <PhotoInfoBox>
+                                <TagBox>
+                                    <Icon src={tagIcon} />
+                                    # example
+                                </TagBox>
+                                <CommentBox>
+                                    <Icon src={commentIcon} />
+                                    (comment: example)
+                                </CommentBox>
+                                <Form>
+                                    <Input placeholder="댓글 달기" />
+                                    <Button>게시</Button>
+                                </Form>
+                            </PhotoInfoBox>
+                        </SideContainer>
+                    </Container>
                 )
                 : null}
         </>

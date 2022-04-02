@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { isLightAtom } from "../atoms";
 import Switch from "react-switch";
-import { useState } from "react";
 import { useQuery } from "react-query";
 
 const ContainerBox = styled.div`
