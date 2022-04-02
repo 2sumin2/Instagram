@@ -50,7 +50,7 @@ const UserImg = styled.div`
     height:30px;
     width:30px;
     background-color:lightgray;
-    border-radius: 50px;
+    border-radius: 50%;
 `;
 const UserName = styled.div`
     padding-left: 15px;
@@ -101,43 +101,50 @@ const Button = styled.button`
 `;
 
 function Feed() {
-    const [width, setWidth] = useState(window.innerWidth);
+    const isLight = useRecoilValue(isLightAtom);
     const getWidth = () => {
-        setWidth(window.innerWidth);
+        return window.innerWidth;
     };
-    useQuery(
-        "windowSize",
+    const { data: width } = useQuery(
+        "windowSizes",
         () => getWidth(),
         {
             refetchInterval: 100,
         }
     );
-    const isLight = useRecoilValue(isLightAtom);
     return (
-        <Container flex-direction={`row`}>
-            <ImgContainer>(image: example)</ImgContainer>
-            <SideContainer>
-                <UserInfoBox>
-                    <UserImg />
-                    <UserName>username</UserName>
-                    <Icon src={isLight ? blackHeart : whiteHeart} />
-                </UserInfoBox>
-                <PhotoInfoBox>
-                    <Icon src={commentIcon} />
-                    <CommentBox>
-                        (comment: example)
-                    </CommentBox>
-                    <TagBox>
-                        <Icon src={tagIcon} />
-                        (tag: example)
-                    </TagBox>
-                    <Form>♡
-                        <Input placeholder="댓글 달기" />
-                        <Button>게시</Button>
-                    </Form>
-                </PhotoInfoBox>
-            </SideContainer>
-        </Container>
+        <>
+            {width ?
+                width > 800 ? (
+                    <Container flex-direction={`row`}>
+                        <ImgContainer>(image: example)</ImgContainer>
+                        <SideContainer>
+                            <UserInfoBox>
+                                <UserImg />
+                                <UserName>username</UserName>
+                                <Icon src={isLight ? blackHeart : whiteHeart} />
+                            </UserInfoBox>
+                            <PhotoInfoBox>
+                                <Icon src={commentIcon} />
+                                <CommentBox>
+                                    (comment: example)
+                                </CommentBox>
+                                <TagBox>
+                                    <Icon src={tagIcon} />
+                                    (tag: example)
+                                </TagBox>
+                                <Form>♡
+                                    <Input placeholder="댓글 달기" />
+                                    <Button>게시</Button>
+                                </Form>
+                            </PhotoInfoBox>
+                        </SideContainer>
+                    </Container>
+                ) : (
+                    null
+                )
+                : null}
+        </>
     );
 }
 export default Feed;

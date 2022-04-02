@@ -72,12 +72,11 @@ function NavigationBar() {
     const onChange = () => {
         setLightAtom((props) => !props);
     };
-    const [width, setWidth] = useState(window.innerWidth);
     const getWidth = () => {
-        setWidth(window.innerWidth);
+        return window.innerWidth;
     };
-    useQuery(
-        "windowSize",
+    const { data: width } = useQuery(
+        "windowSizes",
         () => getWidth(),
         {
             refetchInterval: 100,
@@ -93,10 +92,12 @@ function NavigationBar() {
                 </ItemContainer>
                 <ItemContainer>
                     {
-                        width > 800 ?
-                            <form>
-                                <Input disabled type="text" placeholder="검색" />
-                            </form>
+                        width ?
+                            width > 800 ?
+                                <form>
+                                    <Input disabled type="text" placeholder="검색" />
+                                </form>
+                                : null
                             : null
                     }
                 </ItemContainer>
