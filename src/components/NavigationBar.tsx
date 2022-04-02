@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { isLightAtom } from "../atoms";
 import Switch from "react-switch";
+import { useState } from "react";
+import { useQuery } from "react-query";
 
 const ContainerBox = styled.div`
     background: linear-gradient(45deg, #020e31, #562b74, #f97375);
@@ -18,7 +20,9 @@ const ContainerBox = styled.div`
     height: 60px;
 `;
 const Container = styled.div`
-    width: 900px;
+    max-width: 900px;
+    width:100%;
+    padding: 0 10px;
     display:grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
@@ -68,6 +72,17 @@ function NavigationBar() {
     const onChange = () => {
         setLightAtom((props) => !props);
     };
+    const [width, setWidth] = useState(window.innerWidth);
+    const getWidth = () => {
+        setWidth(window.innerWidth);
+    };
+    useQuery(
+        "windowSize",
+        () => getWidth(),
+        {
+            refetchInterval: 100,
+        }
+    );
     return (
         <ContainerBox>
             <Container>
@@ -77,9 +92,13 @@ function NavigationBar() {
                     </Link>
                 </ItemContainer>
                 <ItemContainer>
-                    <form>
-                        <Input disabled type="text" placeholder="검색" />
-                    </form>
+                    {
+                        width > 800 ?
+                            <form>
+                                <Input disabled type="text" placeholder="검색" />
+                            </form>
+                            : null
+                    }
                 </ItemContainer>
                 <ItemContainer>
                     <Link to="/home">
