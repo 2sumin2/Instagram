@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import tagIcon from "../image/tag.png";
 import commentIcon from "../image/comment.png";
-import heartIcon from "../image/heart.png";
+import blackHeart from "../image/blackheart.png";
+import whiteHeart from "../image/whiteheart.png";
+import redHeart from "../image/redheart.png";
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { isLightAtom } from "../atoms";
+import { useRecoilValue } from "recoil";
 
 interface IContainer {
     'flex-direction': string;
@@ -41,9 +45,6 @@ const UserInfoBox = styled.div`
     align-items: center;
     padding-left:10px;
     justify-content: flex-start;
-    & img {
-        margin-right:10px;
-    }
 `;
 const UserImg = styled.div`
     height:30px;
@@ -79,6 +80,7 @@ const TagBox = styled.div`
 const Icon = styled.img`
     height:25px;
     width:25px;
+    margin-right:10px;
 `;
 const Form = styled.form`
     border: 1px solid lightgray;
@@ -110,6 +112,7 @@ function Feed() {
             refetchInterval: 100,
         }
     );
+    const isLight = useRecoilValue(isLightAtom);
     return (
         <Container flex-direction={`row`}>
             <ImgContainer>(image: example)</ImgContainer>
@@ -117,7 +120,7 @@ function Feed() {
                 <UserInfoBox>
                     <UserImg />
                     <UserName>username</UserName>
-                    <Icon src={heartIcon} />
+                    <Icon src={isLight ? blackHeart : whiteHeart} />
                 </UserInfoBox>
                 <PhotoInfoBox>
                     <Icon src={commentIcon} />
@@ -128,7 +131,7 @@ function Feed() {
                         <Icon src={tagIcon} />
                         (tag: example)
                     </TagBox>
-                    <Form>
+                    <Form>♡
                         <Input placeholder="댓글 달기" />
                         <Button>게시</Button>
                     </Form>
