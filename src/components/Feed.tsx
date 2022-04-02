@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import tagIcon from "../image/tag.png";
 import commentIcon from "../image/comment.png";
+import heartIcon from "../image/heart.png";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
-const Container = styled.div`
+interface IContainer {
+    'flex-direction': string;
+}
+const Container = styled.div<IContainer>`
     background-color: ${props => props.theme.bgColor};
     max-width:950px;
     width: 100%;
@@ -12,6 +16,7 @@ const Container = styled.div`
     border: 1px solid ${props => props.theme.textColor};
     color: black;
     display:flex;
+    flex-direction:${props => props["flex-direction"]};
 `;
 const ImgContainer = styled.div`
     background-color: lightgray;
@@ -32,8 +37,13 @@ const SideContainer = styled.div`
 const UserInfoBox = styled.div`
     height:50px;
     display: flex;
+    width:100%;
     align-items: center;
     padding-left:10px;
+    justify-content: flex-start;
+    & img {
+        margin-right:10px;
+    }
 `;
 const UserImg = styled.div`
     height:30px;
@@ -43,6 +53,7 @@ const UserImg = styled.div`
 `;
 const UserName = styled.div`
     padding-left: 15px;
+    width:100%;
     font-size: 20px;
     color: ${props => props.theme.textColor};
 `;
@@ -100,12 +111,13 @@ function Feed() {
         }
     );
     return (
-        <Container>
+        <Container flex-direction={`row`}>
             <ImgContainer>(image: example)</ImgContainer>
             <SideContainer>
                 <UserInfoBox>
                     <UserImg />
                     <UserName>username</UserName>
+                    <Icon src={heartIcon} />
                 </UserInfoBox>
                 <PhotoInfoBox>
                     <Icon src={commentIcon} />
