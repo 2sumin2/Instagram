@@ -1,19 +1,36 @@
 import styled from "styled-components";
 import tagIcon from "../image/tag.png";
 import commentIcon from "../image/comment.png";
+import { useState } from "react";
+import { useQuery } from "react-query";
 
 const Container = styled.div`
     background-color: ${props => props.theme.bgColor};
-    max-width:850px;
-    width: 90vw;
-    height:600px;
-    padding: 5px;
+    max-width:950px;
+    width: 100%;
+    height:630px;
     border: 1px solid ${props => props.theme.textColor};
-    margin:10px;
     color: black;
+    display:flex;
 `;
-const UserBox = styled.div`
-    height:60px;
+const ImgContainer = styled.div`
+    background-color: lightgray;
+    max-width:630px;
+    min-height:400px;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+const SideContainer = styled.div`
+    max-width:320px;
+    width: 100%;
+    min-height:400px;
+    display: flex;
+    flex-direction: column;
+`;
+const UserInfoBox = styled.div`
+    height:50px;
     display: flex;
     align-items: center;
     padding-left:10px;
@@ -29,61 +46,82 @@ const UserName = styled.div`
     font-size: 20px;
     color: ${props => props.theme.textColor};
 `;
-const ContentBox = styled.div`
-    height:530px;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 530px auto;
-    grid-template-rows: 100px auto;
-    grid-template-areas: 
-    "photo tag"
-    "photo comment"
-    ;
-    gap:5px;
+const PhotoInfoBox = styled.div`
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 5px;
+    height:100%;
+    display:flex;
+    flex-direction: column;
 `;
-const ImgBox = styled.div`
-    background-color: lightgray;
-    height:530px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-area: photo;
+const CommentBox = styled.div`
+    border: 1px solid lightgray;
+    padding: 5px;
+    height: 100%;
 `;
 const TagBox = styled.div`
-    background-color: whitesmoke;
     border: 1px solid lightgray;
     display: flex;
-    grid-area: tag;
     padding: 5px;
+    min-height: 100px;
 `;
 const Icon = styled.img`
     height:25px;
     width:25px;
 `;
-const CommentsBox = styled.div`
-    background-color: whitesmoke;
+const Form = styled.form`
     border: 1px solid lightgray;
+    height:50px;
     display: flex;
-    grid-area: comment;
-    padding: 5px;
+`;
+const Input = styled.input`
+    padding: 0 10px;
+    border:0;
+    width:100%;
+`;
+const Button = styled.button`
+    background-color:transparent;
+    min-width: max-content;
+    border: 0;
+    color: #571479;
+    font-weight: 600;
 `;
 
 function Feed() {
+    const [width, setWidth] = useState(window.innerWidth);
+    const getWidth = () => {
+        setWidth(window.innerWidth);
+    };
+    useQuery(
+        "windowSize",
+        () => getWidth(),
+        {
+            refetchInterval: 100,
+        }
+    );
     return (
         <Container>
-            <UserBox>
-                <UserImg></UserImg>
-                <UserName>username</UserName>
-            </UserBox>
-            <ContentBox>
-                <ImgBox>(image: example)</ImgBox>
-                <TagBox>
-                    <Icon src={tagIcon} />
-                    (tag: example)</TagBox>
-                <CommentsBox>
+            <ImgContainer>(image: example)</ImgContainer>
+            <SideContainer>
+                <UserInfoBox>
+                    <UserImg />
+                    <UserName>username</UserName>
+                </UserInfoBox>
+                <PhotoInfoBox>
                     <Icon src={commentIcon} />
-                    (comment: example)</CommentsBox>
-            </ContentBox>
+                    <CommentBox>
+                        (comment: example)
+                    </CommentBox>
+                    <TagBox>
+                        <Icon src={tagIcon} />
+                        (tag: example)
+                    </TagBox>
+                    <Form>
+                        <Input placeholder="댓글 달기" />
+                        <Button>게시</Button>
+                    </Form>
+                </PhotoInfoBox>
+            </SideContainer>
         </Container>
     );
 }
