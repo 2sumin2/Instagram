@@ -91,6 +91,7 @@ const ToggleBtn = styled.button`
     border: 0;
     background-color: transparent;
     font-size:15px;
+    //#2b2a29
 `;
 const Message = styled.span`
     font-size:13px;

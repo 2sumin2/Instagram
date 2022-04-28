@@ -61,7 +61,8 @@ const UserName = styled.div`
     color: ${props => props.theme.textColor};
 `;
 const PhotoInfoBox = styled.div`
-    background-color: white;
+    background-color: ${props => props.theme.bgColor};
+    color: ${props => props.theme.textColor};
     border: 1px solid lightgray;
     padding: 5px;
     width:100%;
@@ -89,6 +90,8 @@ const Form = styled.form`
     display: flex;
 `;
 const Input = styled.input`
+    background-color: ${props => props.theme.bgColor};
+    color: ${props => props.theme.textColor};
     padding: 10px 10px;
     border:0;
     width:100%;
@@ -97,8 +100,9 @@ const Button = styled.button`
     background-color:transparent;
     min-width: max-content;
     border: 0;
-    color: #571479;
+    color: ${props => props.theme.accentColor};
     font-weight: 600;
+    //#b39fbd
 `;
 
 function Feed() {
