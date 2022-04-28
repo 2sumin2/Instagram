@@ -10,21 +10,25 @@ import { useRecoilValue } from "recoil";
 
 interface IContainer {
     'flex-direction': string;
+    width: string;
 }
 const Container = styled.div<IContainer>`
     background-color: ${props => props.theme.bgColor};
-    max-width:950px;
-    width: 100%;
-    height:550px;
+    max-width:1050px;
+    //width: 100%;
+    //width:500px;
+    width:${props => props.width};
+    height:650px;
     border: 1px solid ${props => props.theme.textColor};
     color: black;
     display:flex;
     flex-direction:${props => props["flex-direction"]};
 `;
+
 const ImgContainer = styled.div`
     background-color: lightgray;
     min-height:400px;
-    width:100vw;
+    width:100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -120,8 +124,8 @@ function Feed() {
     return (
         <>
             {width ?
-                width > 800 ? (
-                    <Container flex-direction={`row`}>
+                width > 1050 ? (
+                    <Container flex-direction={`row`} width="100%">
                         <ImgContainer>(image: example)</ImgContainer>
                         <SideContainer maxWidth="320px" height="100%">
                             <UserInfoBox>
@@ -147,7 +151,7 @@ function Feed() {
                         </SideContainer>
                     </Container>
                 ) : (
-                    <Container flex-direction={`column`}>
+                    <Container flex-direction={`column`} width="500px">
                         <UserInfoBox>
                             <UserImg />
                             <UserName>username</UserName>
