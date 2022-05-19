@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import LogIn from "./components/Login";
+import Signup from "./components/Login/Signup";
+import LogIn from "./components/Login/Login";
 import User from "./components/User";
 
 function Router() {
@@ -9,6 +10,7 @@ function Router() {
             <Routes>
                 <Route path="/user" element={<User />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/account" element={<Signup />} />
                 <Route path="/" element={<LogIn />} />
             </Routes>
         </BrowserRouter>
