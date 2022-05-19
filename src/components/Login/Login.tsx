@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { gql, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { Container, Form, Input, LoginBox, LoginBtn, Message, ToggleBtn, ToggleForm, Title } from "./LoginForm";
@@ -12,16 +13,50 @@ interface IForm {
     username?: string;
 }
 
+const LOGIN_MUTATION = gql`
+    mutation login(
+        $email:String!, 
+        $password:String!){
+        login(
+            email:$email, 
+            password:$password) {
+            ok
+            token
+            error
+        }
+    }
+`;
+
 function Login() {
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<IForm>();
+    const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm<IForm>();
     const onClick = () => {
         reset();
         navigate('/account');
     };
+    const onCompleted = (data: any) => {
+        const {
+            login: { ok, error, token },
+        } = data;
+        if (!ok) {
+            alert(error);
+        }
+        if (token) {
+            localStorage.setItem("TOKEN", token);
+            navigate('/home');
+        }
+    };
+    const [login, { loading }] = useMutation(LOGIN_MUTATION, {
+        onCompleted,
+    });
     const onSubmit = (data: IForm) => {
-        reset();
-        navigate('/home');
+        if (loading) {
+            return;
+        }
+        const { email, password } = getValues();
+        login({
+            variables: { email, password }
+        });
     };
     const [width, setWidth] = useState(window.innerWidth);
     const getWidth = () => {
