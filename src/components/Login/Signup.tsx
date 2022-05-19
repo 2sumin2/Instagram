@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
-import { Container, Form, InnerTitle, Input, LoginBox, LoginBtn, LogoBox, Message, ToggleBtn, ToggleForm, LogoImg, Title } from "./LoginForm";
+import { Container, Form, Input, LoginBox, LoginBtn, Message, ToggleBtn, ToggleForm, Title } from "./LoginForm";
 import Logo from './Logo';
 
 interface IForm {
@@ -12,16 +13,51 @@ interface IForm {
     username?: string;
 }
 
+const CREATE_ACCOUNT_MUTATION = gql`
+    mutation createAccount(
+        $email:String!, 
+        $statement:String!, 
+        $username:String!, 
+        $password:String!){
+        createAccount(
+            email:$email, 
+            username:$username, 
+            statement:$statement, 
+            password:$password) {
+            ok
+            error
+        }
+    }
+`;
+
 function Signup() {
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<IForm>();
+    const { register, handleSubmit, formState: { errors }, reset, getValues
+    } = useForm<IForm>();
     const onClick = () => {
         navigate('/');
         reset();
     };
+    const onCompleted = (data: any) => {
+        const {
+            createAccount: { ok, error },
+        } = data;
+        if (!ok) {
+            alert(error);
+        }
+        navigate('/');
+    };
+    const [createAccount, { loading }] = useMutation(CREATE_ACCOUNT_MUTATION, {
+        onCompleted,
+    });
     const onSubmit = (data: IForm) => {
-        reset();
-        console.log(data);
+        if (loading) {
+            return;
+        }
+        const { email, username, statement, password } = getValues();
+        createAccount({
+            variables: { email, username, statement, password }
+        });
     };
     const [width, setWidth] = useState(window.innerWidth);
     const getWidth = () => {

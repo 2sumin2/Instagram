@@ -3,7 +3,9 @@ import { useRecoilValue } from 'recoil';
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { isLightAtom } from './atoms';
 import Router from './Router';
+import { ApolloProvider } from "@apollo/client";
 import { darkTheme, lightTheme } from './theme';
+import { client } from './apollo';
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -52,10 +54,12 @@ function App() {
   const isLight = useRecoilValue(isLightAtom);
   return (
     <>
-      <ThemeProvider theme={isLight ? lightTheme : darkTheme}>
-        <GlobalStyle />
-        <Router />
-      </ThemeProvider>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={isLight ? lightTheme : darkTheme}>
+          <GlobalStyle />
+          <Router />
+        </ThemeProvider>
+      </ApolloProvider>
     </>
   );
 }
