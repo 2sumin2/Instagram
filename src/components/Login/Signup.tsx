@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
 import { Container, Form, Input, LoginBox, LoginBtn, Message, ToggleBtn, ToggleForm, Title } from "./LoginForm";
 import Logo from './Logo';
 
@@ -59,20 +57,9 @@ function Signup() {
             variables: { email, username, statement, password }
         });
     };
-    const [width, setWidth] = useState(window.innerWidth);
-    const getWidth = () => {
-        setWidth(window.innerWidth);
-    };
-    useQuery(
-        "windowSize",
-        () => getWidth(),
-        {
-            refetchInterval: 100,
-        }
-    );
     return (
         <Container>
-            {width > 900 ? <Logo /> : null}
+            <Logo />
             <LoginBox>
                 <Title>Inspacegram</Title>
                 <Form onSubmit={handleSubmit(onSubmit)}>
