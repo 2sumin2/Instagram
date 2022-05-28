@@ -15,8 +15,6 @@ interface IContainer {
 const Container = styled.div<IContainer>`
     background-color: ${props => props.theme.bgColor};
     max-width:1050px;
-    //width: 100%;
-    //width:500px;
     width:${props => props.width};
     height:650px;
     border: 1px solid ${props => props.theme.textColor};

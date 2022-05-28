@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import NavigationBar from "./NavigationBar";
+import Photo from "./Photo";
 
 const Container = styled.div`
     height:35vh;
@@ -49,11 +50,6 @@ const PhotoBox = styled.div`
     grid-template-rows: 250px auto;
     grid-gap:10px;
     padding-bottom: 100px;
-`;
-const Photo = styled.div`
-    height:250px;
-    width:250px;
-    background-color: #8b8b8b;
 `;
 
 function User() {
