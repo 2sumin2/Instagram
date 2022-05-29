@@ -1,3 +1,4 @@
+import { gql, useQuery } from "@apollo/client";
 import styled from "styled-components";
 import NavigationBar from "./NavigationBar";
 import Photo from "./Photo";
@@ -20,28 +21,38 @@ const InnerContainer = styled(Container)`
 `;
 
 const UserImg = styled.div`
-    width:250px;
-    height:250px;
+    width:230px;
+    height:230px;
     margin-right:50px;
     border-radius: 50%;
     background-color: #8b8b8b;
 `;
 const UserInfo = styled.div`
     height:250px;
-    width:600px;
+    width:500px;
+    display:flex;
+    flex-direction: column;
+    padding: 10px 50px 50px 50px;
+`;
+
+const InfoBox = styled.div`
     display:flex;
     justify-content: space-between;
-    flex-direction: row;
-    padding:50px ;
+    padding-bottom:10px;
 `;
 const ItemBox = styled.div`
     display:flex;
-    align-items: center;
-    flex-direction: column;
+    flex-direction: row;
 `;
 const Item = styled.span`
     padding-bottom:10px;
-    font-size: 18px;
+    padding-right:10px;
+    font-size: 15px;
+`;
+const Username = styled(Item)`
+    padding-bottom:10px;
+    padding-right:10px;
+    font-size: 25px;
 `;
 const PhotoBox = styled.div`
     height: max-content;
@@ -52,7 +63,25 @@ const PhotoBox = styled.div`
     padding-bottom: 100px;
 `;
 
+const ME_QUERY = gql`
+  query me($token: String) {
+    me(token: $token) {
+        id      
+        username
+        statement
+        createAt
+        updateAt    
+        }
+  }
+`;
+
 function User() {
+    const token = localStorage.getItem("TOKEN");
+    const { data } = useQuery(ME_QUERY, {
+        variables: {
+            token
+        },
+    });
     return (
         <>
             <NavigationBar />
@@ -60,18 +89,24 @@ function User() {
                 <InnerContainer>
                     <UserImg>UserImg</UserImg>
                     <UserInfo>
-                        <ItemBox>
-                            <Item>0</Item>
-                            <Item>게시물</Item>
-                        </ItemBox>
-                        <ItemBox>
-                            <Item>0</Item>
-                            <Item>팔로워</Item>
-                        </ItemBox>
-                        <ItemBox>
-                            <Item>0</Item>
-                            <Item>팔로잉</Item>
-                        </ItemBox>
+                        <InfoBox>
+                            <Username>{data?.me?.username}</Username>
+                        </InfoBox>
+                        <InfoBox>
+                            <ItemBox>
+                                <Item>게시물</Item>
+                                <Item>0</Item>
+                            </ItemBox>
+                            <ItemBox>
+
+                                <Item>팔로워</Item>
+                                <Item>0</Item>
+                            </ItemBox>
+                            <ItemBox>
+                                <Item>팔로잉</Item>
+                                <Item>0</Item>
+                            </ItemBox>
+                        </InfoBox>
                     </UserInfo>
                 </InnerContainer>
             </Container>
