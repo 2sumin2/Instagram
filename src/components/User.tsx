@@ -4,7 +4,8 @@ import NavigationBar from "./NavigationBar";
 import Photo from "./Photo";
 
 const Container = styled.div`
-    height:35vh;
+    height:40vw;
+    max-height:250px;
     display:flex;
     justify-content: center;
     background-color: #e6e6e6;
@@ -15,14 +16,17 @@ const ContentContainer = styled(Container)`
 `;
 const InnerContainer = styled(Container)`
     max-width:960px;
-    padding:50px;
+    padding:30px;
     flex-direction:rows;
     background-color: inherit;
 `;
 
 const UserImg = styled.div`
-    width:230px;
-    height:230px;
+    width:26vw;
+    height:26vw;
+    max-width:170px;
+    max-height:170px;
+
     margin-right:50px;
     border-radius: 50%;
     background-color: #8b8b8b;
@@ -39,6 +43,7 @@ const UserInfo = styled.div`
 const InfoBox = styled.div`
     display:flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     padding-bottom:10px;
 `;
 const ItemBox = styled.div`
@@ -49,6 +54,8 @@ const Item = styled.span`
     padding-bottom:10px;
     padding-right:10px;
     font-size: 15px;
+    min-width:max-content;
+    width: 50px;
 `;
 const Username = styled(Item)`
     padding-bottom:10px;
@@ -99,7 +106,6 @@ function User() {
                                 <Item>0</Item>
                             </ItemBox>
                             <ItemBox>
-
                                 <Item>팔로워</Item>
                                 <Item>0</Item>
                             </ItemBox>
