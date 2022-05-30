@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const Img = styled.div`
-    height:30vw;
+    height:32vw;
     max-height:250px;
-    width:30vw;
+    width:32vw;
     max-width:250px;
     background-color: #8b8b8b;
 `;
