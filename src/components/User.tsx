@@ -29,7 +29,8 @@ const UserImg = styled.div`
 `;
 const UserInfo = styled.div`
     height:250px;
-    width:500px;
+    width: 60vw;
+    max-width:500px;
     display:flex;
     flex-direction: column;
     padding: 10px 50px 50px 50px;
@@ -57,8 +58,8 @@ const Username = styled(Item)`
 const PhotoBox = styled.div`
     height: max-content;
     display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 250px auto;
+    grid-template-columns: repeat(3, minmax(max-content,250px));
+    grid-template-rows: max-content auto;
     grid-gap:10px;
     padding-bottom: 100px;
 `;
