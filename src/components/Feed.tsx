@@ -7,6 +7,7 @@ import redHeart from "../image/redheart.png";
 import { useQuery } from "react-query";
 import { isLightAtom } from "../atoms";
 import { useRecoilValue } from "recoil";
+import { useState } from "react";
 
 interface IContainer {
     'flex-direction': string;
@@ -86,6 +87,9 @@ const Icon = styled.img`
     width:20px;
     margin-right:10px;
 `;
+const LikeIcon = styled(Icon)`
+    cursor:pointer;
+`;
 const Form = styled.form`
     border: 1px solid lightgray;
     height:50px;
@@ -108,6 +112,7 @@ const Button = styled.button`
 `;
 
 function Feed() {
+    const [like, setLike] = useState(false);
     const isLight = useRecoilValue(isLightAtom);
     const getWidth = () => {
         return window.innerWidth;
@@ -119,6 +124,9 @@ function Feed() {
             refetchInterval: 100,
         }
     );
+    const toggleLike = () => {
+        setLike(!like);
+    };
     return (
         <>
             {width ?
@@ -129,7 +137,7 @@ function Feed() {
                             <UserInfoBox>
                                 <UserImg />
                                 <UserName>username</UserName>
-                                <Icon src={isLight ? blackHeart : whiteHeart} />
+                                <LikeIcon src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={toggleLike} />
                             </UserInfoBox>
                             <PhotoInfoBox>
                                 <TagBox>
