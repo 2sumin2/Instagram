@@ -9,6 +9,8 @@ import { useRecoilState } from "recoil";
 import { isLightAtom } from "../atoms";
 import Switch from "react-switch";
 import { useQuery } from "react-query";
+import FeedUpload from "./FeedUpload";
+import { useState } from "react";
 
 const ContainerBox = styled.div`
     background: linear-gradient(45deg, #020e31, #562b74, #f97375);
@@ -45,7 +47,7 @@ const Icon = styled.img`
     height:25px;
     width:25px;
     margin: 0 10px;
-    :nth-child(1), :nth-last-child(1){
+    :nth-child(2n+1){
         cursor: pointer;
     }
 `;
@@ -65,8 +67,18 @@ const SwitchBox = styled.div`
     align-items: center;
     margin-left: 5px;
 `;
-
+const CloseBtn = styled.button`
+    color:white;
+    background:inherit;
+    border:0;
+    position:fixed;
+    top:15px;
+    right:15px;
+    font-size:30px;
+    z-index: 2;
+`;
 function NavigationBar() {
+    const [uploadbox, setUploadbox] = useState(false);
     const [isLight, setLightAtom] = useRecoilState(isLightAtom);
     const onChange = () => {
         setLightAtom((props) => !props);
@@ -81,53 +93,64 @@ function NavigationBar() {
             refetchInterval: 100,
         }
     );
+    const toggleUploadBox = () => {
+        setUploadbox(!uploadbox);
+    };
     return (
-        <ContainerBox>
-            <Container>
-                <ItemContainer>
-                    <Link to="/home">
-                        <Title>Inspacegram</Title>
-                    </Link>
-                </ItemContainer>
-                <ItemContainer>
-                    {
-                        width ?
-                            width > 800 ?
-                                <form>
-                                    <Input disabled type="text" placeholder="검색" />
-                                </form>
+        <>
+            <ContainerBox>
+                <Container>
+                    <ItemContainer>
+                        <Link to="/home">
+                            <Title>Inspacegram</Title>
+                        </Link>
+                    </ItemContainer>
+                    <ItemContainer>
+                        {
+                            width ?
+                                width > 800 ?
+                                    <form>
+                                        <Input disabled type="text" placeholder="검색" />
+                                    </form>
+                                    : null
                                 : null
-                            : null
-                    }
-                </ItemContainer>
-                <ItemContainer>
-                    <Link to="/home">
-                        <Icon src={homeIcon} />
-                    </Link>
-                    <Icon src={sendIcon} />
-                    <Icon src={plusIcon} />
-                    <Icon src={exploreIcon} />
-                    <Link to="/user">
-                        <Icon src={userIcon} />
-                    </Link>
-                    <SwitchBox>
-                        <Switch
-                            onChange={onChange}
-                            checked={isLight}
-                            handleDiameter={13}
-                            height={18}
-                            width={40}
-                            onColor={"#fcedee"}
-                            offColor={"#341941"}
-                            uncheckedIcon={false}
-                            checkedIcon={false}
-                            onHandleColor={"#341941"}
-                            offHandleColor={"#fcedee"}
-                        />
-                    </SwitchBox>
-                </ItemContainer>
-            </Container>
-        </ContainerBox>
+                        }
+                    </ItemContainer>
+                    <ItemContainer>
+                        <Link to="/home">
+                            <Icon src={homeIcon} />
+                        </Link>
+                        <Icon src={sendIcon} />
+                        <Icon src={plusIcon} onClick={toggleUploadBox} />
+                        <Icon src={exploreIcon} />
+                        <Link to="/user">
+                            <Icon src={userIcon} />
+                        </Link>
+                        <SwitchBox>
+                            <Switch
+                                onChange={onChange}
+                                checked={isLight}
+                                handleDiameter={13}
+                                height={18}
+                                width={40}
+                                onColor={"#fcedee"}
+                                offColor={"#341941"}
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                onHandleColor={"#341941"}
+                                offHandleColor={"#fcedee"}
+                            />
+                        </SwitchBox>
+                    </ItemContainer>
+                </Container>
+            </ContainerBox>
+            {uploadbox ? (
+                <>
+                    <CloseBtn onClick={toggleUploadBox}>X</CloseBtn>
+                    <FeedUpload />
+                </>
+            ) : null}
+        </>
     );
 }
 export default NavigationBar;
