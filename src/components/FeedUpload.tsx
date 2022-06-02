@@ -12,14 +12,18 @@ const Full = styled.div`
 `;
 const Container = styled.div`
     width:100vw;
+    height:100%;
     display:flex;
     position:fixed;
     top:120px;
     justify-content: center;
+    align-items: center;
     z-index: 2;
+    padding-bottom:200px;
 `;
 const InnerContainer = styled.div`
-    height: 700px;
+    max-height: 700px;
+    height: 75vw;
     max-width:700px;
     width:65%;
     border-radius:5%;
