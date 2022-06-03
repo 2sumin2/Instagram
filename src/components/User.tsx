@@ -8,7 +8,7 @@ const Container = styled.div`
     max-height:250px;
     display:flex;
     justify-content: center;
-    background-color: #e6e6e6;
+    
 `;
 const ContentContainer = styled(Container)`
     background-color: inherit;
@@ -19,6 +19,7 @@ const InnerContainer = styled(Container)`
     padding:30px;
     flex-direction:rows;
     background-color: inherit;
+    border-bottom: 2px solid #9e9e9e;
 `;
 
 const UserImg = styled.div`
@@ -59,7 +60,7 @@ const Item = styled.span`
 `;
 const Username = styled(Item)`
     padding-bottom:10px;
-    padding-right:10px;
+    padding-right:20px;
     font-size: 25px;
 `;
 const PhotoBox = styled.div`
@@ -69,6 +70,13 @@ const PhotoBox = styled.div`
     grid-template-rows: max-content auto;
     grid-gap:10px;
     padding-bottom: 100px;
+`;
+
+const Btn = styled.button`
+    height: max-content;
+    padding:3px;
+    border:1px solid #c0c0c0;
+    background: inherit;
 `;
 
 const ME_QUERY = gql`
@@ -98,7 +106,10 @@ function User() {
                     <UserImg>UserImg</UserImg>
                     <UserInfo>
                         <InfoBox>
-                            <Username>{data?.me?.username}</Username>
+                            <div>
+                                <Username>{data?.me?.username}</Username>
+                                <Btn>프로필 편집</Btn>
+                            </div>
                         </InfoBox>
                         <InfoBox>
                             <ItemBox>
