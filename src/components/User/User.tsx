@@ -113,7 +113,7 @@ function User() {
                                     <Btn>프포필 편접</Btn>
                                 </Link>
                             </div>
-                        </InfoBox>
+                        </InfoBox>ㄴ
                         <InfoBox>
                             <ItemBox>
                                 <Item>게시물</Item>
