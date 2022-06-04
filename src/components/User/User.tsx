@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import NavigationBar from "./NavigationBar";
+import NavigationBar from "../NavigationBar";
 import Photo from "./Photo";
 
 const Container = styled.div`
@@ -108,7 +109,9 @@ function User() {
                         <InfoBox>
                             <div>
                                 <Username>{data?.me?.username}</Username>
-                                <Btn>프로필 편집</Btn>
+                                <Link to={`/edit/user`}>
+                                    <Btn>프포필 편접</Btn>
+                                </Link>
                             </div>
                         </InfoBox>
                         <InfoBox>
