@@ -123,7 +123,7 @@ function NavigationBar() {
                         <Icon src={sendIcon} />
                         <Icon src={plusIcon} onClick={toggleUploadBox} />
                         <Icon src={exploreIcon} />
-                        <Link to="/user">
+                        <Link to={`/user`}>
                             <Icon src={userIcon} />
                         </Link>
                         <SwitchBox>
