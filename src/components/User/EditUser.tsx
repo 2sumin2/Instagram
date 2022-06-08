@@ -1,6 +1,6 @@
 import NavigationBar from "../NavigationBar";
 import styled from "styled-components";
-
+import FindUserName from "./FindUserName";
 const ContainerBox = styled.div`
     display:flex;
     justify-content:center;
@@ -111,7 +111,7 @@ function EditUser() {
                     <Content>
                         <UserImg></UserImg>
                         <div>
-                            <ItemSpan>username</ItemSpan>
+                            <ItemSpan><FindUserName /></ItemSpan>
                             <EditImg>프로필 사진 바꾸기</EditImg>
                         </div>
                         <ItemSpan>이름</ItemSpan>
