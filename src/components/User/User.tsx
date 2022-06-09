@@ -1,4 +1,3 @@
-import { gql, useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavigationBar from "../NavigationBar";

@@ -1,6 +1,7 @@
 import NavigationBar from "../NavigationBar";
 import styled from "styled-components";
 import FindMe from "./FindMe";
+import { useState } from "react";
 
 
 const ContainerBox = styled.div`
@@ -34,7 +35,7 @@ const MenuItem = styled.button`
     width:100%;
     text-align: center;
     font-size:18px;
-    &:focus {
+    &:hover {
         font-style: italic;
     }
 `;
@@ -101,34 +102,50 @@ const Submit = styled.button`
 `;
 
 function EditUser() {
+    const [option, setOption] = useState(0);
+
     return (
         <>
             <NavigationBar />
             <ContainerBox>
                 <Container>
                     <Menu>
-                        <MenuItem>프로필 편집</MenuItem>
-                        <MenuItem>비밀번호 변경</MenuItem>
+                        <MenuItem onClick={() => setOption(0)}>프로필 편집</MenuItem>
+                        <MenuItem onClick={() => setOption(1)}>비밀번호 변경</MenuItem>
                     </Menu>
-                    <Content>
-                        <UserImg></UserImg>
-                        <div>
-                            <ItemSpan><FindMe find="username" /></ItemSpan>
-                            <EditImg>프로필 사진 바꾸기</EditImg>
-                        </div>
-                        <ItemSpan>이름</ItemSpan>
-                        <ItemInput></ItemInput>
-                        <ItemSpan>사용자 이름</ItemSpan>
-                        <ItemInput></ItemInput>
-                        <ItemSpan>웹사이트</ItemSpan>
-                        <ItemInput></ItemInput>
-                        <ItemSpan>소개</ItemSpan>
-                        <Textarea></Textarea>
-                        <ItemSpan>이메일</ItemSpan>
-                        <ItemInput></ItemInput>
-                        <div></div>
-                        <Submit>제출</Submit>
-                    </Content>
+                    {option === 0 ?
+                        <Content>
+                            <UserImg></UserImg>
+                            <div>
+                                <ItemSpan><FindMe find="username" /></ItemSpan>
+                                <EditImg>프로필 사진 바꾸기</EditImg>
+                            </div>
+                            <ItemSpan>이름</ItemSpan>
+                            <ItemInput></ItemInput>
+                            <ItemSpan>사용자 이름</ItemSpan>
+                            <ItemInput></ItemInput>
+                            <ItemSpan>웹사이트</ItemSpan>
+                            <ItemInput></ItemInput>
+                            <ItemSpan>소개</ItemSpan>
+                            <Textarea></Textarea>
+                            <ItemSpan>이메일</ItemSpan>
+                            <ItemInput></ItemInput>
+                            <div></div>
+                            <Submit>제출</Submit>
+                        </Content>
+                        :
+                        <Content>
+                            <div></div><div></div>
+                            <ItemSpan>현재 비밀번호</ItemSpan>
+                            <ItemInput type="password"></ItemInput>
+                            <ItemSpan>변경할 비밀번호</ItemSpan>
+                            <ItemInput type="password"></ItemInput>
+                            <ItemSpan>비밀번호 확인</ItemSpan>
+                            <ItemInput type="password"></ItemInput>
+                            <div></div>
+                            <Submit>제출</Submit>
+                        </Content>
+                    }
                 </Container>
             </ContainerBox>
         </>
