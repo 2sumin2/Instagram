@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavigationBar from "../NavigationBar";
+import UserName from "./FindMe";
 import Photo from "./Photo";
-import FindMe from "./FindMe";
 
 
 const Container = styled.div`
@@ -82,6 +82,7 @@ const Btn = styled.button`
 `;
 
 function User() {
+    const username = UserName();
     return (
         <>
             <NavigationBar />
@@ -91,9 +92,9 @@ function User() {
                     <UserInfo>
                         <InfoBox>
                             <div>
-                                <Username><FindMe find="username" /></Username>
+                                <Username>{username}</Username>
                                 <Link to={`/edit/user`}>
-                                    <Btn>프포필 편집</Btn>
+                                    <Btn>프로필 편집</Btn>
                                 </Link>
                             </div>
                         </InfoBox>

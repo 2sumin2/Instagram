@@ -1,6 +1,6 @@
 import NavigationBar from "../NavigationBar";
 import styled from "styled-components";
-import FindMe from "./FindMe";
+import UserName, { UserStatement } from "./FindMe";
 import { useState } from "react";
 
 
@@ -103,7 +103,8 @@ const Submit = styled.button`
 
 function EditUser() {
     const [option, setOption] = useState(0);
-
+    const userstatement = UserStatement();
+    const username = UserName();
     return (
         <>
             <NavigationBar />
@@ -114,37 +115,35 @@ function EditUser() {
                         <MenuItem onClick={() => setOption(1)}>비밀번호 변경</MenuItem>
                     </Menu>
                     {option === 0 ?
-                        <Content>
+                        (<Content>
                             <UserImg></UserImg>
                             <div>
-                                <ItemSpan><FindMe find="username" /></ItemSpan>
+                                <ItemSpan>{username}</ItemSpan>
                                 <EditImg>프로필 사진 바꾸기</EditImg>
                             </div>
                             <ItemSpan>이름</ItemSpan>
-                            <ItemInput></ItemInput>
+                            <ItemInput value={userstatement} />
                             <ItemSpan>사용자 이름</ItemSpan>
-                            <ItemInput></ItemInput>
+                            <ItemInput value={username} />
                             <ItemSpan>웹사이트</ItemSpan>
-                            <ItemInput></ItemInput>
+                            <ItemInput value="" />
                             <ItemSpan>소개</ItemSpan>
-                            <Textarea></Textarea>
-                            <ItemSpan>이메일</ItemSpan>
-                            <ItemInput></ItemInput>
+                            <Textarea value="" ></Textarea>
                             <div></div>
                             <Submit>제출</Submit>
-                        </Content>
+                        </Content>)
                         :
-                        <Content>
+                        (<Content>
                             <div></div><div></div>
                             <ItemSpan>현재 비밀번호</ItemSpan>
-                            <ItemInput type="password"></ItemInput>
+                            <ItemInput type="password" value="" />
                             <ItemSpan>변경할 비밀번호</ItemSpan>
-                            <ItemInput type="password"></ItemInput>
+                            <ItemInput type="password" value="" />
                             <ItemSpan>비밀번호 확인</ItemSpan>
-                            <ItemInput type="password"></ItemInput>
+                            <ItemInput type="password" value="" />
                             <div></div>
                             <Submit>제출</Submit>
-                        </Content>
+                        </Content>)
                     }
                 </Container>
             </ContainerBox>
