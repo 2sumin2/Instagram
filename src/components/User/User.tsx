@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavigationBar from "../NavigationBar";
 import Photo from "./Photo";
+import FindMe from "./FindMe";
+
 
 const Container = styled.div`
     height:40vw;
@@ -80,25 +82,7 @@ const Btn = styled.button`
     background: inherit;
 `;
 
-const ME_QUERY = gql`
-  query me($token: String) {
-    me(token: $token) {
-        id      
-        username
-        statement
-        createAt
-        updateAt    
-        }
-  }
-`;
-
 function User() {
-    const token = localStorage.getItem("TOKEN");
-    const { data } = useQuery(ME_QUERY, {
-        variables: {
-            token
-        },
-    });
     return (
         <>
             <NavigationBar />
@@ -108,9 +92,9 @@ function User() {
                     <UserInfo>
                         <InfoBox>
                             <div>
-                                <Username>{data?.me?.username}</Username>
+                                <Username><FindMe find="username" /></Username>
                                 <Link to={`/edit/user`}>
-                                    <Btn>프포필 편접</Btn>
+                                    <Btn>프포필 편집</Btn>
                                 </Link>
                             </div>
                         </InfoBox>

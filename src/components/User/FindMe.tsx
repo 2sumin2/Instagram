@@ -1,5 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
 
+interface iForm {
+  find: string;
+}
 const ME_QUERY = gql`
   query me($token: String) {
     me(token: $token) {
@@ -11,16 +14,18 @@ const ME_QUERY = gql`
         }
   }
 `;
-function FindUserName() {
+
+function FindMe({ find }: iForm) {
   const token = localStorage.getItem("TOKEN");
   const { data } = useQuery(ME_QUERY, {
     variables: {
       token
     },
   });
+
   const username = data?.me?.username;
-  return (<span>{username}</span>);
+  return (<> {find === "username" ? username : null}</>);
 }
 
 
-export default FindUserName;
+export default FindMe;
