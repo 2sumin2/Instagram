@@ -103,8 +103,19 @@ const Submit = styled.button`
 
 function EditUser() {
     const [option, setOption] = useState(0);
-    const userstatement = UserStatement();
-    const username = UserName();
+    const statement = UserStatement();
+    const name = UserName();
+    const [state, setState] = useState({
+        name,
+        statement
+    });
+    const onChange = (event: any) => {
+        const {
+            currentTarget: { value },
+        } = event;
+        setState({ ...state, [event.target.name]: value });
+    };
+    console.log(state);
     return (
         <>
             <NavigationBar />
@@ -118,17 +129,17 @@ function EditUser() {
                         (<Content>
                             <UserImg></UserImg>
                             <div>
-                                <ItemSpan>{username}</ItemSpan>
+                                <ItemSpan>{name}</ItemSpan>
                                 <EditImg>프로필 사진 바꾸기</EditImg>
                             </div>
                             <ItemSpan>이름</ItemSpan>
-                            <ItemInput value={userstatement} />
+                            <ItemInput value={state?.statement} name="statement" onChange={onChange} />
                             <ItemSpan>사용자 이름</ItemSpan>
-                            <ItemInput value={username} />
+                            <ItemInput value={state?.name} name="name" onChange={onChange} />
                             <ItemSpan>웹사이트</ItemSpan>
-                            <ItemInput value="" />
+                            <ItemInput />
                             <ItemSpan>소개</ItemSpan>
-                            <Textarea value="" ></Textarea>
+                            <Textarea></Textarea>
                             <div></div>
                             <Submit>제출</Submit>
                         </Content>)
@@ -136,11 +147,11 @@ function EditUser() {
                         (<Content>
                             <div></div><div></div>
                             <ItemSpan>현재 비밀번호</ItemSpan>
-                            <ItemInput type="password" value="" />
+                            <ItemInput type="password" />
                             <ItemSpan>변경할 비밀번호</ItemSpan>
-                            <ItemInput type="password" value="" />
+                            <ItemInput type="password" />
                             <ItemSpan>비밀번호 확인</ItemSpan>
-                            <ItemInput type="password" value="" />
+                            <ItemInput type="password" />
                             <div></div>
                             <Submit>제출</Submit>
                         </Content>)
