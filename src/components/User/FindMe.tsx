@@ -35,3 +35,14 @@ export function UserStatement() {
   const statement = data?.me?.statement;
   return statement;
 }
+
+export function UserEmail() {
+  const { data } = useQuery(ME_QUERY, {
+    variables: {
+      token
+    },
+  });
+
+  const email = data?.me?.email;
+  return email;
+}

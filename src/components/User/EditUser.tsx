@@ -1,7 +1,9 @@
+import { gql, useMutation } from "@apollo/client";
 import NavigationBar from "../NavigationBar";
 import styled from "styled-components";
-import UserName, { UserStatement } from "./FindMe";
+import UserName, { UserStatement, UserEmail } from "./FindMe";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 
 const ContainerBox = styled.div`
@@ -101,12 +103,38 @@ const Submit = styled.button`
     justify-self: right;
 `;
 
+interface IForm {
+    username?: string;
+    statement?: string;
+    email?: string;
+}
+
+const MODIFY_MUTATION = gql`
+    mutation modify(
+        $email:String!, 
+        $statement:String, 
+        $username:String, 
+        $password:String){
+        modify(
+            email:$email, 
+            username:$username, 
+            statement:$statement, 
+            password:$password) {
+            ok
+            error
+        }
+    }
+`;
+
 function EditUser() {
     const [option, setOption] = useState(0);
     const statement = UserStatement();
     const name = UserName();
+    const email = UserEmail();
+
     const [state, setState] = useState({
         name,
+        email,
         statement
     });
     const onChange = (event: any) => {
@@ -115,7 +143,36 @@ function EditUser() {
         } = event;
         setState({ ...state, [event.target.name]: value });
     };
-    console.log(state);
+    const { register, handleSubmit, formState: { errors }, reset, getValues
+    } = useForm<IForm>();
+    const onCompleted = (data: any) => {
+        const {
+            modify: { ok, error },
+        } = data;
+        if (!ok) {
+            alert(error);
+        }
+    };
+    const [modify, { loading }] = useMutation(MODIFY_MUTATION, {
+        onCompleted,
+    });
+    const onSubmit = (data: IForm) => {
+        if (loading) {
+            return;
+        }
+        const { username, statement, email } = getValues();
+        console.log(state);
+        if (name !== username) {
+            modify({
+                variables: { email, username, statement }
+            });
+        }
+        else {
+            modify({
+                variables: { email, statement }
+            });
+        }
+    };
     return (
         <>
             <NavigationBar />
@@ -132,16 +189,20 @@ function EditUser() {
                                 <ItemSpan>{name}</ItemSpan>
                                 <EditImg>프로필 사진 바꾸기</EditImg>
                             </div>
-                            <ItemSpan>이름</ItemSpan>
-                            <ItemInput value={state?.statement} name="statement" onChange={onChange} />
-                            <ItemSpan>사용자 이름</ItemSpan>
-                            <ItemInput value={state?.name} name="name" onChange={onChange} />
-                            <ItemSpan>웹사이트</ItemSpan>
-                            <ItemInput />
-                            <ItemSpan>소개</ItemSpan>
-                            <Textarea></Textarea>
-                            <div></div>
-                            <Submit>제출</Submit>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <ItemSpan>이름</ItemSpan>
+                                <ItemInput {...register("statement")} value={state?.statement} name="statement" onChange={onChange} />
+                                <ItemSpan>사용자 이름</ItemSpan>
+                                <ItemInput {...register("username")} value={state?.name} name="name" onChange={onChange} />
+                                <ItemSpan>이메일</ItemSpan>
+                                <ItemInput {...register("email")} value={state?.email} name="email" onChange={onChange} disabled />
+                                <ItemSpan>웹사이트</ItemSpan>
+                                <ItemInput />
+                                <ItemSpan>소개</ItemSpan>
+                                <Textarea></Textarea>
+                                <div></div>
+                                <Submit>제출</Submit>
+                            </form>
                         </Content>)
                         :
                         (<Content>
