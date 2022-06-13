@@ -4,11 +4,21 @@ import styled from "styled-components";
 import UserName, { UserStatement, UserEmail } from "./FindMe";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { RecoilLoadable } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 
 const ContainerBox = styled.div`
     display:flex;
     justify-content:center;
+`;
+
+const GridBox = styled.div`
+    display:grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: minmax(max-content, 70px);
+    gap:20px;
+    margin-bottom:20px;
 `;
 
 const Container = styled.div`
@@ -45,10 +55,7 @@ const MenuItem = styled.button`
 const Content = styled.div`
     height: 100%;
     padding:70px;
-    display:grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: minmax(max-content, 70px) repeat(5, minmax(max-content, 50px));
-    gap:20px;
+    
 `;
 
 const UserImg = styled.img`
@@ -58,6 +65,7 @@ const UserImg = styled.img`
     height: 50px;
     width:50px;
     justify-self: right;
+    margin-right: 30px;
 `;
 
 const EditImg = styled.button`
@@ -67,6 +75,13 @@ const EditImg = styled.button`
     background:inherit;
     font-weight:600;
     border:0;
+`;
+
+const Form = styled.form`
+    display:grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: repeat(5, minmax(max-content, 50px));
+    gap:20px;
 `;
 
 const ItemSpan = styled.span`
@@ -104,7 +119,7 @@ const Submit = styled.button`
 `;
 
 interface IForm {
-    username?: string;
+    name?: string;
     statement?: string;
     email?: string;
 }
@@ -128,14 +143,14 @@ const MODIFY_MUTATION = gql`
 
 function EditUser() {
     const [option, setOption] = useState(0);
-    const statement = UserStatement();
-    const name = UserName();
-    const email = UserEmail();
-
+    const userstatement = UserStatement();
+    var username = UserName();
+    const useremail = UserEmail();
+    const navigate = useNavigate();
     const [state, setState] = useState({
-        name,
-        email,
-        statement
+        username,
+        useremail,
+        userstatement
     });
     const onChange = (event: any) => {
         const {
@@ -143,7 +158,7 @@ function EditUser() {
         } = event;
         setState({ ...state, [event.target.name]: value });
     };
-    const { register, handleSubmit, formState: { errors }, reset, getValues
+    const { register, handleSubmit
     } = useForm<IForm>();
     const onCompleted = (data: any) => {
         const {
@@ -152,26 +167,33 @@ function EditUser() {
         if (!ok) {
             alert(error);
         }
+        if (ok) {
+            navigate('/user');
+            window.location.reload();
+        }
+
     };
     const [modify, { loading }] = useMutation(MODIFY_MUTATION, {
         onCompleted,
     });
     const onSubmit = (data: IForm) => {
+        const name = state.username;
+        const statement = state.userstatement;
+
         if (loading) {
             return;
         }
-        const { username, statement, email } = getValues();
-        console.log(state);
         if (name !== username) {
             modify({
-                variables: { email, username, statement }
+                variables: { email: useremail, username: name, statement }
             });
         }
         else {
             modify({
-                variables: { email, statement }
+                variables: { email: useremail, statement }
             });
         }
+
     };
     return (
         <>
@@ -184,25 +206,26 @@ function EditUser() {
                     </Menu>
                     {option === 0 ?
                         (<Content>
-                            <UserImg></UserImg>
-                            <div>
-                                <ItemSpan>{name}</ItemSpan>
-                                <EditImg>프로필 사진 바꾸기</EditImg>
-                            </div>
-                            <form onSubmit={handleSubmit(onSubmit)}>
+
+                            <GridBox>
+                                <UserImg></UserImg>
+                                <div>
+                                    <ItemSpan>{username}</ItemSpan>
+                                    <EditImg>프로필 사진 바꾸기</EditImg>
+                                </div>
+                            </GridBox>
+                            <Form onSubmit={handleSubmit(onSubmit)}>
                                 <ItemSpan>이름</ItemSpan>
-                                <ItemInput {...register("statement")} value={state?.statement} name="statement" onChange={onChange} />
+                                <ItemInput {...register("statement")} value={state?.userstatement} name="userstatement" onChange={onChange} />
                                 <ItemSpan>사용자 이름</ItemSpan>
-                                <ItemInput {...register("username")} value={state?.name} name="name" onChange={onChange} />
-                                <ItemSpan>이메일</ItemSpan>
-                                <ItemInput {...register("email")} value={state?.email} name="email" onChange={onChange} disabled />
+                                <ItemInput {...register("name")} value={state?.username} name="username" onChange={onChange} />
                                 <ItemSpan>웹사이트</ItemSpan>
                                 <ItemInput />
                                 <ItemSpan>소개</ItemSpan>
                                 <Textarea></Textarea>
                                 <div></div>
                                 <Submit>제출</Submit>
-                            </form>
+                            </Form>
                         </Content>)
                         :
                         (<Content>

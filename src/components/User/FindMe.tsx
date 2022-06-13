@@ -5,6 +5,7 @@ const ME_QUERY = gql`
     me(token: $token) {
         id      
         username
+        email
         statement
         createAt
         updateAt    
@@ -15,7 +16,7 @@ const ME_QUERY = gql`
 const token = localStorage.getItem("TOKEN");
 
 export default function UserName() {
-  const { data } = useQuery(ME_QUERY, {
+  var { data } = useQuery(ME_QUERY, {
     variables: {
       token
     },
@@ -26,7 +27,7 @@ export default function UserName() {
 }
 
 export function UserStatement() {
-  const { data } = useQuery(ME_QUERY, {
+  var { data } = useQuery(ME_QUERY, {
     variables: {
       token
     },
