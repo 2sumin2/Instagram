@@ -248,15 +248,16 @@ function EditUser() {
                         </Content>)
                         :
                         (<Content>
-                            <div></div><div></div>
-                            <ItemSpan>현재 비밀번호</ItemSpan>
-                            <ItemInput type="password" />
-                            <ItemSpan>변경할 비밀번호</ItemSpan>
-                            <ItemInput type="password" />
-                            <ItemSpan>비밀번호 확인</ItemSpan>
-                            <ItemInput type="password" />
-                            <div></div>
-                            <Submit>제출</Submit>
+                            <Form>
+                                <ItemSpan>현재 비밀번호</ItemSpan>
+                                <ItemInput type="password" />
+                                <ItemSpan>변경할 비밀번호</ItemSpan>
+                                <ItemInput type="password" />
+                                <ItemSpan>비밀번호 확인</ItemSpan>
+                                <ItemInput type="password" />
+                                <div></div>
+                                <Submit>제출</Submit>
+                            </Form>
                         </Content>)
                     }
                 </Container>
