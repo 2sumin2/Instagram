@@ -7,6 +7,8 @@ const ME_QUERY = gql`
         username
         email
         statement
+        website
+        intro
         createAt
         updateAt    
         }
@@ -46,4 +48,26 @@ export function UserEmail() {
 
   const email = data?.me?.email;
   return email;
+}
+
+export function UserWebSite() {
+  const { data } = useQuery(ME_QUERY, {
+    variables: {
+      token
+    },
+  });
+
+  const website = data?.me?.website;
+  return website;
+}
+
+export function UserIntro() {
+  const { data } = useQuery(ME_QUERY, {
+    variables: {
+      token
+    },
+  });
+
+  const intro = data?.me?.intro;
+  return intro;
 }
