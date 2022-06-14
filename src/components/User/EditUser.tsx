@@ -22,7 +22,7 @@ const GridBox = styled.div`
 
 const Container = styled.div`
     border: 2px solid ${props => props.theme.textColor};
-    border-radius:5%;
+    border-radius:20px;
     margin-top: 50px;
     min-height: 80vh;
     height:max-content;

@@ -18,10 +18,12 @@ const Container = styled.div<IContainer>`
     max-width:1050px;
     width:${props => props.width};
     height:650px;
-    border: 1px solid ${props => props.theme.textColor};
+    border: 2px solid ${props => props.theme.textColor};
     color: black;
     display:flex;
     flex-direction:${props => props["flex-direction"]};
+    border-radius:20px;
+    overflow: hidden;
 `;
 
 const ImgContainer = styled.div`
@@ -42,6 +44,7 @@ const SideContainer = styled.div<ISideContainer>`
     height: ${props => props.height};
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 `;
 const UserInfoBox = styled.div`
     height:50px;
@@ -50,6 +53,7 @@ const UserInfoBox = styled.div`
     align-items: center;
     padding:10px;
     justify-content: flex-start;
+    border-left: 1px solid lightgray;
 `;
 const UserImg = styled.div`
     height:30px;
@@ -94,6 +98,8 @@ const Form = styled.form`
     border: 1px solid lightgray;
     height:50px;
     display: flex;
+    border-radius: 15px;
+    overflow: hidden;
 `;
 const Input = styled.input`
     background-color: ${props => props.theme.bgColor};
@@ -108,7 +114,6 @@ const Button = styled.button`
     border: 0;
     color: ${props => props.theme.accentColor};
     font-weight: 600;
-    //#b39fbd
 `;
 
 function Feed() {
@@ -161,7 +166,7 @@ function Feed() {
                         <UserInfoBox>
                             <UserImg />
                             <UserName>username</UserName>
-                            <Icon src={isLight ? blackHeart : whiteHeart} />
+                            <LikeIcon src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={toggleLike} />
                         </UserInfoBox>
                         <ImgContainer>(image: example)</ImgContainer>
                         <SideContainer maxWidth="100%" height="200px">
