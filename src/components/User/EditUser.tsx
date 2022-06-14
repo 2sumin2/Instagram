@@ -48,7 +48,8 @@ const MenuItem = styled.button`
     text-align: center;
     font-size:18px;
     &:hover {
-        font-style: italic;
+        //font-style: italic;
+        opacity: 50%;
     }
 `;
 

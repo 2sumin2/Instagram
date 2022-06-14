@@ -41,6 +41,7 @@ const Span = styled.span`
     font-size:18px;
     border-bottom:1px solid rgba(0, 0, 0, 0.2);
     text-align: center;
+    color: black;
 `;
 const Box = styled.div`
     height:100%;
@@ -52,7 +53,7 @@ const Btn = styled.button`
     background-color: ${props => props.theme.accentColor};
     height: 30px;
     width:100px;
-    color:white;
+    color: ${props => props.theme.bgColor};
 `;
 
 function FeedUpload() {
