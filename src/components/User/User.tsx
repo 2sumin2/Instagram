@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavigationBar from "../NavigationBar";
-import UserName from "./FindMe";
+import UserName, { UserIntro, UserWebSite } from "./FindMe";
 import Photo from "./Photo";
+import { useQuery } from "react-query";
 
 
 const Container = styled.div`
@@ -49,6 +50,7 @@ const InfoBox = styled.div`
     flex-wrap: wrap;
     padding-bottom:10px;
 `;
+
 const ItemBox = styled.div`
     display:flex;
     flex-direction: row;
@@ -59,11 +61,13 @@ const Item = styled.span`
     font-size: 15px;
     min-width:max-content;
     width: 50px;
+    div{
+        font-weight:600;
+    }
 `;
 const Username = styled(Item)`
-    padding-bottom:10px;
     padding-right:20px;
-    font-size: 25px;
+    font-size: 28px;
 `;
 const PhotoBox = styled.div`
     height: max-content;
@@ -79,10 +83,37 @@ const Btn = styled.button`
     padding:3px;
     border:1px solid #c0c0c0;
     background: inherit;
+    margin-bottom:15px;
+`;
+//display:flex;
+//flex - wrap: wrap;
+const SpanItem = styled.div`
+    word-break:break-all;
+    width:400px;  
+    min-height:20px;
+    overflow:auto;
+    margin-bottom:10px;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none; 
+    }
 `;
 
 function User() {
     const username = UserName();
+    const userintro = UserIntro();
+    const userwebsite = UserWebSite();
+    const getWidth = () => {
+        return window.innerWidth;
+    };
+    const { data: width } = useQuery(
+        "windowSizes",
+        () => getWidth(),
+        {
+            refetchInterval: 100,
+        }
+    );
     return (
         <>
             <NavigationBar />
@@ -100,18 +131,31 @@ function User() {
                         </InfoBox>
                         <InfoBox>
                             <ItemBox>
-                                <Item>게시물</Item>
+                                <Item><div>게시물</div></Item>
                                 <Item>0</Item>
                             </ItemBox>
                             <ItemBox>
-                                <Item>팔로워</Item>
+                                <Item><div>팔로워</div></Item>
                                 <Item>0</Item>
                             </ItemBox>
                             <ItemBox>
-                                <Item>팔로잉</Item>
+                                <Item><div>팔로잉</div></Item>
                                 <Item>0</Item>
                             </ItemBox>
                         </InfoBox>
+                        {
+                            width ?
+                                width > 800 ?
+                                    <>
+                                        <SpanItem>
+                                            <p>{userwebsite}</p>
+                                            <p>{userintro}</p>
+                                        </SpanItem>
+                                    </>
+                                    : null
+                                : null
+                        }
+
                     </UserInfo>
                 </InnerContainer>
             </Container>
