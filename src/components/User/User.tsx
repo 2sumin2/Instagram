@@ -83,7 +83,7 @@ const Btn = styled.button`
     padding:3px;
     border:1px solid #c0c0c0;
     background: inherit;
-    margin-bottom:15px;
+    margin-bottom:11px;
 `;
 //display:flex;
 //flex - wrap: wrap;
