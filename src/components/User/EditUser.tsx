@@ -130,6 +130,9 @@ interface IForm {
     email?: string;
     intro?: string;
     website?: string;
+    password?: string;
+    newpassword?: string;
+    newpasswordconfirm?: string;
 }
 
 const MODIFY_MUTATION = gql`
@@ -139,14 +142,16 @@ const MODIFY_MUTATION = gql`
         $username:String, 
         $intro:String, 
         $website:String, 
-        $password:String){
+        $password:String,
+        $newpassword:String){
         modify(
             email:$email, 
             username:$username, 
             statement:$statement, 
             intro:$intro, 
             website:$website, 
-            password:$password) {
+            password:$password,
+            newpassword:$newpassword) {
             ok
             error
         }
@@ -174,8 +179,7 @@ function EditUser() {
         } = event;
         setState({ ...state, [event.target.name]: value });
     };
-    const { register, handleSubmit
-    } = useForm<IForm>();
+    const { register, handleSubmit, getValues } = useForm<IForm>();
     const onCompleted = (data: any) => {
         const {
             modify: { ok, error },
@@ -198,10 +202,22 @@ function EditUser() {
         const intro = state.userintro;
         const website = state.userwebsite;
 
+        const { password, newpassword, newpasswordconfirm } = getValues();
+
         if (loading) {
             return;
         }
-        if (name !== username) {
+        if (password) {
+            if (newpassword !== newpasswordconfirm) {
+                alert("비밀번호가 일치하지 않습니다");
+            }
+            else {
+                modify({
+                    variables: { email: useremail, password, newpassword }
+                });
+            }
+        }
+        else if (name && name !== username) {
             modify({
                 variables: { email: useremail, username: name, statement, intro, website }
             });
@@ -249,13 +265,13 @@ function EditUser() {
                         </Content>)
                         :
                         (<Content>
-                            <Form>
+                            <Form onSubmit={handleSubmit(onSubmit)}>
                                 <ItemSpan>현재 비밀번호</ItemSpan>
-                                <ItemInput type="password" />
+                                <ItemInput type="password" {...register("password")} name="password" />
                                 <ItemSpan>변경할 비밀번호</ItemSpan>
-                                <ItemInput type="password" />
+                                <ItemInput type="password" {...register("newpassword")} name="newpassword" />
                                 <ItemSpan>비밀번호 확인</ItemSpan>
-                                <ItemInput type="password" />
+                                <ItemInput type="password" {...register("newpasswordconfirm")} name="newpasswordconfirm" />
                                 <div></div>
                                 <Submit>제출</Submit>
                             </Form>
