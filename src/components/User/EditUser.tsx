@@ -124,6 +124,7 @@ const Submit = styled.button`
     justify-self: right;
 `;
 
+
 interface IForm {
     name?: string;
     statement?: string;
@@ -209,7 +210,7 @@ function EditUser() {
         }
         if (password) {
             if (newpassword !== newpasswordconfirm) {
-                alert("비밀번호가 일치하지 않습니다");
+                alert("변경할 비밀번호가 일치하지 않습니다");
             }
             else {
                 modify({
