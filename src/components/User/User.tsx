@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 
 
 const Container = styled.div`
-    height:40vw;
+    height:max-content;
     max-height:250px;
     display:flex;
     justify-content: center;
@@ -19,18 +19,18 @@ const ContentContainer = styled(Container)`
 `;
 const InnerContainer = styled(Container)`
     max-width:960px;
-    padding:30px;
+    padding:40px;
+    height: max-content;
     flex-direction:rows;
     background-color: inherit;
     border-bottom: 2px solid #9e9e9e;
 `;
 
 const UserImg = styled.div`
-    width:26vw;
-    height:26vw;
+    width:30vw;
+    height:30vw;
     max-width:170px;
     max-height:170px;
-    margin-right:50px;
     border-radius: 50%;
     background-color: #8b8b8b;
 `;
@@ -40,7 +40,7 @@ const UserInfo = styled.div`
     max-width:500px;
     display:flex;
     flex-direction: column;
-    padding: 10px 50px 50px 50px;
+    padding: 10px 50px 50px 5vw;
 `;
 
 const InfoBox = styled.div`
@@ -53,6 +53,7 @@ const InfoBox = styled.div`
 const ItemBox = styled.div`
     display:flex;
     flex-direction: row;
+    padding-right: 10px;
 `;
 const Item = styled.span`
     padding-bottom:10px;
@@ -71,10 +72,11 @@ const Username = styled(Item)`
 const PhotoBox = styled.div`
     height: max-content;
     display:grid;
-    grid-template-columns: repeat(3, minmax(max-content,250px));
+    grid-template-columns: repeat(3, minmax(max-content,245px));
     grid-template-rows: max-content auto;
     grid-gap:10px;
     padding-bottom: 100px;
+    padding: 0 30px;
 `;
 
 const Btn = styled.button`
