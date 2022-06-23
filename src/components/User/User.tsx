@@ -147,7 +147,7 @@ function User() {
                                 width > 800 ?
                                     <>
                                         <SpanItem>
-                                            <p>{userwebsite}</p>
+                                            <p><a href={userwebsite} target="_blank">{userwebsite}</a></p>
                                             <p>{userintro}</p>
                                         </SpanItem>
                                     </>
