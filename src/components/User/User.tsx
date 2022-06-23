@@ -85,8 +85,6 @@ const Btn = styled.button`
     background: inherit;
     margin-bottom:11px;
 `;
-//display:flex;
-//flex - wrap: wrap;
 const SpanItem = styled.div`
     word-break:break-all;
     width:400px;  

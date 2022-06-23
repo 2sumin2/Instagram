@@ -1,0 +1,92 @@
+import styled from "styled-components";
+
+export const ContainerBox = styled.div`
+    display:flex;
+    justify-content:center;
+`;
+
+export const GridBox = styled.div`
+    display:grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: minmax(max-content, 70px);
+    gap:20px;
+    margin-bottom:20px;
+`;
+
+export const Menu = styled.div`
+    border-right: 2px solid ${props => props.theme.textColor};
+    display:flex;
+    flex-direction:column;
+    justify-content: start;
+`;
+
+export const Content = styled.div`
+    height: 100%;
+    padding:70px;
+    
+`;
+
+export const UserImg = styled.img`
+    border-right: 1px solid gray;
+    background: lightgray;
+    border-radius:50%;
+    height: 50px;
+    width:50px;
+    justify-self: right;
+    margin-right: 30px;
+`;
+
+export const EditImg = styled.button`
+    margin-left:10px;
+    height:40px;
+    color: ${props => props.theme.accentColor};
+    background:inherit;
+    font-weight:600;
+    border:0;
+`;
+
+export const Form = styled.form`
+    display:grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: repeat(5, minmax(max-content, 50px));
+    gap:20px;
+`;
+
+export const ItemSpan = styled.span`
+    text-align: right;
+    height:40px;
+    align-self: center;
+`;
+
+export const ItemInput = styled.input`
+    height:max-content;
+    padding:10px;
+    color: ${props => props.theme.textColor};
+    background: ${props => props.theme.bgColor};
+    border: 1px solid ${props => props.theme.textColor};
+`;
+
+export const ItemInputDisabled = styled(ItemInput)`
+    opacity: 50%;
+`;
+
+export const Textarea = styled.textarea`
+    min-height:40px;
+    width:45vw;
+    max-width: 450px;
+    margin-bottom:6px;
+    resize: vertical;
+    color: ${props => props.theme.textColor};
+    background: ${props => props.theme.bgColor};
+    border: 1px solid ${props => props.theme.textColor};
+    padding:10px;
+`;
+
+export const Submit = styled.button`
+    background: ${props => props.theme.accentColor};
+    margin-top:50px;
+    height:35px;
+    width:100px;
+    color: ${props => props.theme.bgColor};
+    justify-self: right;
+`;
