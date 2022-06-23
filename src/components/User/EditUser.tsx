@@ -1,11 +1,10 @@
 import { gql, useMutation } from "@apollo/client";
-import NavigationBar from "../NavigationBar";
 import styled from "styled-components";
 import UserName, { UserStatement, UserEmail, UserIntro, UserWebSite } from "./FindMe";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { ContainerBox, Content, EditImg, Form, GridBox, ItemInput, ItemInputDisabled, ItemSpan, Menu, Submit, Textarea, UserImg } from "./UserStyles";
+import { Content, EditImg, Form, GridBox, ItemInput, ItemInputDisabled, ItemSpan, Menu, Submit, Textarea, UserImg } from "./UserStyles";
 
 export const Container = styled.div`
     border: 2px solid ${props => props.theme.textColor};
@@ -29,7 +28,7 @@ const MenuItem = styled.button<IMenuItem>`
     padding-top:20px;
     width:100%;
     text-align: center;
-    font-size:18px;
+    font-size:15px;
     font-weight: ${props => props.fontWeight};
     &:hover {
         opacity: 50%;
@@ -143,65 +142,60 @@ function EditUser() {
     };
     return (
         <>
-            <NavigationBar />
-            <ContainerBox>
-                <Container>
-                    {option === 0 ?
-                        (
-                            <>
-                                <Menu>
-                                    <MenuItem onClick={() => setOption(0)} fontWeight="550">프로필 편집</MenuItem>
-                                    <MenuItem onClick={() => setOption(1)}>비밀번호 변경</MenuItem>
-                                </Menu>
-                                <Content>
-                                    <GridBox>
-                                        <UserImg></UserImg>
-                                        <div>
-                                            <ItemSpan>{username}</ItemSpan>
-                                            <EditImg>프로필 사진 바꾸기</EditImg>
-                                        </div>
-                                    </GridBox>
-                                    <Form onSubmit={handleSubmit(onSubmit)}>
-                                        <ItemSpan>이메일</ItemSpan>
-                                        <ItemInputDisabled value={state?.useremail} disabled />
-                                        <ItemSpan>이름</ItemSpan>
-                                        <ItemInput {...register("statement")} value={state?.userstatement} name="userstatement" onChange={onChange} />
-                                        <ItemSpan>사용자 이름</ItemSpan>
-                                        <ItemInput {...register("name")} value={state?.username} name="username" onChange={onChange} />
-                                        <ItemSpan>웹사이트</ItemSpan>
-                                        <ItemInput {...register("website")} value={state?.userwebsite} name="userwebsite" onChange={onChange} />
-                                        <ItemSpan>소개</ItemSpan>
-                                        <Textarea {...register("intro")} value={state?.userintro} name="userintro" onChange={onChange} ></Textarea>
-                                        <div></div>
-                                        <Submit>제출</Submit>
-                                    </Form>
-                                </Content>
-                            </>
-                        )
-                        :
-                        (
-                            <>
-                                <Menu>
-                                    <MenuItem onClick={() => setOption(0)}>프로필 편집</MenuItem>
-                                    <MenuItem onClick={() => setOption(1)} fontWeight="550">비밀번호 변경</MenuItem>
-                                </Menu>
-                                <Content>
-                                    <Form onSubmit={handleSubmit(onSubmit)}>
-                                        <ItemSpan>현재 비밀번호</ItemSpan>
-                                        <ItemInput type="password" {...register("password")} name="password" />
-                                        <ItemSpan>변경할 비밀번호</ItemSpan>
-                                        <ItemInput type="password" {...register("newpassword")} name="newpassword" />
-                                        <ItemSpan>비밀번호 확인</ItemSpan>
-                                        <ItemInput type="password" {...register("newpasswordconfirm")} name="newpasswordconfirm" />
-                                        <div></div>
-                                        <Submit>제출</Submit>
-                                    </Form>
-                                </Content>
-                            </>
-                        )
-                    }
-                </Container>
-            </ContainerBox>
+            {option === 0 ?
+                (
+                    <>
+                        <Menu>
+                            <MenuItem onClick={() => setOption(0)} fontWeight="550">프로필 편집</MenuItem>
+                            <MenuItem onClick={() => setOption(1)}>비밀번호 변경</MenuItem>
+                        </Menu>
+                        <Content>
+                            <GridBox>
+                                <UserImg></UserImg>
+                                <div>
+                                    <ItemSpan>{username}</ItemSpan>
+                                    <EditImg>프로필 사진 바꾸기</EditImg>
+                                </div>
+                            </GridBox>
+                            <Form onSubmit={handleSubmit(onSubmit)}>
+                                <ItemSpan>이메일</ItemSpan>
+                                <ItemInputDisabled value={state?.useremail} disabled />
+                                <ItemSpan>이름</ItemSpan>
+                                <ItemInput {...register("statement")} value={state?.userstatement} name="userstatement" onChange={onChange} />
+                                <ItemSpan>사용자 이름</ItemSpan>
+                                <ItemInput {...register("name")} value={state?.username} name="username" onChange={onChange} />
+                                <ItemSpan>웹사이트</ItemSpan>
+                                <ItemInput {...register("website")} value={state?.userwebsite} name="userwebsite" onChange={onChange} />
+                                <ItemSpan>소개</ItemSpan>
+                                <Textarea {...register("intro")} value={state?.userintro} name="userintro" onChange={onChange} ></Textarea>
+                                <div></div>
+                                <Submit>제출</Submit>
+                            </Form>
+                        </Content>
+                    </>
+                )
+                :
+                (
+                    <>
+                        <Menu>
+                            <MenuItem onClick={() => setOption(0)}>프로필 편집</MenuItem>
+                            <MenuItem onClick={() => setOption(1)} fontWeight="550">비밀번호 변경</MenuItem>
+                        </Menu>
+                        <Content>
+                            <Form onSubmit={handleSubmit(onSubmit)}>
+                                <ItemSpan>현재 비밀번호</ItemSpan>
+                                <ItemInput type="password" {...register("password")} name="password" />
+                                <ItemSpan>변경할 비밀번호</ItemSpan>
+                                <ItemInput type="password" {...register("newpassword")} name="newpassword" />
+                                <ItemSpan>비밀번호 확인</ItemSpan>
+                                <ItemInput type="password" {...register("newpasswordconfirm")} name="newpasswordconfirm" />
+                                <div></div>
+                                <Submit>제출</Submit>
+                            </Form>
+                        </Content>
+                    </>
+                )
+            }
         </>
     );
 };

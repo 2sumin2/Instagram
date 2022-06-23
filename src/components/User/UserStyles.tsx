@@ -14,16 +14,16 @@ export const GridBox = styled.div`
 `;
 
 export const Menu = styled.div`
-    border-right: 2px solid ${props => props.theme.textColor};
     display:flex;
     flex-direction:column;
     justify-content: start;
+    background: ${props => props.theme.bgColor};
 `;
 
 export const Content = styled.div`
     height: 100%;
     padding:70px;
-    
+    background: ${props => props.theme.bgColor};
 `;
 
 export const UserImg = styled.img`
@@ -56,6 +56,7 @@ export const ItemSpan = styled.span`
     text-align: right;
     height:40px;
     align-self: center;
+    min-width:max-content;
 `;
 
 export const ItemInput = styled.input`
@@ -72,8 +73,6 @@ export const ItemInputDisabled = styled(ItemInput)`
 
 export const Textarea = styled.textarea`
     min-height:40px;
-    width:45vw;
-    max-width: 450px;
     margin-bottom:6px;
     resize: vertical;
     color: ${props => props.theme.textColor};
@@ -81,7 +80,8 @@ export const Textarea = styled.textarea`
     border: 1px solid ${props => props.theme.textColor};
     padding:10px;
 `;
-
+//width:45vw;
+//max - width: 450px;
 export const Submit = styled.button`
     background: ${props => props.theme.accentColor};
     margin-top:50px;

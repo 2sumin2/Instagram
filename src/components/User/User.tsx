@@ -30,7 +30,6 @@ const UserImg = styled.div`
     height:26vw;
     max-width:170px;
     max-height:170px;
-
     margin-right:50px;
     border-radius: 50%;
     background-color: #8b8b8b;
