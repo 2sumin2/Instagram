@@ -24,6 +24,7 @@ const Container = styled.div<IContainer>`
     flex-direction:${props => props["flex-direction"]};
     border-radius:20px;
     overflow: hidden;
+    margin:20px;
 `;
 
 const ImgContainer = styled.div`

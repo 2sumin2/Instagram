@@ -4,7 +4,9 @@ import NavigationBar from "./NavigationBar";
 
 const FeedContainer = styled.div`
     display:flex;
-    justify-content:center;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
 `;
 
 const Title = styled.span`
@@ -16,8 +18,8 @@ function Home() {
     return (
         <div>
             <NavigationBar />
-            <Title>home page</Title>
             <FeedContainer>
+                <Feed />
                 <Feed />
             </FeedContainer>
         </div>
