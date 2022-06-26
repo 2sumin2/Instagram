@@ -77,6 +77,22 @@ const CloseBtn = styled.button`
     font-size:30px;
     z-index: 2;
 `;
+const UserContainer = styled.div`
+    background: ${props => props.theme.bgColor};
+    border: 2px solid ${props => props.theme.textColor};
+    width: 140px;
+    height: 100px;
+    position: fixed;
+    top: 50px;
+    border-radius: 5px;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    padding: 10px;
+    *{
+        margin: 3px;
+    }
+`;
 function NavigationBar() {
     const [uploadbox, setUploadbox] = useState(false);
     const [isLight, setLightAtom] = useRecoilState(isLightAtom);
@@ -123,6 +139,15 @@ function NavigationBar() {
                         <Icon src={sendIcon} />
                         <Icon src={plusIcon} onClick={toggleUploadBox} />
                         <Icon src={exploreIcon} />
+                        <UserContainer>
+                            <Link to={`/user`}>
+                                <span>프로필</span>
+                            </Link>
+                            <Link to={`/edit/user`}>
+                                <span>설정</span>
+                            </Link>
+                            <span>로그아웃</span>
+                        </UserContainer>
                         <Link to={`/user`}>
                             <Icon src={userIcon} />
                         </Link>
