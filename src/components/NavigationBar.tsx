@@ -79,11 +79,12 @@ const CloseBtn = styled.button`
 `;
 const UserContainer = styled.div`
     background: ${props => props.theme.bgColor};
-    border: 2px solid ${props => props.theme.textColor};
+    border: 1px solid ${props => props.theme.textColor};
     width: 140px;
     height: 100px;
     position: fixed;
-    top: 50px;
+    top: 55px;
+    right:7%;
     border-radius: 5px;
     flex-direction: column;
     align-items: center;
@@ -91,6 +92,15 @@ const UserContainer = styled.div`
     padding: 10px;
     *{
         margin: 3px;
+    }
+    &:after {
+        content: "";
+        position: fixed;
+        top: 46px;
+        right:9%;
+        border-left: 20px solid transparent; 
+        border-right: 20px solid transparent; 
+        border-bottom: 30px solid ${props => props.theme.bgColor};
     }
 `;
 function NavigationBar() {
