@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Content, EditImg, Form, GridBox, ItemInput, ItemInputDisabled, ItemSpan, Menu, Submit, Textarea, UserImg } from "./UserStyles";
+import GetToken from "../GetToken";
 
 export const Container = styled.div`
     border: 2px solid ${props => props.theme.textColor};
@@ -142,6 +143,7 @@ function EditUser() {
     };
     return (
         <>
+            <GetToken />
             {option === 0 ?
                 (
                     <>

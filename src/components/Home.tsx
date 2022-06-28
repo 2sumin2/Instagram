@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Feed from "./Feed";
+import GetToken from "./GetToken";
 import NavigationBar from "./NavigationBar";
 
 const FeedContainer = styled.div`
@@ -9,14 +10,10 @@ const FeedContainer = styled.div`
     padding: 20px;
 `;
 
-const Title = styled.span`
-    text-align: center;
-    font-size: 37px;
-`;
-
 function Home() {
     return (
         <div>
+            <GetToken />
             <NavigationBar />
             <FeedContainer>
                 <Feed />

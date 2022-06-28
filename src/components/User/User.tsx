@@ -5,6 +5,7 @@ import UserName, { UserIntro, UserWebSite } from "./FindMe";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import GetToken from "../GetToken";
 
 
 const Container = styled.div`
@@ -138,6 +139,7 @@ function User() {
     };
     return (
         <>
+            <GetToken />
             <NavigationBar />
             <Container>
                 <InnerContainer>
