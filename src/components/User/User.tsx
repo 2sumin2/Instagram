@@ -10,18 +10,23 @@ const Container = styled.div`
     height:max-content;
     max-height:250px;
     display:flex;
-    justify-content: center;
-    
+    flex-direction: column;
+    align-items: center;
 `;
-const ContentContainer = styled(Container)`
+const ContentContainer = styled.div`
     background-color: inherit;
+    flex-direction: column;
+    display:flex;
+    align-items:center;
     padding-top: 20px;
 `;
 const InnerContainer = styled(Container)`
-    max-width:960px;
+    max-width:750px;
+    width:100%;
     padding:40px;
     height: max-content;
-    flex-direction:rows;
+    align-items:flex-start;
+    flex-direction:row;
     background-color: inherit;
     border-bottom: 2px solid #9e9e9e;
 `;
@@ -74,9 +79,9 @@ const PhotoBox = styled.div`
     display:grid;
     grid-template-columns: repeat(3, minmax(max-content,245px));
     grid-template-rows: max-content auto;
-    grid-gap:10px;
+    grid-gap:8px;
     padding-bottom: 100px;
-    padding: 0 30px;
+    padding: 0;
 `;
 
 const Btn = styled.button`
@@ -97,6 +102,18 @@ const SpanItem = styled.div`
     &::-webkit-scrollbar {
         display: none; 
     }
+`;
+const Logout = styled(InnerContainer)`
+    margin:20px;
+    padding:60px;
+    border-bottom: 0;
+    justify-content: center;
+    border-top: 2px solid #9e9e9e;
+`;
+const LogoutBtn = styled.button`
+    background: inherit;
+    border: 0;
+    color: ${props => props.theme.accentColor};
 `;
 
 function User() {
@@ -157,19 +174,20 @@ function User() {
 
                     </UserInfo>
                 </InnerContainer>
+                <ContentContainer>
+                    <PhotoBox>
+                        <Photo></Photo>
+                        <Photo></Photo>
+                        <Photo></Photo>
+                        <Photo></Photo>
+                        <Photo></Photo>
+                        <Photo></Photo>
+                        <Photo></Photo>
+                        <Photo></Photo>
+                    </PhotoBox>
+                </ContentContainer>
+                <Logout><LogoutBtn>로그아웃</LogoutBtn></Logout>
             </Container>
-            <ContentContainer>
-                <PhotoBox>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                </PhotoBox>
-            </ContentContainer>
         </>
     );
 }
