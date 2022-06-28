@@ -78,6 +78,9 @@ export const ToggleForm = styled.div`
     margin: 10px 50px;
     justify-content: center;
     align-items: center;
+    span{
+        color: black;
+    }
 `;
 export const ToggleBtn = styled.button`
     color:#5d2e74;

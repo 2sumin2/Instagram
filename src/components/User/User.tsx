@@ -4,6 +4,7 @@ import NavigationBar from "../NavigationBar";
 import UserName, { UserIntro, UserWebSite } from "./FindMe";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 
 const Container = styled.div`
@@ -130,6 +131,11 @@ function User() {
             refetchInterval: 100,
         }
     );
+    const navigate = useNavigate();
+    const onClick = () => {
+        localStorage.removeItem("TOKEN");
+        navigate('/');
+    };
     return (
         <>
             <NavigationBar />
@@ -186,7 +192,9 @@ function User() {
                         <Photo></Photo>
                     </PhotoBox>
                 </ContentContainer>
-                <Logout><LogoutBtn>로그아웃</LogoutBtn></Logout>
+                <Logout>
+                    <LogoutBtn onClick={onClick}>로그아웃</LogoutBtn>
+                </Logout>
             </Container>
         </>
     );
