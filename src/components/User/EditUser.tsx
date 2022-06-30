@@ -141,6 +141,13 @@ function EditUser() {
         }
 
     };
+    const logout = (data: any) => {
+        if (window.confirm("로그아웃 하시겠습니까?")) {
+            localStorage.removeItem("TOKEN");
+            navigate('/');
+            window.location.reload();
+        };
+    };
     return (
         <>
             <GetToken />
@@ -150,6 +157,7 @@ function EditUser() {
                         <Menu>
                             <MenuItem onClick={() => setOption(0)} fontWeight="550">프로필 편집</MenuItem>
                             <MenuItem onClick={() => setOption(1)}>비밀번호 변경</MenuItem>
+                            <MenuItem onClick={logout}>로그아웃</MenuItem>
                         </Menu>
                         <Content>
                             <GridBox>
@@ -182,6 +190,7 @@ function EditUser() {
                         <Menu>
                             <MenuItem onClick={() => setOption(0)}>프로필 편집</MenuItem>
                             <MenuItem onClick={() => setOption(1)} fontWeight="550">비밀번호 변경</MenuItem>
+                            <MenuItem onClick={logout}>로그아웃</MenuItem>
                         </Menu>
                         <Content>
                             <Form onSubmit={handleSubmit(onSubmit)}>
