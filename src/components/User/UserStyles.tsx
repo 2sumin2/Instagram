@@ -33,7 +33,6 @@ export const UserImg = styled.img`
     height: 50px;
     width:50px;
     justify-self: right;
-    margin-right: 30px;
 `;
 
 export const EditImg = styled.button`
