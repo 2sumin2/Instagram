@@ -136,6 +136,7 @@ function User() {
     const onClick = () => {
         localStorage.removeItem("TOKEN");
         navigate('/');
+        window.location.reload();
     };
     return (
         <>

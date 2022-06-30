@@ -42,6 +42,7 @@ function Login() {
         if (token) {
             localStorage.setItem("TOKEN", token);
             navigate('/home');
+            window.location.reload();
         }
     };
     const [login, { loading }] = useMutation(LOGIN_MUTATION, {
