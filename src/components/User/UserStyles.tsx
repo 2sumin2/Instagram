@@ -10,7 +10,7 @@ export const GridBox = styled.div`
     grid-template-columns: 1fr 3fr;
     grid-template-rows: minmax(max-content, 70px);
     gap:20px;
-    margin-bottom:20px;
+    margin-bottom:10px;
 `;
 
 export const Menu = styled.div`
@@ -23,7 +23,8 @@ export const Menu = styled.div`
 
 export const Content = styled.div`
     height: 100%;
-    padding:70px;
+    padding:50px;
+    padding-right:70px;
     background: ${props => props.theme.bgColor};
 `;
 
@@ -73,7 +74,6 @@ export const ItemInputDisabled = styled(ItemInput)`
 
 export const Textarea = styled.textarea`
     min-height:40px;
-    margin-bottom:6px;
     resize: vertical;
     color: ${props => props.theme.textColor};
     background: ${props => props.theme.bgColor};

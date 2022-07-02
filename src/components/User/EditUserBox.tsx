@@ -13,7 +13,6 @@ const Container = styled.div<iContainer>`
     border: 2px solid ${props => props.theme.textColor};
     border-radius:20px;
     margin-top: 50px;
-    margin-bottom: 100px;
     min-height: 80vh;
     height:max-content;
     max-width: 960px;
