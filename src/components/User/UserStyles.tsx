@@ -18,6 +18,7 @@ export const Menu = styled.div`
     flex-direction:column;
     justify-content: start;
     background: ${props => props.theme.bgColor};
+    min-height:max-content;
 `;
 
 export const Content = styled.div`

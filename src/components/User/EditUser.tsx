@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Content, EditImg, Form, GridBox, ItemInput, ItemInputDisabled, ItemSpan, Menu, Submit, Textarea, UserImg } from "./UserStyles";
 import GetToken from "../GetToken";
 
+/*
 export const Container = styled.div`
     border: 2px solid ${props => props.theme.textColor};
     border-radius:20px;
@@ -19,6 +20,7 @@ export const Container = styled.div`
     grid-template-columns: 1fr 3fr;
 `;
 
+*/
 interface IMenuItem {
     fontWeight?: string;
 }

@@ -9,10 +9,11 @@ interface iContainer {
     rows: string;
 }
 
-export const Container = styled.div<iContainer>`
+const Container = styled.div<iContainer>`
     border: 2px solid ${props => props.theme.textColor};
     border-radius:20px;
     margin-top: 50px;
+    margin-bottom: 100px;
     min-height: 80vh;
     height:max-content;
     max-width: 960px;
@@ -47,7 +48,7 @@ function EditUserBox() {
                                 <EditUser />
                             </Container>
                             :
-                            <Container rows="100px 3fr" columns="auto">
+                            <Container rows="150px 2fr" columns="auto">
                                 <EditUser />
                             </Container>
                         : <Container columns="1fr 3fr" rows="auto">
