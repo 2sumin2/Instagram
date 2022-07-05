@@ -34,8 +34,8 @@ const InnerContainer = styled(Container)`
 `;
 
 const UserImg = styled.div`
-    width:30vw;
-    height:30vw;
+    width:28vw;
+    height:28vw;
     max-width:170px;
     max-height:170px;
     border-radius: 50%;
