@@ -112,6 +112,7 @@ function NavigationBar() {
     };
     const username = UserName();
     const [keyword, setKeyword] = useState("");
+    const [searching, setSearching] = useState(false);
     const onChangeKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
         setKeyword(event.target.value);
     };
@@ -122,6 +123,7 @@ function NavigationBar() {
     });
     const OnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setSearching(true);
         const result = data?.search;
         console.log(result);
     };
@@ -137,10 +139,14 @@ function NavigationBar() {
                     <ItemContainer>
                         {
                             width ?
-                                width > 800 ?
-                                    <form onSubmit={OnSubmit} >
-                                        <Input type="text" placeholder="검색" onChange={onChangeKeyword} />
-                                    </form>
+                                width > 800 ? (
+                                    <>
+                                        <form onSubmit={OnSubmit} >
+                                            <Input type="text" placeholder="검색" onChange={onChangeKeyword} />
+                                        </form>
+                                        {searching ? <Search to={`$result`} /> : null}
+                                    </>
+                                )
                                     : null
                                 : null
                         }
