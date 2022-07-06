@@ -78,6 +78,7 @@ const Username = styled(Item)`
 `;
 const PhotoBox = styled.div`
     height: max-content;
+    min-height:80vh;
     display:grid;
     grid-template-columns: repeat(3, minmax(max-content,245px));
     grid-template-rows: max-content auto;
@@ -105,16 +106,12 @@ const SpanItem = styled.div`
         display: none; 
     }
 `;
-const Logout = styled(InnerContainer)`
+const Logo = styled(InnerContainer)`
     margin:20px;
     padding:60px;
     border-bottom: 0;
     justify-content: center;
     border-top: 2px solid #9e9e9e;
-`;
-const LogoutBtn = styled.button`
-    background: inherit;
-    border: 0;
     color: ${props => props.theme.accentColor};
 `;
 
@@ -132,12 +129,6 @@ function User() {
             refetchInterval: 100,
         }
     );
-    const navigate = useNavigate();
-    const onClick = () => {
-        localStorage.removeItem("TOKEN");
-        navigate('/');
-        window.location.reload();
-    };
     return (
         <>
             <GetToken />
@@ -195,9 +186,9 @@ function User() {
                         <Photo></Photo>
                     </PhotoBox>
                 </ContentContainer>
-                <Logout>
-                    <LogoutBtn onClick={onClick}>로그아웃</LogoutBtn>
-                </Logout>
+                <Logo>
+                    Inspacegram
+                </Logo>
             </Container>
         </>
     );
