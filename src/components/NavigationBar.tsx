@@ -8,10 +8,12 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { isLightAtom } from "../atoms";
 import Switch from "react-switch";
-import { useQuery } from "react-query";
+import { useQuery as useReactQuery } from "react-query";
 import FeedUpload from "./FeedUpload";
 import { useState } from "react";
 import UserName from "./User/FindMe";
+import Search from "./Search";
+import { gql, useQuery } from "@apollo/client";
 
 const ContainerBox = styled.div`
     background: linear-gradient(45deg, #020e31, #562b74, #f97375);
@@ -78,6 +80,17 @@ const CloseBtn = styled.button`
     font-size:30px;
     z-index: 2;
 `;
+
+const SEARCH_QUERY = gql`
+    query search(
+        $keyword:String){
+        search(
+            keyword:$keyword) {
+            username
+        }
+    }
+`;
+
 function NavigationBar() {
     const [uploadbox, setUploadbox] = useState(false);
     const [isLight, setLightAtom] = useRecoilState(isLightAtom);
@@ -87,7 +100,7 @@ function NavigationBar() {
     const getWidth = () => {
         return window.innerWidth;
     };
-    const { data: width } = useQuery(
+    const { data: width } = useReactQuery(
         "windowSizes",
         () => getWidth(),
         {
@@ -98,6 +111,20 @@ function NavigationBar() {
         setUploadbox(!uploadbox);
     };
     const username = UserName();
+    const [keyword, setKeyword] = useState("");
+    const onChangeKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setKeyword(event.target.value);
+    };
+    const { data } = useQuery(SEARCH_QUERY, {
+        variables: {
+            keyword
+        },
+    });
+    const OnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const result = data?.search;
+        console.log(result);
+    };
     return (
         <>
             <ContainerBox>
@@ -111,8 +138,8 @@ function NavigationBar() {
                         {
                             width ?
                                 width > 800 ?
-                                    <form>
-                                        <Input disabled type="text" placeholder="검색" />
+                                    <form onSubmit={OnSubmit} >
+                                        <Input type="text" placeholder="검색" onChange={onChangeKeyword} />
                                     </form>
                                     : null
                                 : null
