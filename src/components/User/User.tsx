@@ -78,7 +78,6 @@ const Username = styled(Item)`
 `;
 const PhotoBox = styled.div`
     height: max-content;
-    min-height:80vh;
     display:grid;
     grid-template-columns: repeat(3, minmax(max-content,245px));
     grid-template-rows: max-content auto;
@@ -140,7 +139,7 @@ function User() {
                         <InfoBox>
                             <div>
                                 <Username>{username}</Username>
-                                <Link to={`/edit/user`}>
+                                <Link to={`/user/${username}/edit`}>
                                     <Btn>프로필 편집</Btn>
                                 </Link>
                             </div>

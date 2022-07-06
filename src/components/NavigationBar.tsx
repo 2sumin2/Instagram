@@ -11,6 +11,7 @@ import Switch from "react-switch";
 import { useQuery } from "react-query";
 import FeedUpload from "./FeedUpload";
 import { useState } from "react";
+import UserName from "./User/FindMe";
 
 const ContainerBox = styled.div`
     background: linear-gradient(45deg, #020e31, #562b74, #f97375);
@@ -96,6 +97,7 @@ function NavigationBar() {
     const toggleUploadBox = () => {
         setUploadbox(!uploadbox);
     };
+    const username = UserName();
     return (
         <>
             <ContainerBox>
@@ -123,7 +125,7 @@ function NavigationBar() {
                         <Icon src={sendIcon} />
                         <Icon src={plusIcon} onClick={toggleUploadBox} />
                         <Icon src={exploreIcon} />
-                        <Link to={`/user`}>
+                        <Link to={`/user/${username}`}>
                             <Icon src={userIcon} />
                         </Link>
                         <SwitchBox>

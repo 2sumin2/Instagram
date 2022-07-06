@@ -9,9 +9,9 @@ function Router() {
     return (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Routes>
-                <Route path="/edit/user" element={<EditUserBox />} />
-                <Route path="/user" element={<User />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/user/:username/edit" element={<EditUserBox />} />
+                <Route path="/user/:username" element={<User />} />
                 <Route path="/account" element={<Signup />} />
                 <Route path="/" element={<LogIn />} />
             </Routes>
