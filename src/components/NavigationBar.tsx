@@ -123,7 +123,6 @@ function NavigationBar() {
     });
     const OnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setSearching(true);
         const result = data?.search;
         console.log(result);
     };
@@ -142,7 +141,12 @@ function NavigationBar() {
                                 width > 800 ? (
                                     <>
                                         <form onSubmit={OnSubmit} >
-                                            <Input type="text" placeholder="검색" onChange={onChangeKeyword} />
+                                            <Input
+                                                type="text"
+                                                placeholder="검색"
+                                                onChange={onChangeKeyword}
+                                                onFocus={(e) => { setSearching(true) }}
+                                                onBlur={(e) => { setSearching(false) }} />
                                         </form>
                                         {searching ? <Search to={`$result`} /> : null}
                                     </>
