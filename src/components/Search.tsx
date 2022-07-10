@@ -1,10 +1,9 @@
 
 
-function Search(keyword: any) {
-    console.log(keyword);
+function Search({ keyword }: any) {
     return (
         <div>
-            <span>pink</span>
+            <span>{keyword}</span>
         </div>
     );
 }

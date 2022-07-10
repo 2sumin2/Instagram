@@ -18,6 +18,7 @@ import { gql, useQuery } from "@apollo/client";
 const ContainerBox = styled.div`
     background: linear-gradient(45deg, #020e31, #562b74, #f97375);
     display:flex;
+    position:fixed;
     justify-content:center;
     align-items:center;
     width: 100%;
@@ -79,6 +80,16 @@ const CloseBtn = styled.button`
     right:15px;
     font-size:30px;
     z-index: 2;
+`;
+const SerachingBox = styled.div`
+    background:${props => props.theme.bgColor};
+    border:2px solid ${props => props.theme.textColor};
+    width: 250px;
+    height: 400px;
+    overflow: auto;
+    position:fixed;
+    z-index: 2;
+    top:60px;
 `;
 
 const SEARCH_QUERY = gql`
@@ -150,7 +161,7 @@ function NavigationBar() {
                                                 onFocus={(e) => { setSearching(true) }}
                                                 onBlur={(e) => { setSearching(false); setIsSubmit(false); }} />
                                         </form>
-                                        {searching ? (isSubmit ? <Search to={`${result}`} /> : null) : null}
+                                        {searching ? (isSubmit ? <SerachingBox /> : null) : null}
                                     </>
                                 )
                                     : null
