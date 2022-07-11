@@ -85,7 +85,7 @@ const SerachingBox = styled.div`
     background:${props => props.theme.bgColor};
     border:2px solid ${props => props.theme.textColor};
     width: 250px;
-    height: 400px;
+    height: 300px;
     overflow: auto;
     position:fixed;
     z-index: 2;
@@ -161,7 +161,13 @@ function NavigationBar() {
                                                 onFocus={(e) => { setSearching(true) }}
                                                 onBlur={(e) => { setSearching(false); setIsSubmit(false); }} />
                                         </form>
-                                        {searching ? (isSubmit ? <SerachingBox /> : null) : null}
+                                        {searching ? (isSubmit ?
+                                            <SerachingBox>
+                                                {
+                                                    result.length == 0 ? <span>검색 결과 없음</span> : result.map((data, index) => <span key={index}>{data['username']}</span>)
+                                                }
+                                            </SerachingBox>
+                                            : null) : null}
                                     </>
                                 )
                                     : null
