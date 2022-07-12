@@ -12,7 +12,6 @@ import { useQuery as useReactQuery } from "react-query";
 import FeedUpload from "./FeedUpload";
 import { useState } from "react";
 import UserName from "./User/FindMe";
-import Search from "./Search";
 import { gql, useQuery } from "@apollo/client";
 
 const ContainerBox = styled.div`
@@ -85,11 +84,23 @@ const SerachingBox = styled.div`
     background:${props => props.theme.bgColor};
     border:2px solid ${props => props.theme.textColor};
     width: 250px;
-    height: 300px;
+    max-height: 300px;
     overflow: auto;
     position:fixed;
     z-index: 2;
     top:60px;
+`;
+
+const ResultBox = styled.button`
+    width: 100%;
+    height: 50px;
+    background:inherit;
+    border:0;
+    border-bottom:2px solid ${props => props.theme.textColor};
+`;
+
+const ResultNone = styled(ResultBox)`
+    cursor:default;
 `;
 
 const SEARCH_QUERY = gql`
@@ -105,6 +116,7 @@ const SEARCH_QUERY = gql`
 function NavigationBar() {
     const [uploadbox, setUploadbox] = useState(false);
     const [isLight, setLightAtom] = useRecoilState(isLightAtom);
+    const username = UserName();
     const onChange = () => {
         setLightAtom((props) => !props);
     };
@@ -121,7 +133,6 @@ function NavigationBar() {
     const toggleUploadBox = () => {
         setUploadbox(!uploadbox);
     };
-    const username = UserName();
     const [keyword, setKeyword] = useState("");
     const [result, setResult] = useState([]);
     const [searching, setSearching] = useState(false);
@@ -164,7 +175,7 @@ function NavigationBar() {
                                         {searching ? (isSubmit ?
                                             <SerachingBox>
                                                 {
-                                                    result.length == 0 ? <span>검색 결과 없음</span> : result.map((data, index) => <span key={index}>{data['username']}</span>)
+                                                    result.length == 0 ? <ResultNone>검색 결과 없음</ResultNone> : result.map((data, index) => data['username'] === username ? null : <ResultBox key={index}>{data['username']}</ResultBox>)
                                                 }
                                             </SerachingBox>
                                             : null) : null}
