@@ -13,6 +13,8 @@ import FeedUpload from "./FeedUpload";
 import { useState } from "react";
 import UserName from "./User/FindMe";
 import { gql, useQuery } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+
 
 const ContainerBox = styled.div`
     background: linear-gradient(45deg, #020e31, #562b74, #f97375);
@@ -114,6 +116,7 @@ const SEARCH_QUERY = gql`
 `;
 
 function NavigationBar() {
+    const navigate = useNavigate();
     const [uploadbox, setUploadbox] = useState(false);
     const [isLight, setLightAtom] = useRecoilState(isLightAtom);
     const username = UserName();
@@ -137,6 +140,7 @@ function NavigationBar() {
     const [result, setResult] = useState([]);
     const [searching, setSearching] = useState(false);
     const [isSubmit, setIsSubmit] = useState(false);
+    const [isFocus, setIsFocus] = useState(false);
     const onChangeKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
         setKeyword(event.target.value);
     };
@@ -164,21 +168,28 @@ function NavigationBar() {
                             width ?
                                 width > 800 ? (
                                     <>
-                                        <form onSubmit={OnSubmit} >
+                                        <form
+                                            onSubmit={OnSubmit}
+                                            onFocus={(e) => { setSearching(true) }}
+                                            onBlur={(e) => { if (!isFocus) { setSearching(false); setIsSubmit(false); } }}>
                                             <Input
                                                 type="text"
                                                 placeholder="검색"
-                                                onChange={onChangeKeyword}
-                                                onFocus={(e) => { setSearching(true) }}
-                                                onBlur={(e) => { setSearching(false); setIsSubmit(false); }} />
+                                                onChange={onChangeKeyword} />
                                         </form>
-                                        {searching ? (isSubmit ?
-                                            <SerachingBox>
+                                        {searching && isSubmit ?
+                                            <SerachingBox
+                                                onMouseOver={(e) => { setIsFocus(true); }}
+                                                onBlur={(e) => { setSearching(false); setIsSubmit(false); }}>
                                                 {
-                                                    result.length == 0 ? <ResultNone>검색 결과 없음</ResultNone> : result.map((data, index) => data['username'] === username ? null : <ResultBox key={index}>{data['username']}</ResultBox>)
+                                                    result.length == 0 ?
+                                                        <ResultNone>검색 결과 없음</ResultNone> :
+                                                        result.map((data, index) => data['username'] === username ? null :
+                                                            <ResultBox key={index} onClick={() => { navigate(`/user/${username}`) }}>{data['username']}</ResultBox>)
                                                 }
                                             </SerachingBox>
-                                            : null) : null}
+                                            : null}
+
                                     </>
                                 )
                                     : null
@@ -213,12 +224,14 @@ function NavigationBar() {
                     </ItemContainer>
                 </Container>
             </ContainerBox>
-            {uploadbox ? (
-                <>
-                    <CloseBtn onClick={toggleUploadBox}>X</CloseBtn>
-                    <FeedUpload />
-                </>
-            ) : null}
+            {
+                uploadbox ? (
+                    <>
+                        <CloseBtn onClick={toggleUploadBox}>X</CloseBtn>
+                        <FeedUpload />
+                    </>
+                ) : null
+            }
         </>
     );
 }

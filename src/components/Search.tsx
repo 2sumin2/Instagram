@@ -9,3 +9,5 @@ function Search({ keyword }: any) {
 }
 
 export default Search;
+
+//{searching ? (isSubmit ? <Search to={`${result}`} /> : null) : null}
