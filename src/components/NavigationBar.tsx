@@ -179,7 +179,7 @@ function NavigationBar() {
                                         </form>
                                         {searching && isSubmit ?
                                             <SerachingBox
-                                                onMouseOver={(e) => { setIsFocus(true); }}
+                                                onFocus={(e) => { setIsFocus(true); }}
                                                 onBlur={(e) => { setSearching(false); setIsSubmit(false); }}>
                                                 {
                                                     result.length == 0 ?
