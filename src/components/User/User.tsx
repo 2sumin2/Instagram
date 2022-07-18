@@ -14,6 +14,7 @@ const Container = styled.div`
     display:flex;
     flex-direction: column;
     align-items: center;
+    padding: 100px 0;
 `;
 const ContentContainer = styled.div`
     background-color: inherit;
