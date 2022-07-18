@@ -138,22 +138,17 @@ function NavigationBar() {
     };
     const [keyword, setKeyword] = useState("");
     const [result, setResult] = useState([]);
-    const [searching, setSearching] = useState(false);
-    const [isSubmit, setIsSubmit] = useState(false);
-    const [isFocus, setIsFocus] = useState(false);
+    const [keywordChange, setKeywordChange] = useState(false);
     const onChangeKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
         setKeyword(event.target.value);
+        setKeywordChange(true);
+        setResult(data?.search);
     };
     const { data } = useQuery(SEARCH_QUERY, {
         variables: {
             keyword
         },
     });
-    const OnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setIsSubmit(true);
-        setResult(data?.search);
-    };
     return (
         <>
             <ContainerBox>
@@ -168,24 +163,22 @@ function NavigationBar() {
                             width ?
                                 width > 800 ? (
                                     <>
-                                        <form
-                                            onSubmit={OnSubmit}
-                                            onFocus={(e) => { setSearching(true) }}
-                                            onBlur={(e) => { if (!isFocus) { setSearching(false); setIsSubmit(false); } }}>
+                                        <form>
                                             <Input
                                                 type="text"
                                                 placeholder="검색"
-                                                onChange={onChangeKeyword} />
+                                                onChange={onChangeKeyword}
+                                                onBlur={() => {
+                                                    setTimeout(() => { setKeywordChange(false) }, 3000);
+                                                }} />
                                         </form>
-                                        {searching && isSubmit ?
-                                            <SerachingBox
-                                                onFocus={(e) => { setIsFocus(true); }}
-                                                onBlur={(e) => { setSearching(false); setIsSubmit(false); }}>
+                                        {keywordChange ?
+                                            <SerachingBox>
                                                 {
                                                     result.length == 0 ?
                                                         <ResultNone>검색 결과 없음</ResultNone> :
                                                         result.map((data, index) => data['username'] === username ? null :
-                                                            <ResultBox key={index} onClick={() => { navigate(`/user/${username}`) }}>{data['username']}</ResultBox>)
+                                                            <ResultBox key={index} onClick={() => { navigate(`/user/${data['username']}`); setKeywordChange(true); }}>{data['username']}</ResultBox>)
                                                 }
                                             </SerachingBox>
                                             : null}
