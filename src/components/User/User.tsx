@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import NavigationBar from "../NavigationBar";
 import UserName, { UserIntro, UserWebSite } from "./FindMe";
@@ -116,9 +116,9 @@ const Logo = styled(InnerContainer)`
 `;
 
 function User() {
-    const username = UserName();
-    const userintro = UserIntro();
-    const userwebsite = UserWebSite();
+    const myname = UserName();
+    const myIntro = UserIntro();
+    const mywebsite = UserWebSite();
     const getWidth = () => {
         return window.innerWidth;
     };
@@ -129,6 +129,7 @@ function User() {
             refetchInterval: 100,
         }
     );
+    let { username } = useParams();
     return (
         <>
             <GetToken />
@@ -138,12 +139,15 @@ function User() {
                     <UserImg>UserImg</UserImg>
                     <UserInfo>
                         <InfoBox>
-                            <div>
-                                <Username>{username}</Username>
-                                <Link to={`/user/${username}/edit`}>
-                                    <Btn>프로필 편집</Btn>
-                                </Link>
-                            </div>
+                            {myname == username ?
+                                <div>
+                                    <Username>{myname}</Username>
+                                    <Link to={`/user/${myname}/edit`}>
+                                        <Btn>프로필 편집</Btn>
+                                    </Link>
+                                </div>
+                                :
+                                <div><Username>{username}</Username></div>}
                         </InfoBox>
                         <InfoBox>
                             <ItemBox>
@@ -164,8 +168,8 @@ function User() {
                                 width > 800 ?
                                     <>
                                         <SpanItem>
-                                            <p><a href={userwebsite} target="_blank">{userwebsite}</a></p>
-                                            <p>{userintro}</p>
+                                            <p><a href={mywebsite} target="_blank">{mywebsite}</a></p>
+                                            <p>{myIntro}</p>
                                         </SpanItem>
                                     </>
                                     : null
