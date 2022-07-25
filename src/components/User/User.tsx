@@ -6,6 +6,8 @@ import Photo from "./Photo";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import GetToken from "../GetToken";
+import Me from "./Me";
+import Other from "./Other";
 
 
 const Container = styled.div`
@@ -16,14 +18,14 @@ const Container = styled.div`
     align-items: center;
     padding: 100px 0;
 `;
-const ContentContainer = styled.div`
+export const ContentContainer = styled.div`
     background-color: inherit;
     flex-direction: column;
     display:flex;
     align-items:center;
     padding-top: 20px;
 `;
-const InnerContainer = styled(Container)`
+export const InnerContainer = styled(Container)`
     max-width:750px;
     width:100%;
     padding:40px;
@@ -33,8 +35,7 @@ const InnerContainer = styled(Container)`
     background-color: inherit;
     border-bottom: 2px solid #9e9e9e;
 `;
-
-const UserImg = styled.div`
+export const UserImg = styled.div`
     width:28vw;
     height:28vw;
     max-width:170px;
@@ -42,7 +43,7 @@ const UserImg = styled.div`
     border-radius: 50%;
     background-color: #8b8b8b;
 `;
-const UserInfo = styled.div`
+export const UserInfo = styled.div`
     height:250px;
     width: 60vw;
     max-width:500px;
@@ -50,20 +51,18 @@ const UserInfo = styled.div`
     flex-direction: column;
     padding: 10px 50px 50px 5vw;
 `;
-
-const InfoBox = styled.div`
+export const InfoBox = styled.div`
     display:flex;
     justify-content: space-between;
     flex-wrap: wrap;
     padding-bottom:10px;
 `;
-
-const ItemBox = styled.div`
+export const ItemBox = styled.div`
     display:flex;
     flex-direction: row;
     padding-right: 10px;
 `;
-const Item = styled.span`
+export const Item = styled.span`
     padding-bottom:10px;
     padding-right:10px;
     font-size: 15px;
@@ -73,11 +72,11 @@ const Item = styled.span`
         font-weight:600;
     }
 `;
-const Username = styled(Item)`
+export const Username = styled(Item)`
     padding-right:20px;
     font-size: 28px;
 `;
-const PhotoBox = styled.div`
+export const PhotoBox = styled.div`
     height: max-content;
     display:grid;
     grid-template-columns: repeat(3, minmax(max-content,245px));
@@ -86,15 +85,14 @@ const PhotoBox = styled.div`
     padding-bottom: 100px;
     padding: 0;
 `;
-
-const Btn = styled.button`
+export const Btn = styled.button`
     height: max-content;
     padding:3px;
     border:1px solid #c0c0c0;
     background: inherit;
     margin-bottom:11px;
 `;
-const SpanItem = styled.div`
+export const SpanItem = styled.div`
     word-break:break-all;
     width:400px;  
     min-height:20px;
@@ -106,7 +104,7 @@ const SpanItem = styled.div`
         display: none; 
     }
 `;
-const Logo = styled(InnerContainer)`
+export const Logo = styled(InnerContainer)`
     margin:20px;
     padding:60px;
     border-bottom: 0;
@@ -135,61 +133,10 @@ function User() {
             <GetToken />
             <NavigationBar />
             <Container>
-                <InnerContainer>
-                    <UserImg>UserImg</UserImg>
-                    <UserInfo>
-                        <InfoBox>
-                            {myname == username ?
-                                <div>
-                                    <Username>{myname}</Username>
-                                    <Link to={`/user/${myname}/edit`}>
-                                        <Btn>프로필 편집</Btn>
-                                    </Link>
-                                </div>
-                                :
-                                <div><Username>{username}</Username></div>}
-                        </InfoBox>
-                        <InfoBox>
-                            <ItemBox>
-                                <Item><div>게시물</div></Item>
-                                <Item>0</Item>
-                            </ItemBox>
-                            <ItemBox>
-                                <Item><div>팔로워</div></Item>
-                                <Item>0</Item>
-                            </ItemBox>
-                            <ItemBox>
-                                <Item><div>팔로잉</div></Item>
-                                <Item>0</Item>
-                            </ItemBox>
-                        </InfoBox>
-                        {
-                            width ?
-                                width > 800 ?
-                                    <>
-                                        <SpanItem>
-                                            <p><a href={mywebsite} target="_blank">{mywebsite}</a></p>
-                                            <p>{myIntro}</p>
-                                        </SpanItem>
-                                    </>
-                                    : null
-                                : null
-                        }
-
-                    </UserInfo>
-                </InnerContainer>
-                <ContentContainer>
-                    <PhotoBox>
-                        <Photo></Photo>
-                        <Photo></Photo>
-                        <Photo></Photo>
-                        <Photo></Photo>
-                        <Photo></Photo>
-                        <Photo></Photo>
-                        <Photo></Photo>
-                        <Photo></Photo>
-                    </PhotoBox>
-                </ContentContainer>
+                {myname == username ?
+                    <Me />
+                    :
+                    <Other />}
                 <Logo>
                     Inspacegram
                 </Logo>
