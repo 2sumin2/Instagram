@@ -1,8 +1,14 @@
 import { useParams } from "react-router-dom";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
-import { ContentContainer, InfoBox, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
+import { ContentContainer, InfoBox, Btn, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
 import { gql, useQuery as gqlQuery } from "@apollo/client";
+import styled from "styled-components";
+
+const Follow = styled(Btn)`
+    background-color: ${props => props.theme.accentColor};
+    color:${props => props.theme.bgColor};
+`;
 
 const SEARCH_QUERY = gql`
     query search(
@@ -44,6 +50,7 @@ function Other() {
                     <InfoBox>
                         <div>
                             <Username>{username}</Username>
+                            <Follow>팔로우</Follow>
                         </div>
                     </InfoBox>
                     <InfoBox>
