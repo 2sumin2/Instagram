@@ -8,6 +8,7 @@ import styled from "styled-components";
 const Follow = styled(Btn)`
     background-color: ${props => props.theme.accentColor};
     color:${props => props.theme.bgColor};
+    padding:5px;
 `;
 
 const SEARCH_QUERY = gql`
