@@ -85,7 +85,7 @@ export const PhotoBox = styled.div`
     padding-bottom: 100px;
     padding: 0;
 `;
-export const Btn = styled.button`
+export let Btn = styled.button`
     height: max-content;
     padding:3px;
     border:1px solid #c0c0c0;

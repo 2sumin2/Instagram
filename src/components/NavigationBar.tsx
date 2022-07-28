@@ -85,6 +85,7 @@ const CloseBtn = styled.button`
 const SerachingBox = styled.div`
     background:${props => props.theme.bgColor};
     border:2px solid ${props => props.theme.textColor};
+    color:black;
     width: 250px;
     max-height: 300px;
     overflow: auto;

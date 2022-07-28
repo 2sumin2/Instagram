@@ -1,13 +1,25 @@
 import { useParams } from "react-router-dom";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
-import { ContentContainer, InfoBox, Btn, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
+import { ContentContainer, InfoBox, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
 import { gql, useQuery as gqlQuery } from "@apollo/client";
 import styled from "styled-components";
 
-const Follow = styled(Btn)`
+const Follow = styled.button`
     background-color: ${props => props.theme.accentColor};
     color:${props => props.theme.bgColor};
+    height: max-content;
+    border:1px solid #c0c0c0;
+    margin-bottom:11px;
+    padding:5px;
+`;
+
+const Following = styled(Follow)`
+    background: inherit;
+    height: max-content;
+    border:1px solid #c0c0c0;
+    color:${props => props.theme.textColor};
+    margin-bottom:11px;
     padding:5px;
 `;
 
@@ -52,6 +64,7 @@ function Other() {
                         <div>
                             <Username>{username}</Username>
                             <Follow>팔로우</Follow>
+                            <Following>팔로우 취소</Following>
                         </div>
                     </InfoBox>
                     <InfoBox>
@@ -73,8 +86,8 @@ function Other() {
                             width > 800 ?
                                 <>
                                     <SpanItem>
-                                        {user.search[0] ? <p><a href={user.search[0]['website']} target="_blank">{user.search[0]['website']}</a></p> : null}
-                                        {user.search[0] ? <p>{user.search[0]['intro']}</p> : null}
+                                        {user?.search[0] ? <p><a href={user.search[0]['website']} target="_blank">{user.search[0]['website']}</a></p> : null}
+                                        {user?.search[0] ? <p>{user.search[0]['intro']}</p> : null}
                                     </SpanItem>
                                 </>
                                 : null
