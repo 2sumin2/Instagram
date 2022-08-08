@@ -28,6 +28,17 @@ export default function UserName() {
   return username;
 }
 
+export function UserId() {
+  var { data } = useQuery(ME_QUERY, {
+    variables: {
+      token
+    },
+  });
+
+  const id = data?.me?.id;
+  return id;
+}
+
 export function UserStatement() {
   var { data } = useQuery(ME_QUERY, {
     variables: {

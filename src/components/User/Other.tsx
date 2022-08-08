@@ -2,8 +2,10 @@ import { useParams } from "react-router-dom";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
 import { ContentContainer, InfoBox, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
-import { gql, useQuery as gqlQuery } from "@apollo/client";
+import { gql, useMutation, useQuery as gqlQuery } from "@apollo/client";
 import styled from "styled-components";
+import UserName from "./FindMe";
+
 
 const Follow = styled.button`
     background-color: ${props => props.theme.accentColor};
@@ -28,17 +30,38 @@ const SEARCH_QUERY = gql`
         $keyword:String){
         search(
             keyword:$keyword) {
-            username
-            id
-            email
-            statement
-            intro
-            website
+            ok
+            error
+            users {
+                id
+                email
+                username
+                statement
+                intro
+                website
+                createAt
+                updateAt
+            }
+            count
+        }
+    }
+`;
+
+const FOLLOW_USER_MUTATION = gql`
+    mutation FollowUser(
+        $username: String!, 
+        $followUserId: Int!) {
+        followUser(
+            username: $username, 
+            id: $followUserId) {
+                ok
+                error
         }
     }
 `;
 
 function Other() {
+    const myname = UserName();
     const getWidth = () => {
         return window.innerWidth;
     };
@@ -55,6 +78,25 @@ function Other() {
             keyword: username
         },
     });
+    const onCompleted = (data: any) => {
+        const {
+            FollowUser: { ok, error },
+        } = data;
+        if (!ok) {
+            alert(error);
+        }
+    };
+    const [follow] = useMutation(FOLLOW_USER_MUTATION, {
+        onCompleted,
+    });
+    const onClickFollow = () => {
+        follow({
+            variables: {
+                username: myname,
+                followUserId: user.search.users[0]['id']
+            }
+        });
+    };
     return (
         <>
             <InnerContainer>
@@ -63,7 +105,7 @@ function Other() {
                     <InfoBox>
                         <div>
                             <Username>{username}</Username>
-                            <Follow>팔로우</Follow>
+                            <Follow onClick={onClickFollow}>팔로우</Follow>
                             <Following>팔로우 취소</Following>
                         </div>
                     </InfoBox>
@@ -86,8 +128,8 @@ function Other() {
                             width > 800 ?
                                 <>
                                     <SpanItem>
-                                        {user?.search[0] ? <p><a href={user.search[0]['website']} target="_blank">{user.search[0]['website']}</a></p> : null}
-                                        {user?.search[0] ? <p>{user.search[0]['intro']}</p> : null}
+                                        {user?.search?.users[0] ? <p><a href={user.search?.users[0]['website']} target="_blank">{user.search?.users[0]['website']}</a></p> : null}
+                                        {user?.search?.users[0] ? <p>{user.search?.users[0]['intro']}</p> : null}
                                     </SpanItem>
                                 </>
                                 : null
