@@ -83,15 +83,20 @@ const CloseBtn = styled.button`
     z-index: 2;
 `;
 const SerachingBox = styled.div`
-    background:${props => props.theme.bgColor};
+    background:${props => props.theme.textColor};
     border:2px solid ${props => props.theme.textColor};
+    border-radius: 10px;
+    box-shadow: 2px 2px 20px 1px #b3b3b3;
     color:black;
     width: 250px;
     max-height: 300px;
     overflow: auto;
     position:fixed;
-    z-index: 2;
+    z-index: 5;
     top:60px;
+    display:grid;
+    grid-row: auto;
+    gap:2px;
 `;
 
 const ResultBox = styled.button`
@@ -99,7 +104,7 @@ const ResultBox = styled.button`
     height: 50px;
     background:inherit;
     border:0;
-    border-bottom:2px solid ${props => props.theme.textColor};
+    background:${props => props.theme.bgColor};
 `;
 
 const ResultNone = styled(ResultBox)`
