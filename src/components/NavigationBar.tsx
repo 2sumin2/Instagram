@@ -10,7 +10,7 @@ import { isLightAtom } from "../atoms";
 import Switch from "react-switch";
 import { useQuery as useReactQuery } from "react-query";
 import FeedUpload from "./FeedUpload";
-import { useState } from "react";
+import { Key, ReactChild, ReactFragment, ReactPortal, useState } from "react";
 import UserName from "./User/FindMe";
 import { gql, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
@@ -107,11 +107,23 @@ const ResultNone = styled(ResultBox)`
 `;
 
 const SEARCH_QUERY = gql`
-    query search(
+    query Search(
         $keyword:String){
         search(
             keyword:$keyword) {
-            username
+            ok
+            error
+            users {
+                id
+                email
+                username
+                statement
+                intro
+                website
+                createAt
+                updateAt
+            }
+            count
         }
     }
 `;
@@ -138,12 +150,10 @@ function NavigationBar() {
         setUploadbox(!uploadbox);
     };
     const [keyword, setKeyword] = useState("");
-    const [result, setResult] = useState([]);
     const [keywordChange, setKeywordChange] = useState(false);
     const onChangeKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
         setKeyword(event.target.value);
         setKeywordChange(true);
-        setResult(data?.search);
     };
     const { data } = useQuery(SEARCH_QUERY, {
         variables: {
@@ -176,9 +186,9 @@ function NavigationBar() {
                                         {keywordChange ?
                                             <SerachingBox>
                                                 {
-                                                    result.length == 0 ?
+                                                    data?.search?.ok && data?.search?.count === 0 ?
                                                         <ResultNone>검색 결과 없음</ResultNone> :
-                                                        result.map((data, index) => data['username'] === username ? null :
+                                                        data?.search?.users.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) => data['username'] === username ? null :
                                                             <ResultBox key={index} onClick={() => { navigate(`/user/${data['username']}`); setKeywordChange(true); }}>{data['username']}</ResultBox>)
                                                 }
                                             </SerachingBox>
