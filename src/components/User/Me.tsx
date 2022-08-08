@@ -3,6 +3,28 @@ import UserName, { UserIntro, UserWebSite } from "./FindMe";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
 import { Btn, ContentContainer, InfoBox, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
+import { gql, useQuery as gqlQuery } from "@apollo/client";
+
+const FOLLOWERS_QUERY = gql`
+    query followers(
+        $username: String!) {
+        Followers(username: $username) {
+            ok
+            error
+            followers {
+                id
+                email
+                username
+                statement
+                intro
+                website
+                createAt
+                updateAt
+            }
+            totalFollowers
+        }
+    }
+`;
 
 function Me() {
     const myname = UserName();
@@ -18,6 +40,11 @@ function Me() {
             refetchInterval: 100,
         }
     );
+    const { data: followers } = gqlQuery(FOLLOWERS_QUERY, {
+        variables: {
+            username: myname
+        },
+    });
     return (
         <>
             <InnerContainer>
@@ -39,7 +66,7 @@ function Me() {
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로워</div></Item>
-                            <Item>0</Item>
+                            <Item>{followers ? followers?.Followers?.totalFollowers : 0}</Item>
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로잉</div></Item>

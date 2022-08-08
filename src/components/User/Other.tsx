@@ -60,6 +60,27 @@ const FOLLOW_USER_MUTATION = gql`
     }
 `;
 
+const FOLLOWERS_QUERY = gql`
+    query followers(
+        $username: String!) {
+        Followers(username: $username) {
+            ok
+            error
+            followers {
+                id
+                email
+                username
+                statement
+                intro
+                website
+                createAt
+                updateAt
+            }
+            totalFollowers
+        }
+    }
+`;
+
 function Other() {
     const myname = UserName();
     const getWidth = () => {
@@ -97,6 +118,11 @@ function Other() {
             }
         });
     };
+    const { data: followers } = gqlQuery(FOLLOWERS_QUERY, {
+        variables: {
+            username: user?.search?.users[0]['username']
+        },
+    });
     return (
         <>
             <InnerContainer>
@@ -116,7 +142,7 @@ function Other() {
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로워</div></Item>
-                            <Item>0</Item>
+                            <Item>{followers ? followers?.Followers?.totalFollowers : 0}</Item>
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로잉</div></Item>
