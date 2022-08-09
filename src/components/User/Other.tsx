@@ -48,7 +48,7 @@ const SEARCH_QUERY = gql`
 `;
 
 const FOLLOW_USER_MUTATION = gql`
-    mutation FollowUser(
+    mutation followUser(
         $username: String!, 
         $followUserId: Int!) {
         followUser(
@@ -101,7 +101,7 @@ function Other() {
     });
     const onCompleted = (data: any) => {
         const {
-            FollowUser: { ok, error },
+            followUser: { ok, error },
         } = data;
         if (!ok) {
             alert(error);
@@ -142,7 +142,7 @@ function Other() {
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로워</div></Item>
-                            <Item>{followers ? followers?.Followers?.totalFollowers : 0}</Item>
+                            <Item>{followers ? followers?.followers?.totalFollowers : 0}</Item>
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로잉</div></Item>

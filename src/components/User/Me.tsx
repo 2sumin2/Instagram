@@ -8,7 +8,7 @@ import { gql, useQuery as gqlQuery } from "@apollo/client";
 const FOLLOWERS_QUERY = gql`
     query followers(
         $username: String!) {
-        Followers(username: $username) {
+        followers(username: $username) {
             ok
             error
             followers {
@@ -66,7 +66,7 @@ function Me() {
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로워</div></Item>
-                            <Item>{followers ? followers?.Followers?.totalFollowers : 0}</Item>
+                            <Item>{followers ? followers?.followers?.totalFollowers : 0}</Item>
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로잉</div></Item>
