@@ -125,11 +125,11 @@ function Other() {
             alert(error);
         }
     };
-    const [follow] = useMutation(FOLLOW_USER_MUTATION, {
+    const [followUser] = useMutation(FOLLOW_USER_MUTATION, {
         onCompleted,
     });
     const onClickFollow = () => {
-        follow({
+        followUser({
             variables: {
                 username: myname,
                 followUserId: user.search.users[0]['id']
@@ -149,11 +149,13 @@ function Other() {
     const [areFollowing, setAreFollowing] = useState(false);
     useEffect(() => {
         setAreFollowing(false);
-        if (followers?.followers?.followers.map((data: { [x: string]: string | undefined; }) =>
-            data['username'] === myname)) {
-            setAreFollowing(true)
-        }
     }, [username]);
+    useEffect(() => {
+        if (followers?.followers?.totalFollowers && followers?.followers?.followers.map((data: { [x: string]: string | undefined; }) =>
+            data['username'] === myname)) {
+            setAreFollowing(true);
+        }
+    }, [username, followers]);
     return (
         <>
             <InnerContainer>
