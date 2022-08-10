@@ -1,10 +1,7 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import NavigationBar from "../NavigationBar";
-import UserName, { UserIntro, UserWebSite } from "./FindMe";
-import Photo from "./Photo";
-import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import UserName from "./FindMe";
 import GetToken from "../GetToken";
 import Me from "./Me";
 import Other from "./Other";
@@ -115,25 +112,13 @@ export const Logo = styled(InnerContainer)`
 
 function User() {
     const myname = UserName();
-    const myIntro = UserIntro();
-    const mywebsite = UserWebSite();
-    const getWidth = () => {
-        return window.innerWidth;
-    };
-    const { data: width } = useQuery(
-        "windowSizes",
-        () => getWidth(),
-        {
-            refetchInterval: 100,
-        }
-    );
     let { username } = useParams();
     return (
         <>
             <GetToken />
             <NavigationBar />
             <Container>
-                {myname == username ?
+                {myname === username ?
                     <Me />
                     :
                     <Other />}

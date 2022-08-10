@@ -154,7 +154,7 @@ function Other() {
                             width > 800 ?
                                 <>
                                     <SpanItem>
-                                        {user?.search?.users[0] ? <p><a href={user.search?.users[0]['website']} target="_blank">{user.search?.users[0]['website']}</a></p> : null}
+                                        {user?.search?.users[0] ? <p><a href={user.search?.users[0]['website']} target="_blank" rel="noerferer">{user.search?.users[0]['website']}</a></p> : null}
                                         {user?.search?.users[0] ? <p>{user.search?.users[0]['intro']}</p> : null}
                                     </SpanItem>
                                 </>

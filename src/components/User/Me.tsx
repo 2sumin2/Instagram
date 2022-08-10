@@ -78,7 +78,7 @@ function Me() {
                             width > 800 ?
                                 <>
                                     <SpanItem>
-                                        <p><a href={mywebsite} target="_blank">{mywebsite}</a></p>
+                                        <p><a href={mywebsite} target="_blank" rel="noerferer">{mywebsite}</a></p>
                                         <p>{myIntro}</p>
                                     </SpanItem>
                                 </>
