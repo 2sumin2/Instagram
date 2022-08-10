@@ -5,6 +5,7 @@ import { ContentContainer, InfoBox, InnerContainer, Item, ItemBox, PhotoBox, Spa
 import { gql, useMutation, useQuery as gqlQuery } from "@apollo/client";
 import styled from "styled-components";
 import UserName from "./FindMe";
+import { useEffect, useState } from "react";
 
 
 const Follow = styled.button`
@@ -18,11 +19,7 @@ const Follow = styled.button`
 
 const Following = styled(Follow)`
     background: inherit;
-    height: max-content;
-    border:1px solid #c0c0c0;
     color:${props => props.theme.textColor};
-    margin-bottom:11px;
-    padding:5px;
 `;
 
 const SEARCH_QUERY = gql`
@@ -149,6 +146,14 @@ function Other() {
             username: user?.search?.users[0]['username']
         },
     });
+    const [areFollowing, setAreFollowing] = useState(false);
+    useEffect(() => {
+        setAreFollowing(false);
+        if (followers?.followers?.followers.map((data: { [x: string]: string | undefined; }) =>
+            data['username'] === myname)) {
+            setAreFollowing(true)
+        }
+    }, [username]);
     return (
         <>
             <InnerContainer>
@@ -157,8 +162,7 @@ function Other() {
                     <InfoBox>
                         <div>
                             <Username>{username}</Username>
-                            <Follow onClick={onClickFollow}>팔로우</Follow>
-                            <Following>팔로우 취소</Following>
+                            {areFollowing ? <Following>팔로우 취소</Following> : <Follow onClick={onClickFollow}>팔로우</Follow>}
                         </div>
                     </InfoBox>
                     <InfoBox>
