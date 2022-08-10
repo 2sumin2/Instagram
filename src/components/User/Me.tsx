@@ -26,6 +26,27 @@ const FOLLOWERS_QUERY = gql`
     }
 `;
 
+const FOLLOWING_QUERY = gql`
+    query following(
+        $username: String!) {
+        following(username: $username) {
+            ok
+            error
+            following {
+                id
+                email
+                username
+                statement
+                intro
+                website
+                createAt
+                updateAt
+            }
+            totalFollowing
+        }
+    }
+`;
+
 function Me() {
     const myname = UserName();
     const myIntro = UserIntro();
@@ -41,6 +62,11 @@ function Me() {
         }
     );
     const { data: followers } = gqlQuery(FOLLOWERS_QUERY, {
+        variables: {
+            username: myname
+        },
+    });
+    const { data: following } = gqlQuery(FOLLOWING_QUERY, {
         variables: {
             username: myname
         },
@@ -70,7 +96,7 @@ function Me() {
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로잉</div></Item>
-                            <Item>0</Item>
+                            <Item>{following ? following?.following?.totalFollowing : 0}</Item>
                         </ItemBox>
                     </InfoBox>
                     {
