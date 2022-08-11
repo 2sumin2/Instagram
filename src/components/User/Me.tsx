@@ -5,10 +5,10 @@ import { useQuery } from "react-query";
 import { Btn, ContentContainer, InfoBox, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
 import { gql, useQuery as gqlQuery } from "@apollo/client";
 
-const FOLLOWERS_QUERY = gql`
-    query followers(
+const SEE_FOLLOWERS_QUERY = gql`
+    query seeFollowers(
         $username: String!) {
-        followers(username: $username) {
+        seeFollowers(username: $username) {
             ok
             error
             followers {
@@ -26,10 +26,10 @@ const FOLLOWERS_QUERY = gql`
     }
 `;
 
-const FOLLOWING_QUERY = gql`
-    query following(
+const SEE_FOLLOWING_QUERY = gql`
+    query seeFollowing(
         $username: String!) {
-        following(username: $username) {
+        seeFollowing(username: $username) {
             ok
             error
             following {
@@ -61,12 +61,12 @@ function Me() {
             refetchInterval: 100,
         }
     );
-    const { data: followers } = gqlQuery(FOLLOWERS_QUERY, {
+    const { data: followers } = gqlQuery(SEE_FOLLOWERS_QUERY, {
         variables: {
             username: myname
         },
     });
-    const { data: following } = gqlQuery(FOLLOWING_QUERY, {
+    const { data: following } = gqlQuery(SEE_FOLLOWING_QUERY, {
         variables: {
             username: myname
         },
@@ -92,11 +92,11 @@ function Me() {
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로워</div></Item>
-                            <Item>{followers ? followers?.followers?.totalFollowers : 0}</Item>
+                            <Item>{followers ? followers?.seeFollowers?.totalFollowers : 0}</Item>
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로잉</div></Item>
-                            <Item>{following ? following?.following?.totalFollowing : 0}</Item>
+                            <Item>{following ? following?.seeFollowing?.totalFollowing : 0}</Item>
                         </ItemBox>
                     </InfoBox>
                     {
