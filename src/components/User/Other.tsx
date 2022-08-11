@@ -46,13 +46,13 @@ const SEARCH_QUERY = gql`
 
 const FOLLOW_USER_MUTATION = gql`
     mutation followUser(
-        $username: String!, 
-        $followUserId: Int!) {
+        $othername: String!, 
+        $myname: String!) {
         followUser(
-            username: $username, 
-            id: $followUserId) {
-                ok
-                error
+            othername: $othername, 
+            myname: $myname) {
+            ok
+            error
         }
     }
 `;
@@ -131,10 +131,11 @@ function Other() {
     const onClickFollow = () => {
         followUser({
             variables: {
-                username: myname,
-                followUserId: user.search.users[0]['id']
+                myname,
+                othername: user.search.users[0]['username']
             }
         });
+        window.location.reload();
     };
     const { data: followers } = gqlQuery(FOLLOWERS_QUERY, {
         variables: {
@@ -149,13 +150,11 @@ function Other() {
     const [areFollowing, setAreFollowing] = useState(false);
     useEffect(() => {
         setAreFollowing(false);
-    }, [username]);
-    useEffect(() => {
         if (followers?.followers?.totalFollowers && followers?.followers?.followers.map((data: { [x: string]: string | undefined; }) =>
             data['username'] === myname)) {
             setAreFollowing(true);
         }
-    }, [username, followers]);
+    }, [username, followers, following]);
     return (
         <>
             <InnerContainer>
