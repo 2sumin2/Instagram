@@ -57,6 +57,19 @@ const FOLLOW_MUTATION = gql`
     }
 `;
 
+const UNFOLLOW_MUTATION = gql`
+    mutation unfollow(
+        $othername: String!, 
+        $myname: String!) {
+        unfollow(
+            othername: $othername, 
+            myname: $myname) {
+            ok
+            error
+        }
+    }
+`;
+
 const SEE_FOLLOWERS_QUERY = gql`
     query seeFollowers(
         $username: String!) {
@@ -117,19 +130,25 @@ function Other() {
             keyword: username
         },
     });
-    const onCompleted = (data: any) => {
-        const {
-            follow: { ok, error },
-        } = data;
-        if (!ok) {
-            alert(error);
-        }
-    };
-    const [follow] = useMutation(FOLLOW_MUTATION, {
-        onCompleted,
-    });
+    const [follow, { error: followError }] = useMutation(FOLLOW_MUTATION);
+    if (followError) {
+        alert(followError);
+    }
     const onClickFollow = () => {
         follow({
+            variables: {
+                myname,
+                othername: user.search.users[0]['username']
+            }
+        });
+        window.location.reload();
+    };
+    const [unfollow, { error: unfollowError }] = useMutation(UNFOLLOW_MUTATION);
+    if (unfollowError) {
+        alert(unfollowError);
+    }
+    const onClickUnfollow = () => {
+        unfollow({
             variables: {
                 myname,
                 othername: user.search.users[0]['username']
@@ -163,7 +182,7 @@ function Other() {
                     <InfoBox>
                         <div>
                             <Username>{username}</Username>
-                            {areFollowing ? <Following>팔로우 취소</Following> : <Follow onClick={onClickFollow}>팔로우</Follow>}
+                            {areFollowing ? <Following onClick={onClickUnfollow}>팔로우 취소</Following> : <Follow onClick={onClickFollow}>팔로우</Follow>}
                         </div>
                     </InfoBox>
                     <InfoBox>
