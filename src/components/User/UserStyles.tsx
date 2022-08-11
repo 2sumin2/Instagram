@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const ContainerBox = styled.div`
     display:flex;
     justify-content:center;
+    padding: 60px 0;
 `;
 
 export const GridBox = styled.div`
