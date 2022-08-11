@@ -3,6 +3,7 @@ import { gql, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Input, LoginBox, LoginBtn, Message, ToggleBtn, ToggleForm, Title } from "./LoginForm";
 import Logo from './Logo';
+import { useEffect } from "react";
 
 interface IForm {
     email?: string;
@@ -57,6 +58,12 @@ function Login() {
             variables: { email, password }
         });
     };
+    const token = localStorage.getItem("TOKEN");
+    useEffect(() => {
+        if (token) {
+            navigate('/home');
+        }
+    }, []);
     return (
         <Container>
             <Logo />

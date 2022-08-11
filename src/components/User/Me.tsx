@@ -4,6 +4,7 @@ import Photo from "./Photo";
 import { useQuery } from "react-query";
 import { Btn, ContentContainer, InfoBox, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
 import { gql, useQuery as gqlQuery } from "@apollo/client";
+import styled from "styled-components";
 
 const SEE_FOLLOWERS_QUERY = gql`
     query seeFollowers(

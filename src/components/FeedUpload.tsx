@@ -47,7 +47,8 @@ const Box = styled.div`
     height:100%;
     display:flex;
     justify-content:center;
-    align-items:center;`;
+    align-items:center;
+`;
 
 const Btn = styled.button`
     background-color: ${props => props.theme.accentColor};
