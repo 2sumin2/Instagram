@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
 import { ContentContainer, InfoBox, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
 import { gql, useMutation, useQuery as gqlQuery } from "@apollo/client";
 import styled from "styled-components";
 import UserName from "./FindMe";
-import { useEffect, useState } from "react";
+import { ReactChild, ReactFragment, ReactPortal, useEffect, useState } from "react";
 
 
 const Follow = styled.button`
@@ -20,6 +20,54 @@ const Follow = styled.button`
 const Following = styled(Follow)`
     background: inherit;
     color:${props => props.theme.textColor};
+`;
+
+const Full = styled.div`
+    height: 100vh;
+    width:100vw;
+    background:black;
+    opacity: 80%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index: 1;
+`;
+const Container = styled.div`
+    width:100vw;
+    height:100%;
+    display:flex;
+    position:fixed;
+    top:320px;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    padding-bottom:200px;
+`;
+
+const UserBox = styled.div`
+    background:${props => props.theme.textColor};
+    border:2px solid ${props => props.theme.textColor};
+    border-radius: 10px;
+    box-shadow: 2px 2px 20px 1px #b3b3b3;
+    color:black;
+    width: 250px;
+    max-height: 300px;
+    overflow: auto;
+    position:absolute;
+    z-index: 1;
+    top:250px;
+    display:grid;
+    grid-row: auto;
+    gap:2px;
+    margin-left:-100px;
+`;
+
+const UserItem = styled.button`
+    width: 100%;
+    height: 50px;
+    background:inherit;
+    border:0;
+    background:${props => props.theme.bgColor};
 `;
 
 const SEARCH_QUERY = gql`
@@ -113,6 +161,7 @@ const SEE_FOLLOWING_QUERY = gql`
 `;
 
 function Other() {
+    const navigate = useNavigate();
     const myname = UserName();
     const getWidth = () => {
         return window.innerWidth;
@@ -193,10 +242,24 @@ function Other() {
                         <ItemBox>
                             <Item><div>팔로워</div></Item>
                             <Item>{followers ? followers?.seeFollowers?.totalFollowers : 0}</Item>
+                            {
+                                followers ? followers?.seeFollowers?.totalFollowers === 0 ? null :
+                                    <UserBox>
+                                        {followers?.seeFollowers?.followers.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) =>
+                                            <UserItem onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
+                                    </UserBox> : null
+                            }
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로잉</div></Item>
                             <Item>{following ? following?.seeFollowing?.totalFollowing : 0}</Item>
+                            {
+                                following ? following?.seeFollowing?.totalFollowing === 0 ? null :
+                                    <UserBox>
+                                        {following?.seeFollowing?.following.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) =>
+                                            <UserItem onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
+                                    </UserBox> : null
+                            }
                         </ItemBox>
                     </InfoBox>
                     {
@@ -214,6 +277,9 @@ function Other() {
 
                 </UserInfo>
             </InnerContainer>
+            <Container>
+
+            </Container>
             <ContentContainer>
                 <PhotoBox>
                     <Photo></Photo>

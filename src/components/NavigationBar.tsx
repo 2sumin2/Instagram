@@ -24,6 +24,7 @@ const ContainerBox = styled.div`
     align-items:center;
     width: 100%;
     height: 60px;
+    z-index: 2;
 `;
 const Container = styled.div`
     max-width: 900px;
