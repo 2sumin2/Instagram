@@ -5,6 +5,9 @@ import { useQuery } from "react-query";
 import { Btn, ContentContainer, InfoBox, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
 import { gql, useQuery as gqlQuery } from "@apollo/client";
 import styled from "styled-components";
+import { UserBox, UserItem } from "./Other";
+import { useNavigate, useParams } from "react-router-dom";
+import { ReactChild, ReactFragment, ReactPortal } from "react";
 
 const SEE_FOLLOWERS_QUERY = gql`
     query seeFollowers(
@@ -49,6 +52,7 @@ const SEE_FOLLOWING_QUERY = gql`
 `;
 
 function Me() {
+    const navigate = useNavigate();
     const myname = UserName();
     const myIntro = UserIntro();
     const mywebsite = UserWebSite();
@@ -93,11 +97,24 @@ function Me() {
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로워</div></Item>
-                            <Item>{followers ? followers?.seeFollowers?.totalFollowers : 0}</Item>
+                            {
+                                followers ? followers?.seeFollowers?.totalFollowers === 0 ? null :
+                                    <UserBox>
+                                        {followers?.seeFollowers?.followers.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) =>
+                                            <UserItem onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
+                                    </UserBox> : null
+                            }
                         </ItemBox>
                         <ItemBox>
                             <Item><div>팔로잉</div></Item>
                             <Item>{following ? following?.seeFollowing?.totalFollowing : 0}</Item>
+                            {
+                                following ? following?.seeFollowing?.totalFollowing === 0 ? null :
+                                    <UserBox>
+                                        {following?.seeFollowing?.following.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) =>
+                                            <UserItem onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
+                                    </UserBox> : null
+                            }
                         </ItemBox>
                     </InfoBox>
                     {

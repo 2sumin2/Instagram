@@ -21,30 +21,7 @@ const Following = styled(Follow)`
     background: inherit;
     color:${props => props.theme.textColor};
 `;
-
-const Full = styled.div`
-    height: 100vh;
-    width:100vw;
-    background:black;
-    opacity: 80%;
-    position:fixed;
-    top:0;
-    left:0;
-    z-index: 1;
-`;
-const Container = styled.div`
-    width:100vw;
-    height:100%;
-    display:flex;
-    position:fixed;
-    top:320px;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-    padding-bottom:200px;
-`;
-
-const UserBox = styled.div`
+export const UserBox = styled.div`
     background:${props => props.theme.textColor};
     border:2px solid ${props => props.theme.textColor};
     border-radius: 10px;
@@ -61,8 +38,7 @@ const UserBox = styled.div`
     gap:2px;
     margin-left:-100px;
 `;
-
-const UserItem = styled.button`
+export const UserItem = styled.button`
     width: 100%;
     height: 50px;
     background:inherit;
@@ -277,9 +253,6 @@ function Other() {
 
                 </UserInfo>
             </InnerContainer>
-            <Container>
-
-            </Container>
             <ContentContainer>
                 <PhotoBox>
                     <Photo></Photo>
