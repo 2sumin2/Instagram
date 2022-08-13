@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import UserName, { UserIntro, UserWebSite } from "./FindMe";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
-import { Btn, ContentContainer, InfoBox, InnerContainer, Item, ItemBox, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
+import { Btn, ContentContainer, InfoBox, InnerContainer, Item, ItemBox, ItemBoxNew, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
 import { gql, useQuery as gqlQuery } from "@apollo/client";
 import styled from "styled-components";
 import { UserBox, UserItem } from "./Other";
-import { useNavigate, useParams } from "react-router-dom";
-import { ReactChild, ReactFragment, ReactPortal } from "react";
+import { useNavigate } from "react-router-dom";
+import { Key, ReactChild, ReactFragment, ReactPortal, useState } from "react";
 
 const SEE_FOLLOWERS_QUERY = gql`
     query seeFollowers(
@@ -76,6 +76,9 @@ function Me() {
             username: myname
         },
     });
+    const [showFollowers, setShowFollowers] = useState(false);
+    const [showFollowing, setShowFollowing] = useState(false);
+
     return (
         <>
             <InnerContainer>
@@ -95,34 +98,35 @@ function Me() {
                             <Item><div>게시물</div></Item>
                             <Item>0</Item>
                         </ItemBox>
-                        <ItemBox>
+                        <ItemBoxNew onClick={() => { setShowFollowers(!showFollowers) }}>
                             <Item><div>팔로워</div></Item>
+                            <Item>{followers ? followers?.seeFollowers?.totalFollowers : 0}</Item>
                             {
-                                followers ? followers?.seeFollowers?.totalFollowers === 0 ? null :
+                                followers && showFollowers ? followers?.seeFollowers?.totalFollowers === 0 ? null :
                                     <UserBox>
-                                        {followers?.seeFollowers?.followers.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) =>
-                                            <UserItem onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
+                                        {followers?.seeFollowers?.followers.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) =>
+                                            <UserItem key={index} onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
                                     </UserBox> : null
                             }
-                        </ItemBox>
-                        <ItemBox>
+                        </ItemBoxNew>
+                        <ItemBoxNew onClick={() => { setShowFollowing(!showFollowing) }}>
                             <Item><div>팔로잉</div></Item>
                             <Item>{following ? following?.seeFollowing?.totalFollowing : 0}</Item>
                             {
-                                following ? following?.seeFollowing?.totalFollowing === 0 ? null :
+                                following && showFollowing ? following?.seeFollowing?.totalFollowing === 0 ? null :
                                     <UserBox>
-                                        {following?.seeFollowing?.following.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) =>
-                                            <UserItem onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
+                                        {following?.seeFollowing?.following.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) =>
+                                            <UserItem key={index} onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
                                     </UserBox> : null
                             }
-                        </ItemBox>
+                        </ItemBoxNew>
                     </InfoBox>
                     {
                         width ?
                             width > 800 ?
                                 <>
                                     <SpanItem>
-                                        <p><a href={mywebsite} target="_blank" rel="noerferer">{mywebsite}</a></p>
+                                        <p><a href={mywebsite} target="_blank">{mywebsite}</a></p>
                                         <p>{myIntro}</p>
                                     </SpanItem>
                                 </>

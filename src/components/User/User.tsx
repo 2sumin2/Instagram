@@ -59,6 +59,9 @@ export const ItemBox = styled.div`
     flex-direction: row;
     padding-right: 10px;
 `;
+export const ItemBoxNew = styled(ItemBox)`
+    cursor: pointer;
+`;
 export const Item = styled.span`
     padding-bottom:10px;
     padding-right:10px;
