@@ -37,11 +37,11 @@ export const TriangleOne = styled.div`
     border-right: 15px solid transparent; 
     border-bottom: 15px solid #b3b3b3;
     z-index:1;
-    opacity:25%;
+    opacity:15%;
 `;
 
 export const TriangleTwo = styled(TriangleOne)`
-    margin-top:3px;
+    margin-top:2px;
     border-bottom: 15px solid ${props => props.theme.bgColor};
     z-index:3;
     opacity:100%;  

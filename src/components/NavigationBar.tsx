@@ -64,6 +64,7 @@ const Input = styled.input`
     height: 37px;
     width: 250px;;
     background-color: #ececec;
+    color:black;
     border: 0;
     border-radius: 5px;
 `;
@@ -86,8 +87,8 @@ const CloseBtn = styled.button`
 const SerachingBox = styled.div`
     background:#b3b3b3;
     border-radius: 10px;
-    box-shadow: 2px 2px 20px 1px #b3b3b3;
-    color:black;
+    box-shadow: 2px 2px 10px 1px #b3b3b3;
+    color:${props => props.theme.textColor};
     width: 250px;
     max-height: 300px;
     overflow: auto;
