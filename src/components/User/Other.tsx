@@ -21,12 +21,37 @@ const Following = styled(Follow)`
     background: inherit;
     color:${props => props.theme.textColor};
 `;
+
+export const TriangleOne = styled.div`
+    position:relative; 
+    width:30px; 
+    height:47px; 
+    margin-left:15px;
+    margin-bottom:10px;
+    color: #FFF; 
+    border-radius: 10px; 
+
+    content:""; 
+    position: absolute; 
+    border-left: 15px solid transparent; 
+    border-right: 15px solid transparent; 
+    border-bottom: 15px solid #b3b3b3;
+    z-index:1;
+    opacity:25%;
+`;
+
+export const TriangleTwo = styled(TriangleOne)`
+    margin-top:3px;
+    border-bottom: 15px solid ${props => props.theme.bgColor};
+    z-index:3;
+    opacity:100%;  
+`;
+
 export const UserBox = styled.div`
-    background:${props => props.theme.textColor};
-    border:2px solid ${props => props.theme.textColor};
+    background:#b3b3b3;
     border-radius: 10px;
-    box-shadow: 2px 2px 20px 1px #b3b3b3;
-    color:black;
+    box-shadow: 2px 2px 10px 0px #b3b3b3;
+    color:${props => props.theme.textColor};
     width: 250px;
     max-height: 300px;
     overflow: auto;
@@ -221,35 +246,41 @@ function Other() {
                             <Item><div>팔로워</div></Item>
                             <Item>{followers ? followers?.seeFollowers?.totalFollowers : 0}</Item>
                             {
-                                followers && showFollowers ? followers?.seeFollowers?.totalFollowers === 0 ? null :
-                                    <UserBox>
-                                        {followers?.seeFollowers?.followers.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) =>
-                                            <UserItem key={index} onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
-                                    </UserBox> : null
+                                width && width > 800 && followers && showFollowers ? followers?.seeFollowers?.totalFollowers === 0 ? null :
+                                    <>
+                                        <TriangleOne></TriangleOne>
+                                        <TriangleTwo></TriangleTwo>
+                                        <UserBox>
+                                            {followers?.seeFollowers?.followers.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) =>
+                                                <UserItem key={index} onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
+                                        </UserBox>
+                                    </> : null
                             }
                         </ItemBoxNew>
                         <ItemBoxNew onClick={() => { setShowFollowing(!showFollowing) }}>
                             <Item><div>팔로잉</div></Item>
                             <Item>{following ? following?.seeFollowing?.totalFollowing : 0}</Item>
                             {
-                                following && showFollowing ? following?.seeFollowing?.totalFollowing === 0 ? null :
-                                    <UserBox>
-                                        {following?.seeFollowing?.following.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) =>
-                                            <UserItem key={index} onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
-                                    </UserBox> : null
+                                width && width > 800 && following && showFollowing ? following?.seeFollowing?.totalFollowing === 0 ? null :
+                                    <>
+                                        <TriangleOne></TriangleOne>
+                                        <TriangleTwo></TriangleTwo>
+                                        <UserBox>
+                                            {following?.seeFollowing?.following.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) =>
+                                                <UserItem key={index} onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
+                                        </UserBox>
+                                    </> : null
                             }
                         </ItemBoxNew>
                     </InfoBox>
                     {
-                        width ?
-                            width > 800 ?
-                                <>
-                                    <SpanItem>
-                                        {user?.search?.users[0] ? <p><a href={user.search?.users[0]['website']} target="_blank">{user.search?.users[0]['website']}</a></p> : null}
-                                        {user?.search?.users[0] ? <p>{user.search?.users[0]['intro']}</p> : null}
-                                    </SpanItem>
-                                </>
-                                : null
+                        width && width > 800 ?
+                            <>
+                                <SpanItem>
+                                    {user?.search?.users[0] ? <p><a href={user.search?.users[0]['website']} target="_blank">{user.search?.users[0]['website']}</a></p> : null}
+                                    {user?.search?.users[0] ? <p>{user.search?.users[0]['intro']}</p> : null}
+                                </SpanItem>
+                            </>
                             : null
                     }
 

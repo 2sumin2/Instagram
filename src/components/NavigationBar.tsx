@@ -84,8 +84,7 @@ const CloseBtn = styled.button`
     z-index: 2;
 `;
 const SerachingBox = styled.div`
-    background:${props => props.theme.textColor};
-    border:2px solid ${props => props.theme.textColor};
+    background:#b3b3b3;
     border-radius: 10px;
     box-shadow: 2px 2px 20px 1px #b3b3b3;
     color:black;

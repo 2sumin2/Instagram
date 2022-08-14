@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import { Btn, ContentContainer, InfoBox, InnerContainer, Item, ItemBox, ItemBoxNew, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
 import { gql, useQuery as gqlQuery } from "@apollo/client";
 import styled from "styled-components";
-import { UserBox, UserItem } from "./Other";
+import { UserBox, UserItem, TriangleOne, TriangleTwo } from "./Other";
 import { useNavigate } from "react-router-dom";
 import { Key, ReactChild, ReactFragment, ReactPortal, useState } from "react";
 
@@ -102,35 +102,41 @@ function Me() {
                             <Item><div>팔로워</div></Item>
                             <Item>{followers ? followers?.seeFollowers?.totalFollowers : 0}</Item>
                             {
-                                followers && showFollowers ? followers?.seeFollowers?.totalFollowers === 0 ? null :
-                                    <UserBox>
-                                        {followers?.seeFollowers?.followers.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) =>
-                                            <UserItem key={index} onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
-                                    </UserBox> : null
+                                width && width > 800 && followers && showFollowers ? followers?.seeFollowers?.totalFollowers === 0 ? null :
+                                    <>
+                                        <TriangleOne></TriangleOne>
+                                        <TriangleTwo></TriangleTwo>
+                                        <UserBox>
+                                            {followers?.seeFollowers?.followers.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) =>
+                                                <UserItem key={index} onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
+                                        </UserBox>
+                                    </> : null
                             }
                         </ItemBoxNew>
                         <ItemBoxNew onClick={() => { setShowFollowing(!showFollowing) }}>
                             <Item><div>팔로잉</div></Item>
                             <Item>{following ? following?.seeFollowing?.totalFollowing : 0}</Item>
                             {
-                                following && showFollowing ? following?.seeFollowing?.totalFollowing === 0 ? null :
-                                    <UserBox>
-                                        {following?.seeFollowing?.following.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) =>
-                                            <UserItem key={index} onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
-                                    </UserBox> : null
+                                width && width > 800 && following && showFollowing ? following?.seeFollowing?.totalFollowing === 0 ? null :
+                                    <>
+                                        <TriangleOne></TriangleOne>
+                                        <TriangleTwo></TriangleTwo>
+                                        <UserBox>
+                                            {following?.seeFollowing?.following.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) =>
+                                                <UserItem key={index} onClick={() => { navigate(`/user/${data['username']}`) }}>{data['username']}</UserItem>)}
+                                        </UserBox>
+                                    </> : null
                             }
                         </ItemBoxNew>
                     </InfoBox>
                     {
-                        width ?
-                            width > 800 ?
-                                <>
-                                    <SpanItem>
-                                        <p><a href={mywebsite} target="_blank">{mywebsite}</a></p>
-                                        <p>{myIntro}</p>
-                                    </SpanItem>
-                                </>
-                                : null
+                        width && width > 800 ?
+                            <>
+                                <SpanItem>
+                                    <p><a href={mywebsite} target="_blank">{mywebsite}</a></p>
+                                    <p>{myIntro}</p>
+                                </SpanItem>
+                            </>
                             : null
                     }
 
