@@ -60,7 +60,7 @@ export const UserBox = styled.div`
     top:250px;
     display:grid;
     grid-row: auto;
-    gap:2px;
+    gap:1px;
     margin-left:-100px;
 `;
 export const UserItem = styled.button`

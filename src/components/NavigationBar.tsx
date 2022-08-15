@@ -97,7 +97,7 @@ const SerachingBox = styled.div`
     top:60px;
     display:grid;
     grid-row: auto;
-    gap:2px;
+    gap:1px;
 `;
 
 const ResultBox = styled.button`
