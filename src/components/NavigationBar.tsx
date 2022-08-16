@@ -98,6 +98,11 @@ const SerachingBox = styled.div`
     display:grid;
     grid-row: auto;
     gap:1px;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+    &::-webkit-scrollbar {
+    display: none; 
+    }
 `;
 
 const ResultBox = styled.button`

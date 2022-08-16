@@ -62,6 +62,11 @@ export const UserBox = styled.div`
     grid-row: auto;
     gap:1px;
     margin-left:-100px;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+    &::-webkit-scrollbar {
+    display: none; 
+    }
 `;
 export const UserItem = styled.button`
     width: 100%;
