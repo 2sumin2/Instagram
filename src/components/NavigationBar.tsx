@@ -79,7 +79,7 @@ const CloseBtn = styled.button`
     background:inherit;
     border:0;
     position:fixed;
-    top:15px;
+    top:80px;
     right:15px;
     font-size:30px;
     z-index: 2;
