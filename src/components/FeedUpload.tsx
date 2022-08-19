@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 const Full = styled.div`
@@ -65,7 +66,9 @@ function FeedUpload() {
                 <InnerContainer>
                     <Span>새 게시물 만들기</Span>
                     <Box>
-                        <Btn>파일 선택</Btn>
+                        <React.Fragment>
+                            <input style={{ display: "none" }} type="file" /><Btn>파일 선택</Btn>
+                        </React.Fragment>
                     </Box>
                 </InnerContainer>
             </Container>
