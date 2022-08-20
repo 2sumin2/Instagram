@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 
 const Full = styled.div`
@@ -59,6 +59,10 @@ const Btn = styled.button`
 `;
 
 function FeedUpload() {
+    const fileRef = useRef<HTMLInputElement>(null);
+    const onClick = () => {
+        fileRef.current?.click();
+    };
     return (
         <>
             <Full></Full>
@@ -66,9 +70,8 @@ function FeedUpload() {
                 <InnerContainer>
                     <Span>새 게시물 만들기</Span>
                     <Box>
-                        <React.Fragment>
-                            <input style={{ display: "none" }} type="file" /><Btn>파일 선택</Btn>
-                        </React.Fragment>
+                        <input ref={fileRef} style={{ display: "none" }} type="file" />
+                        <Btn onClick={onClick}>파일 선택</Btn>
                     </Box>
                 </InnerContainer>
             </Container>
