@@ -70,7 +70,11 @@ function FeedUpload() {
                 <InnerContainer>
                     <Span>새 게시물 만들기</Span>
                     <Box>
-                        <input ref={fileRef} style={{ display: "none" }} type="file" />
+                        <input
+                            ref={fileRef}
+                            style={{ display: "none" }}
+                            type="file"
+                            accept=".png, .jpeg, .jpg" />
                         <Btn onClick={onClick}>파일 선택</Btn>
                     </Box>
                 </InnerContainer>
