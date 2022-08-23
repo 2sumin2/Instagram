@@ -55,6 +55,15 @@ const UserInfoBox = styled.div`
     padding:10px;
     justify-content: flex-start;
     border-left: 1px solid lightgray;
+    .event{
+        
+        animation: scale 1s alternate;
+    }
+    @keyframes scale{
+        0%   { transform: scale(1) }
+        50%  { transform: scale(1.2) }
+        100%  { transform: scale(1) }
+    }
 `;
 const UserImg = styled.div`
     height:30px;
@@ -93,7 +102,7 @@ const Icon = styled.img`
     margin-right:10px;
 `;
 const LikeIcon = styled(Icon)`
-    cursor:pointer;
+    cursor:pointer;    
 `;
 const Form = styled.form`
     border: 1px solid lightgray;
@@ -133,6 +142,11 @@ function Feed() {
     const toggleLike = () => {
         setLike(!like);
     };
+    const [event, setEvent] = useState("");
+    const onClick = () => {
+        setLike(!like);
+        event === "event" ? setEvent("") : setEvent("event");
+    }
     return (
         <>
             {width ?
@@ -143,7 +157,7 @@ function Feed() {
                             <UserInfoBox>
                                 <UserImg />
                                 <UserName>username</UserName>
-                                <LikeIcon src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={toggleLike} />
+                                <LikeIcon className={event} src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={onClick} />
                             </UserInfoBox>
                             <PhotoInfoBox>
                                 <TagBox>
@@ -167,7 +181,7 @@ function Feed() {
                         <UserInfoBox>
                             <UserImg />
                             <UserName>username</UserName>
-                            <LikeIcon src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={toggleLike} />
+                            <LikeIcon className={event} src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={onClick} />
                         </UserInfoBox>
                         <ImgContainer>(image: example)</ImgContainer>
                         <SideContainer maxWidth="100%" height="200px">
