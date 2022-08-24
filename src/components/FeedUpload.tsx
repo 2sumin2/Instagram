@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
 const Full = styled.div`
@@ -57,12 +58,30 @@ const Btn = styled.button`
     width:100px;
     color: ${props => props.theme.bgColor};
 `;
+interface iForm {
+    files?: FileList | null;
+}
 
 function FeedUpload() {
     const fileRef = useRef<HTMLInputElement>(null);
     const onClick = () => {
         fileRef.current?.click();
     };
+    const [submit, setSubmit] = useState(false);
+    const [formState, setFormState] = useState<iForm>();
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (!event.target.files?.length) {
+            return;
+        }
+        setFormState(formData => ({
+            ...formData,
+            files: event.target.files
+        }));
+        setSubmit(true);
+        console.log(formState);
+    }
+
+
     return (
         <>
             <Full></Full>
@@ -70,12 +89,21 @@ function FeedUpload() {
                 <InnerContainer>
                     <Span>새 게시물 만들기</Span>
                     <Box>
-                        <input
-                            ref={fileRef}
-                            style={{ display: "none" }}
-                            type="file"
-                            accept=".png, .jpeg, .jpg" />
-                        <Btn onClick={onClick}>파일 선택</Btn>
+                        {submit ?
+                            <>
+
+                            </> :
+                            <>
+                                <input
+                                    ref={fileRef}
+                                    style={{ display: "none" }}
+                                    type="file"
+                                    accept=".png, .jpeg, .jpg"
+                                    onChange={onChange} />
+                                <Btn onClick={onClick}>파일 선택</Btn>
+                            </>
+                        }
+
                     </Box>
                 </InnerContainer>
             </Container>
