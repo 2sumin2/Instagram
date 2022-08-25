@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
@@ -23,18 +23,31 @@ const Container = styled.div`
     z-index: 2;
     padding-bottom:200px;
 `;
-const InnerContainer = styled.div`
+interface iInnerContainer {
+    maxHeight?: string;
+    height?: string;
+    maxWidth?: string;
+    width?: string;
+}
+const InnerContainer = styled.div<iInnerContainer>`
     max-height: 700px;
     height: 75vw;
     max-width:700px;
     width:65%;
-    border-radius:5%;
+
+    max-height: ${props => props.maxHeight};
+    height: ${props => props.height};
+    max-width:${props => props.maxWidth};
+    width:${props => props.width};
+
+    border-radius:3%;
     background:white;
     z-index: 3;
     justify-self:center;
     display:flex;
     flex-direction:column;
     align-items: center;
+    overflow: hidden;
 `;
 const Span = styled.span`
     width:100%;
@@ -49,7 +62,16 @@ const Box = styled.div`
     height:100%;
     display:flex;
     justify-content:center;
-    align-items:center;
+    align-items:center;    
+`;
+
+const SecondBox = styled.div`
+    height:100%;
+    width:100%;
+    display:grid;
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: 1fr;
+    overflow: hidden;
 `;
 
 const Btn = styled.button`
@@ -61,6 +83,14 @@ const Btn = styled.button`
 interface iForm {
     files?: FileList | null;
 }
+const Img = styled.image`
+    height:100%;
+    width:100%;
+    background-color:gray;
+`;
+const TextArea = styled.textarea`
+    border:0;
+`;
 
 function FeedUpload() {
     const fileRef = useRef<HTMLInputElement>(null);
@@ -78,34 +108,39 @@ function FeedUpload() {
             files: event.target.files
         }));
         setSubmit(true);
-        console.log(formState);
     }
-
-
+    useEffect(() => {
+        console.log(formState);
+    }, [formState]);
     return (
         <>
             <Full></Full>
             <Container>
-                <InnerContainer>
-                    <Span>새 게시물 만들기</Span>
-                    <Box>
-                        {submit ?
-                            <>
-
-                            </> :
-                            <>
-                                <input
-                                    ref={fileRef}
-                                    style={{ display: "none" }}
-                                    type="file"
-                                    accept=".png, .jpeg, .jpg"
-                                    onChange={onChange} />
-                                <Btn onClick={onClick}>파일 선택</Btn>
-                            </>
-                        }
-
-                    </Box>
-                </InnerContainer>
+                {submit ?
+                    <InnerContainer
+                        maxHeight="500px"
+                        height="75vw"
+                        maxWidth="800px"
+                        width="85%">
+                        <Span>새 게시물 만들기</Span>
+                        <SecondBox>
+                            <Img />
+                            <TextArea></TextArea>
+                        </SecondBox>
+                    </InnerContainer> :
+                    <InnerContainer>
+                        <Span>새 게시물 만들기</Span>
+                        <Box>
+                            <input
+                                ref={fileRef}
+                                style={{ display: "none" }}
+                                type="file"
+                                accept=".png, .jpeg, .jpg"
+                                onChange={onChange} />
+                            <Btn onClick={onClick}>파일 선택</Btn>
+                        </Box>
+                    </InnerContainer>
+                }
             </Container>
         </>
     );
