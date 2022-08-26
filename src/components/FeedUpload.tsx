@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import UserName from "./User/FindMe";
 
 const Full = styled.div`
     height: 100vh;
     width:100vw;
-    background:black;
-    opacity: 80%;
+    background:${props => props.theme.textColor};
+    opacity: 50%;
     position:fixed;
     top:0;
     left:0;
@@ -41,7 +42,7 @@ const InnerContainer = styled.div<iInnerContainer>`
     width:${props => props.width};
 
     border-radius:3%;
-    background:white;
+    background:${props => props.theme.bgColor};
     z-index: 3;
     justify-self:center;
     display:flex;
@@ -50,13 +51,13 @@ const InnerContainer = styled.div<iInnerContainer>`
     overflow: hidden;
 `;
 const Span = styled.span`
+    color:${props => props.theme.textColor};
     width:100%;
-    padding-bottom:5px;
+    padding-bottom:10px;
     margin-top:10px;
     font-size:18px;
-    border-bottom:1px solid rgba(0, 0, 0, 0.2);
+    border-bottom:1px solid rgba(138, 124, 124, 0.562);
     text-align: center;
-    color: black;
 `;
 const Box = styled.div`
     height:100%;
@@ -74,6 +75,11 @@ const SecondBox = styled.div`
     overflow: hidden;
 `;
 
+const FlexBox = styled.div`
+    display:flex;
+    flex-direction:column;
+`;
+
 const Btn = styled.button`
     background-color: ${props => props.theme.accentColor};
     height: 30px;
@@ -86,13 +92,21 @@ interface iForm {
 const Img = styled.image`
     height:100%;
     width:100%;
-    background-color:gray;
+    background-color:#788cc2;
+`;
+const NameTage = styled.span`
+    color:${props => props.theme.textColor};
+    padding:10px;
 `;
 const TextArea = styled.textarea`
     border:0;
+    background:${props => props.theme.bgColor};
+    height:100%;
+    padding:10px;
 `;
 
 function FeedUpload() {
+    const myname = UserName();
     const fileRef = useRef<HTMLInputElement>(null);
     const onClick = () => {
         fileRef.current?.click();
@@ -125,7 +139,10 @@ function FeedUpload() {
                         <Span>새 게시물 만들기</Span>
                         <SecondBox>
                             <Img />
-                            <TextArea></TextArea>
+                            <FlexBox>
+                                <NameTage>{myname}</NameTage>
+                                <TextArea></TextArea>
+                            </FlexBox>
                         </SecondBox>
                     </InnerContainer> :
                     <InnerContainer>
