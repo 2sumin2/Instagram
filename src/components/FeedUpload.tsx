@@ -103,6 +103,10 @@ const TextArea = styled.textarea`
     background:${props => props.theme.bgColor};
     height:100%;
     padding:10px;
+    resize:none;
+    :focus{
+        outline:none;
+    }
 `;
 
 function FeedUpload() {
@@ -141,7 +145,7 @@ function FeedUpload() {
                             <Img />
                             <FlexBox>
                                 <NameTage>{myname}</NameTage>
-                                <TextArea></TextArea>
+                                <TextArea placeholder="문구 입력..."></TextArea>
                             </FlexBox>
                         </SecondBox>
                     </InnerContainer> :
