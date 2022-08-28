@@ -129,10 +129,9 @@ function FeedUpload() {
     }
     const onChangeTextarea = (event: { target: { value: any; }; }) => {
         var word = "";
-        console.log(event.target.value.length);
-        for (var i = 0; i < event.target.value.length; i++) {
-            if (event.target.value[i] === "#") {
-                for (var j = 1; event.target.value[i + j] !== " "; j++) {
+        for (var i = 1; i < event.target.value.length; i++) {
+            if (event.target.value[i - 1] === "#") {
+                for (var j = 0; event.target.value[i + j] !== " " && i + j < event.target.value.length; j++) {
                     word += event.target.value[i + j];
                 }
             }
