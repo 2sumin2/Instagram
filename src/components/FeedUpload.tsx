@@ -128,15 +128,15 @@ function FeedUpload() {
         setSubmit(true);
     }
     const onChangeTextarea = (event: { target: { value: any; }; }) => {
-        var word = "";
         for (var i = 1; i < event.target.value.length; i++) {
             if (event.target.value[i - 1] === "#") {
+                var word = "";
                 for (var j = 0; event.target.value[i + j] !== " " && i + j < event.target.value.length; j++) {
                     word += event.target.value[i + j];
                 }
+                console.log(word);
             }
         }
-        console.log(word);
     }
     useEffect(() => {
         console.log(formState);
