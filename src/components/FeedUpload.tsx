@@ -89,7 +89,7 @@ const Btn = styled.button`
 interface iForm {
     files?: FileList | null;
 }
-const Img = styled.image`
+const Img = styled.img`
     height:100%;
     width:100%;
     background-color:#788cc2;
@@ -117,7 +117,7 @@ function FeedUpload() {
     };
     const [submit, setSubmit] = useState(false);
     const [formState, setFormState] = useState<iForm>();
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files?.length) {
             return;
         }
@@ -126,6 +126,18 @@ function FeedUpload() {
             files: event.target.files
         }));
         setSubmit(true);
+    }
+    const onChangeTextarea = (event: { target: { value: any; }; }) => {
+        var word = "";
+        console.log(event.target.value.length);
+        for (var i = 0; i < event.target.value.length; i++) {
+            if (event.target.value[i] === "#") {
+                for (var j = 1; event.target.value[i + j] !== " "; j++) {
+                    word += event.target.value[i + j];
+                }
+            }
+        }
+        console.log(word);
     }
     useEffect(() => {
         console.log(formState);
@@ -145,7 +157,9 @@ function FeedUpload() {
                             <Img />
                             <FlexBox>
                                 <NameTage>{myname}</NameTage>
-                                <TextArea placeholder="문구 입력..."></TextArea>
+                                <TextArea
+                                    placeholder="문구 입력..."
+                                    onChange={onChangeTextarea} />
                             </FlexBox>
                         </SecondBox>
                     </InnerContainer> :
@@ -157,7 +171,7 @@ function FeedUpload() {
                                 style={{ display: "none" }}
                                 type="file"
                                 accept=".png, .jpeg, .jpg"
-                                onChange={onChange} />
+                                onChange={onChangeInput} />
                             <Btn onClick={onClick}>파일 선택</Btn>
                         </Box>
                     </InnerContainer>
