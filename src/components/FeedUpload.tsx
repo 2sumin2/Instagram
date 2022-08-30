@@ -108,6 +108,15 @@ const TextArea = styled.textarea`
         outline:none;
     }
 `;
+const TagSearch = styled.div`
+    background:${props => props.theme.bgColor};
+    border-top:1px solid rgba(138, 124, 124, 0.562);
+    height:100%;
+    padding:10px;
+    overflow: auto;
+    display:flex;
+    flex-direction:column;
+`;
 
 function FeedUpload() {
     const myname = UserName();
@@ -127,14 +136,20 @@ function FeedUpload() {
         }));
         setSubmit(true);
     }
+    var [word, setWord] = useState("");
     const onChangeTextarea = (event: { target: { value: any; }; }) => {
+        var localWord = "";
         for (var i = 1; i < event.target.value.length; i++) {
             if (event.target.value[i - 1] === "#") {
-                var word = "";
+                localWord = "";
                 for (var j = 0; event.target.value[i + j] !== " " && i + j < event.target.value.length; j++) {
-                    word += event.target.value[i + j];
+                    localWord += event.target.value[i + j];
                 }
-                console.log(word);
+                console.log(localWord);
+                setWord(localWord);
+            }
+            if (event.target.value[i - 1] === " ") {
+                setWord("");
             }
         }
     }
@@ -159,6 +174,7 @@ function FeedUpload() {
                                 <TextArea
                                     placeholder="문구 입력..."
                                     onChange={onChangeTextarea} />
+                                {word !== "" ? <TagSearch>{word}</TagSearch> : null}
                             </FlexBox>
                         </SecondBox>
                     </InnerContainer> :
