@@ -85,7 +85,7 @@ const PhotoInfoBox = styled.div`
     width:100%;
     height:100%;
     display:flex;
-    flex-direction: column;
+    flex-direction: column;    
 `;
 const CommentBox = styled.div`
     padding: 5px;
@@ -95,6 +95,7 @@ const TagBox = styled.div`
     display: flex;
     padding: 5px;
     height: max-content;
+    border-bottom:1px solid rgba(138, 124, 124, 0.562);
 `;
 const Icon = styled.img`
     height:20px;
@@ -161,14 +162,11 @@ function Feed() {
                             </UserInfoBox>
                             <PhotoInfoBox>
                                 <TagBox>
-                                    <Icon src={tagIcon} />
-                                    # example
+                                    #postInfo #area
                                 </TagBox>
                                 <CommentBox>
-                                    <Icon src={commentIcon} />
-                                    (comment: example)
+                                    comment area
                                 </CommentBox>
-
                                 <Form>
                                     <Input placeholder="댓글 달기" />
                                     <Button>게시</Button>
@@ -187,12 +185,10 @@ function Feed() {
                         <SideContainer maxWidth="100%" height="200px">
                             <PhotoInfoBox>
                                 <TagBox>
-                                    <Icon src={tagIcon} />
-                                    # example
+                                    #postInfo #area
                                 </TagBox>
                                 <CommentBox>
-                                    <Icon src={commentIcon} />
-                                    (comment: example)
+                                    comment area
                                 </CommentBox>
                                 <Form>
                                     <Input placeholder="댓글 달기" />

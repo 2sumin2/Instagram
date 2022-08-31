@@ -85,6 +85,7 @@ const Btn = styled.button`
     height: 30px;
     width:100px;
     color: ${props => props.theme.bgColor};
+    font-weight:600;
 `;
 interface iForm {
     files?: FileList | null;
@@ -117,7 +118,11 @@ const TagSearch = styled.div`
     display:flex;
     flex-direction:column;
 `;
-
+const UploadBtn = styled(Btn)`
+    margin:10px;
+    width:80px;
+    align-self:flex-end;
+`;
 function FeedUpload() {
     const myname = UserName();
     const fileRef = useRef<HTMLInputElement>(null);
@@ -175,6 +180,7 @@ function FeedUpload() {
                                     placeholder="문구 입력..."
                                     onChange={onChangeTextarea} />
                                 {word !== "" ? <TagSearch>{word}</TagSearch> : null}
+                                <UploadBtn>업로드</UploadBtn>
                             </FlexBox>
                         </SecondBox>
                     </InnerContainer> :

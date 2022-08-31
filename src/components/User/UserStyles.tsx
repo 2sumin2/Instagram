@@ -90,4 +90,5 @@ export const Submit = styled.button`
     width:100px;
     color: ${props => props.theme.bgColor};
     justify-self: right;
+    font-weight:600;
 `;
