@@ -1,11 +1,12 @@
 import { gql, useMutation } from "@apollo/client";
 import styled from "styled-components";
 import UserName, { UserStatement, UserEmail, UserIntro, UserWebSite } from "./FindMe";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Content, EditImg, Form, GridBox, ItemInput, ItemInputDisabled, ItemSpan, Menu, Submit, Textarea, UserImg } from "./UserStyles";
 import GetToken from "../GetToken";
+import { create } from 'ipfs-http-client'
 
 interface IMenuItem {
     fontWeight?: string;
@@ -60,6 +61,7 @@ const MODIFY_MUTATION = gql`
 
 function EditUser() {
     const [option, setOption] = useState(0);
+    const fileRef = useRef<HTMLInputElement>(null);
     const userstatement = UserStatement();
     var username = UserName();
     const useremail = UserEmail();
@@ -136,6 +138,27 @@ function EditUser() {
             window.location.reload();
         };
     };
+    const SelectImageBtn = () => {
+        fileRef.current?.click();
+    };
+    const [fileUrl, setFileUrl] = useState(``);
+    const client = create({ url: 'https://ipfs.io:5001/api/v0' });
+    const SelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (!event.target.files?.length) {
+            return;
+        }
+        const file = event.target.files[0];
+        try {
+            const added = client.add(file);
+            console.log(added);
+            const url = `https://ipfs.io/Inspacegram/${useremail}/profile`;
+            setFileUrl(url);
+            console.log(fileUrl);
+        } catch (error) {
+            console.log('Error uploading file: ', error);
+        }
+    };
+
     return (
         <>
             <GetToken />
@@ -152,7 +175,13 @@ function EditUser() {
                                 <UserImg></UserImg>
                                 <div>
                                     <ItemSpan>{username}</ItemSpan>
-                                    <EditImg>프로필 사진 바꾸기</EditImg>
+                                    <input
+                                        ref={fileRef}
+                                        style={{ display: "none" }}
+                                        type="file"
+                                        accept=".png, .jpeg, .jpg"
+                                        onChange={SelectImage} />
+                                    <EditImg onClick={SelectImageBtn}>프로필 사진 바꾸기</EditImg>
                                 </div>
                             </GridBox>
                             <Form onSubmit={handleSubmit(onSubmit)}>
