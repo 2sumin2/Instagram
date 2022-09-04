@@ -141,22 +141,11 @@ function EditUser() {
     const SelectImageBtn = () => {
         fileRef.current?.click();
     };
-    const [fileUrl, setFileUrl] = useState(``);
-    const client = create({ url: 'https://ipfs.io:5001/api/v0' });
     const SelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files?.length) {
             return;
         }
         const file = event.target.files[0];
-        try {
-            const added = client.add(file);
-            console.log(added);
-            const url = `https://ipfs.io/Inspacegram/${useremail}/profile`;
-            setFileUrl(url);
-            console.log(fileUrl);
-        } catch (error) {
-            console.log('Error uploading file: ', error);
-        }
     };
 
     return (
