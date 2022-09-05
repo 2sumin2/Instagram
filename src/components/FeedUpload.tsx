@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { BooleanLiteral } from "typescript";
 import UserName from "./User/FindMe";
 
 const Full = styled.div`
@@ -123,6 +124,7 @@ const UploadBtn = styled(Btn)`
     width:80px;
     align-self:flex-end;
 `;
+
 function FeedUpload() {
     const myname = UserName();
     const fileRef = useRef<HTMLInputElement>(null);
@@ -158,6 +160,9 @@ function FeedUpload() {
             }
         }
     }
+    const PostUpload = () => {
+        window.location.reload();
+    };
     useEffect(() => {
         console.log(formState);
     }, [formState]);
@@ -180,7 +185,7 @@ function FeedUpload() {
                                     placeholder="문구 입력..."
                                     onChange={onChangeTextarea} />
                                 {word !== "" ? <TagSearch>{word}</TagSearch> : null}
-                                <UploadBtn>업로드</UploadBtn>
+                                <UploadBtn onClick={PostUpload}>업로드</UploadBtn>
                             </FlexBox>
                         </SecondBox>
                     </InnerContainer> :

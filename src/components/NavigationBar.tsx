@@ -251,3 +251,7 @@ function NavigationBar() {
     );
 }
 export default NavigationBar;
+
+function UploadWindow(arg0: boolean) {
+    throw new Error("Function not implemented.");
+}
