@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import plusIcon from "../../image/plus.png";
-import { Icon } from "../Navigation/NavigationBar";
+import { Icon } from "./NavigationBar";
 import styled from "styled-components";
 import UserName from "../User/FindMe";
 
@@ -149,7 +149,7 @@ const TagSearch = styled.div`
     flex-direction:column;
 `;
 
-function Upload() {
+function UploadFeed() {
     const [uploadbox, setUploadbox] = useState(false);
     const toggleUploadBox = () => {
         setUploadbox(!uploadbox);
@@ -249,4 +249,4 @@ function Upload() {
     );
 };
 
-export default Upload;
+export default UploadFeed;

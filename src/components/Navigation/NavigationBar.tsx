@@ -3,7 +3,7 @@ import homeIcon from "../../image/home.png";
 import exploreIcon from "../../image/explore.png";
 import userIcon from "../../image/user.png";
 import sendIcon from "../../image/send.png";
-import Upload from "../Upload/Upload";
+import Upload from "./UploadFeed";
 import { Link } from "react-router-dom";
 import { useQuery as useReactQuery } from "react-query";
 import { Key, ReactChild, ReactFragment, ReactPortal, useState } from "react";
