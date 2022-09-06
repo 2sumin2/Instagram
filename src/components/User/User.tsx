@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import NavigationBar from "../NavigationBar";
+import NavigationBar from "../Navigation/NavigationBar";
 import UserName from "./FindMe";
 import GetToken from "../GetToken";
 import Me from "./Me";

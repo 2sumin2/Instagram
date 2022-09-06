@@ -1,18 +1,17 @@
 import styled from "styled-components";
-import homeIcon from "../image/home.png";
-import exploreIcon from "../image/explore.png";
-import userIcon from "../image/user.png";
-import sendIcon from "../image/send.png";
-import Upload from "./Upload/Upload";
+import homeIcon from "../../image/home.png";
+import exploreIcon from "../../image/explore.png";
+import userIcon from "../../image/user.png";
+import sendIcon from "../../image/send.png";
+import Upload from "../Upload/Upload";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { isLightAtom } from "../atoms";
-import Switch from "react-switch";
 import { useQuery as useReactQuery } from "react-query";
 import { Key, ReactChild, ReactFragment, ReactPortal, useState } from "react";
-import UserName from "./User/FindMe";
+import UserName from "../User/FindMe";
 import { gql, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+import SwitchThemes from "./SwitchThemes";
+import Search from "./Search";
 
 
 const ContainerBox = styled.div`
@@ -66,12 +65,6 @@ const Input = styled.input`
     color:black;
     border: 0;
     border-radius: 5px;
-`;
-const SwitchBox = styled.div`
-    display:flex;
-    justify-content: right;
-    align-items: center;
-    margin-left: 5px;
 `;
 
 const SerachingBox = styled.div`
@@ -131,11 +124,7 @@ const SEARCH_QUERY = gql`
 
 function NavigationBar() {
     const navigate = useNavigate();
-    const [isLight, setLightAtom] = useRecoilState(isLightAtom);
     const username = UserName();
-    const onChange = () => {
-        setLightAtom((props) => !props);
-    };
     const getWidth = () => {
         return window.innerWidth;
     };
@@ -168,33 +157,7 @@ function NavigationBar() {
                     </ItemContainer>
                     <ItemContainer>
                         {
-                            width ?
-                                width > 800 ? (
-                                    <>
-                                        <form>
-                                            <Input
-                                                type="text"
-                                                placeholder="검색"
-                                                onChange={onChangeKeyword}
-                                                onBlur={() => {
-                                                    setTimeout(() => { setKeywordChange(false) }, 3000);
-                                                }} />
-                                        </form>
-                                        {keywordChange ?
-                                            <SerachingBox>
-                                                {
-                                                    data?.search?.ok && data?.search?.count === 0 ?
-                                                        <ResultNone>검색 결과 없음</ResultNone> :
-                                                        data?.search?.users.map((data: { [x: string]: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) => data['username'] === username ? null :
-                                                            <ResultBox key={index} onClick={() => { navigate(`/user/${data['username']}`); setKeywordChange(true); }}>{data['username']}</ResultBox>)
-                                                }
-                                            </SerachingBox>
-                                            : null}
-
-                                    </>
-                                )
-                                    : null
-                                : null
+                            width && width > 800 ? <Search /> : null
                         }
                     </ItemContainer>
                     <ItemContainer>
@@ -207,21 +170,7 @@ function NavigationBar() {
                         <Link to={`/user/${username}`}>
                             <Icon src={userIcon} />
                         </Link>
-                        <SwitchBox>
-                            <Switch
-                                onChange={onChange}
-                                checked={isLight}
-                                handleDiameter={13}
-                                height={18}
-                                width={40}
-                                onColor={"#fcedee"}
-                                offColor={"#341941"}
-                                uncheckedIcon={false}
-                                checkedIcon={false}
-                                onHandleColor={"#341941"}
-                                offHandleColor={"#fcedee"}
-                            />
-                        </SwitchBox>
+                        <SwitchThemes />
                     </ItemContainer>
                 </Container>
             </ContainerBox>
@@ -229,7 +178,3 @@ function NavigationBar() {
     );
 }
 export default NavigationBar;
-
-function UploadWindow(arg0: boolean) {
-    throw new Error("Function not implemented.");
-}

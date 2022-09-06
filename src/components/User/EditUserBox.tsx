@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import NavigationBar from "../NavigationBar";
+import NavigationBar from "../Navigation/NavigationBar";
 import styled from "styled-components";
 import { ContainerBox } from "./UserStyles";
 import EditUser from "./EditUser";

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Feed from "./Feed";
 import GetToken from "./GetToken";
-import NavigationBar from "./NavigationBar";
+import NavigationBar from "./Navigation/NavigationBar";
 
 const FeedContainer = styled.div`
     display:flex;
