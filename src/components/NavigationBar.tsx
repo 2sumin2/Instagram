@@ -3,13 +3,12 @@ import homeIcon from "../image/home.png";
 import exploreIcon from "../image/explore.png";
 import userIcon from "../image/user.png";
 import sendIcon from "../image/send.png";
-import plusIcon from "../image/plus.png";
+import Upload from "./Upload/Upload";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { isLightAtom } from "../atoms";
 import Switch from "react-switch";
 import { useQuery as useReactQuery } from "react-query";
-import FeedUpload from "./FeedUpload";
 import { Key, ReactChild, ReactFragment, ReactPortal, useState } from "react";
 import UserName from "./User/FindMe";
 import { gql, useQuery } from "@apollo/client";
@@ -49,7 +48,7 @@ const Title = styled.span`
     color:white;
     cursor:pointer;
 `;
-const Icon = styled.img`
+export const Icon = styled.img`
     height:25px;
     width:25px;
     margin: 0 10px;
@@ -74,16 +73,7 @@ const SwitchBox = styled.div`
     align-items: center;
     margin-left: 5px;
 `;
-const CloseBtn = styled.button`
-    color:white;
-    background:inherit;
-    border:0;
-    position:fixed;
-    top:80px;
-    right:15px;
-    font-size:30px;
-    z-index: 2;
-`;
+
 const SerachingBox = styled.div`
     background:#b3b3b3;
     border-radius: 10px;
@@ -141,7 +131,6 @@ const SEARCH_QUERY = gql`
 
 function NavigationBar() {
     const navigate = useNavigate();
-    const [uploadbox, setUploadbox] = useState(false);
     const [isLight, setLightAtom] = useRecoilState(isLightAtom);
     const username = UserName();
     const onChange = () => {
@@ -157,9 +146,6 @@ function NavigationBar() {
             refetchInterval: 100,
         }
     );
-    const toggleUploadBox = () => {
-        setUploadbox(!uploadbox);
-    };
     const [keyword, setKeyword] = useState("");
     const [keywordChange, setKeywordChange] = useState(false);
     const onChangeKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -216,7 +202,7 @@ function NavigationBar() {
                             <Icon src={homeIcon} />
                         </Link>
                         <Icon src={sendIcon} />
-                        <Icon src={plusIcon} onClick={toggleUploadBox} />
+                        <Upload />
                         <Icon src={exploreIcon} />
                         <Link to={`/user/${username}`}>
                             <Icon src={userIcon} />
@@ -239,14 +225,6 @@ function NavigationBar() {
                     </ItemContainer>
                 </Container>
             </ContainerBox>
-            {
-                uploadbox ? (
-                    <>
-                        <CloseBtn onClick={toggleUploadBox}>X</CloseBtn>
-                        <FeedUpload />
-                    </>
-                ) : null
-            }
         </>
     );
 }
