@@ -3,6 +3,9 @@ import plusIcon from "../../image/plus.png";
 import { Icon } from "./NavigationBar";
 import styled from "styled-components";
 import UserName from "../User/FindMe";
+import { useForm } from "react-hook-form";
+import { gql, useMutation } from "@apollo/client";
+import { UserId } from "../User/FindMe";
 
 const CloseBtn = styled.button`
     color:white;
@@ -111,6 +114,7 @@ const Box = styled.div`
 `;
 interface iForm {
     files?: FileList | null;
+    caption?: string;
 };
 const SecondBox = styled.div`
     height:100%;
@@ -148,12 +152,24 @@ const TagSearch = styled.div`
     display:flex;
     flex-direction:column;
 `;
+const CREATE_POST_MUTATION = gql`
+    mutation CreatePost(
+        $userId: Int!, 
+        $file: String!,
+        $caption: String) {
+        createPost(
+            userId: $userId, 
+            file: $file,
+            caption: $caption) {
+            ok
+            error
+        }
+    }
+`;
 
 function UploadFeed() {
+    const myId = UserId();
     const [uploadbox, setUploadbox] = useState(false);
-    const toggleUploadBox = () => {
-        setUploadbox(!uploadbox);
-    };
     const [submit, setSubmit] = useState(false);
     const fileRef = useRef<HTMLInputElement>(null);
     const onClick = () => {
@@ -170,10 +186,6 @@ function UploadFeed() {
         }));
         setSubmit(true);
     }
-    const postUpload = () => {
-        setUploadbox(!uploadbox);
-        setSubmit(false);
-    };
     const myname = UserName();
     var [word, setWord] = useState("");
     const onChange = (event: { target: { value: any; }; }) => {
@@ -191,13 +203,45 @@ function UploadFeed() {
                 setWord("");
             }
         }
-    }
-    useEffect(() => {
-        console.log(formState);
-    }, [formState]);
+    };
+    const toggleUploadBox = () => {
+        setUploadbox(!uploadbox);
+    };
+    const onClickBtn = () => {
+        setUploadbox(!uploadbox);
+        setSubmit(false);
+    };
+    const { register, handleSubmit, getValues, reset } = useForm<iForm>();
+    const onCompleted = (data: any) => {
+        const {
+            createPost: { ok, error },
+        } = data;
+        if (!ok) {
+            alert(error);
+        }
+    };
+    const [createPost] = useMutation(CREATE_POST_MUTATION, {
+        onCompleted,
+    });
+    const UploadPost = () => {
+        onClickBtn();
+        const { caption } = getValues();
+        reset();
+        if (caption) {
+            createPost({
+                variables: { userId: myId, file: "", caption }
+            });
+        }
+        else {
+            createPost({
+                variables: { userId: myId, file: "" }
+            });
+        }
+        console.log(formState?.files, caption);
+    };
     return (
         <>
-            <Icon src={plusIcon} onClick={toggleUploadBox} />
+            <Icon src={plusIcon} onClick={onClickBtn} />
             {
                 uploadbox ? (
                     <>
@@ -225,20 +269,23 @@ function UploadFeed() {
                                     height="75vw"
                                     maxWidth="800px"
                                     width="85%">
-                                    <TopBox flexDirection="row">
-                                        <Span marginLeft="80px">새 게시물 만들기</Span>
-                                        <UploadBtn onClick={postUpload}>업로드</UploadBtn>
-                                    </TopBox>
-                                    <SecondBox>
-                                        <Img />
-                                        <FlexBox>
-                                            <NameTage>{myname}</NameTage>
-                                            <TextArea
-                                                placeholder="문구 입력..."
-                                                onChange={onChange} />
-                                            {word !== "" ? <TagSearch>{word}</TagSearch> : null}
-                                        </FlexBox>
-                                    </SecondBox>
+                                    <form onSubmit={handleSubmit(UploadPost)}>
+                                        <TopBox flexDirection="row">
+                                            <Span marginLeft="80px">새 게시물 만들기</Span>
+                                            <UploadBtn>업로드</UploadBtn>
+                                        </TopBox>
+                                        <SecondBox>
+                                            <Img />
+                                            <FlexBox>
+                                                <NameTage>{myname}</NameTage>
+                                                <TextArea {...register("caption")}
+                                                    placeholder="문구 입력..."
+                                                    onChange={onChange} />
+                                                {word !== "" ? <TagSearch>{word}</TagSearch> : null}
+                                            </FlexBox>
+                                        </SecondBox>
+                                    </form>
+
                                 </InnerContainer>
                             }
                         </Container>
