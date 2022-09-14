@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import UserName, { UserIntro, UserWebSite } from "./FindMe";
+import UserName, { UserIntro, UserWebSite, UserId } from "./FindMe";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
 import { Btn, ContentContainer, InfoBox, InnerContainer, Item, ItemBox, ItemBoxNew, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
@@ -51,9 +51,26 @@ const SEE_FOLLOWING_QUERY = gql`
     }
 `;
 
+const SEE_POSTS_QUERY = gql`
+    query SeePosts($userId: Int!) {
+        seePosts(userId: $userId) {
+            ok
+            error
+            posts {
+                id
+                userId
+                file
+                caption
+            }
+            totalPosts
+        }
+    }
+`;
+
 function Me() {
     const navigate = useNavigate();
     const myname = UserName();
+    const myId = UserId();
     const myIntro = UserIntro();
     const mywebsite = UserWebSite();
     const getWidth = () => {
@@ -74,6 +91,11 @@ function Me() {
     const { data: following } = gqlQuery(SEE_FOLLOWING_QUERY, {
         variables: {
             username: myname
+        },
+    });
+    const { data: posts } = gqlQuery(SEE_POSTS_QUERY, {
+        variables: {
+            userId: myId
         },
     });
     const [showFollowers, setShowFollowers] = useState(false);

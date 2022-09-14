@@ -234,7 +234,7 @@ function UploadFeed() {
         }
         else {
             createPost({
-                variables: { userId: myId, file: "" }
+                variables: { userId: myId, file: "", caption: "" }
             });
         }
         console.log(formState?.files, caption);
