@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import UserName, { UserIntro, UserWebSite, UserId } from "./FindMe";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
-import { Btn, ContentContainer, InfoBox, InnerContainer, Item, ItemBox, ItemBoxNew, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
+import { Btn, ContentContainer, InfoBox, InnerContainer, Item, ItemBox, NothingSpan, ItemBoxNew, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
 import { gql, useQuery as gqlQuery } from "@apollo/client";
 import styled from "styled-components";
 import { UserBox, UserItem, TriangleOne, TriangleTwo } from "./Other";
@@ -93,7 +93,7 @@ function Me() {
             username: myname
         },
     });
-    const { data: posts } = gqlQuery(SEE_POSTS_QUERY, {
+    const { data: posts, loading: postsLoading } = gqlQuery(SEE_POSTS_QUERY, {
         variables: {
             userId: myId
         },
@@ -164,12 +164,12 @@ function Me() {
                 </UserInfo>
             </InnerContainer>
             <ContentContainer>
-                <PhotoBox>
-                    {posts?.seePosts?.totalPosts !== 0 ?
-                        posts?.seePosts?.posts.map((data: any) => (
+                {postsLoading ? <NothingSpan>Loading...</NothingSpan> : posts?.seePosts?.totalPosts !== 0 ?
+                    <PhotoBox>
+                        {posts?.seePosts?.posts.map((data: any) => (
                             <Photo />
-                        )) : null}
-                </PhotoBox>
+                        ))}
+                    </PhotoBox> : <NothingSpan>게시물 없음</NothingSpan>}
             </ContentContainer>
         </>
     );

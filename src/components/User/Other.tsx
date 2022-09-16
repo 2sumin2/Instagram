@@ -236,7 +236,7 @@ function Other() {
             username: username
         },
     });
-    const { data: posts } = gqlQuery(SEE_POSTS_QUERY, {
+    const { data: posts, loading: postsLoading } = gqlQuery(SEE_POSTS_QUERY, {
         variables: {
             userId: user?.search?.users[0]['id']
         },
@@ -312,8 +312,7 @@ function Other() {
                 </UserInfo>
             </InnerContainer>
             <ContentContainer>
-
-                {posts?.seePosts?.totalPosts !== 0 ?
+                {postsLoading ? <NothingSpan>Loading...</NothingSpan> : posts?.seePosts?.totalPosts !== 0 ?
                     <PhotoBox>
                         {posts?.seePosts?.posts.map((data: any) => (
                             <Photo />
