@@ -79,7 +79,7 @@ export const Username = styled(Item)`
 export const PhotoBox = styled.div`
     height: max-content;
     display:grid;
-    grid-template-columns: repeat(3, minmax(max-content,245px));
+    grid-template-columns: repeat(3, minmax(20px,245px));
     grid-template-rows: max-content auto;
     grid-gap:8px;
     padding-bottom: 100px;
@@ -111,6 +111,11 @@ export const Logo = styled(InnerContainer)`
     justify-content: center;
     border-top: 2px solid #9e9e9e;
     color: ${props => props.theme.accentColor};
+`;
+export const NothingSpan = styled.span`
+    color: ${props => props.theme.textColor};
+    font-size:13px;
+    padding:100px;
 `;
 
 function User() {

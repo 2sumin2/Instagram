@@ -100,7 +100,6 @@ function Me() {
     });
     const [showFollowers, setShowFollowers] = useState(false);
     const [showFollowing, setShowFollowing] = useState(false);
-
     return (
         <>
             <InnerContainer>
@@ -118,7 +117,7 @@ function Me() {
                     <InfoBox>
                         <ItemBox>
                             <Item><div>게시물</div></Item>
-                            <Item>0</Item>
+                            <Item>{posts?.seePosts?.totalPosts}</Item>
                         </ItemBox>
                         <ItemBoxNew onClick={() => { setShowFollowers(!showFollowers) }}>
                             <Item><div>팔로워</div></Item>
@@ -166,14 +165,10 @@ function Me() {
             </InnerContainer>
             <ContentContainer>
                 <PhotoBox>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
+                    {posts?.seePosts?.totalPosts !== 0 ?
+                        posts?.seePosts?.posts.map((data: any) => (
+                            <Photo />
+                        )) : null}
                 </PhotoBox>
             </ContentContainer>
         </>

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import Photo from "./Photo";
 import { useQuery } from "react-query";
-import { ContentContainer, InfoBox, InnerContainer, Item, ItemBox, ItemBoxNew, PhotoBox, SpanItem, UserImg, UserInfo, Username } from "./User";
+import { ContentContainer, InfoBox, InnerContainer, Item, ItemBox, ItemBoxNew, PhotoBox, SpanItem, UserImg, UserInfo, Username, NothingSpan } from "./User";
 import { gql, useMutation, useQuery as gqlQuery } from "@apollo/client";
 import styled from "styled-components";
 import UserName from "./FindMe";
@@ -165,6 +165,21 @@ const SEE_FOLLOWING_QUERY = gql`
         }
     }
 `;
+const SEE_POSTS_QUERY = gql`
+    query SeePosts($userId: Int!) {
+        seePosts(userId: $userId) {
+            ok
+            error
+            posts {
+                id
+                userId
+                file
+                caption
+            }
+            totalPosts
+        }
+    }
+`;
 
 function Other() {
     const navigate = useNavigate();
@@ -193,7 +208,7 @@ function Other() {
         follow({
             variables: {
                 myname,
-                othername: user.search.users[0]['username']
+                othername: username
             }
         });
         window.location.reload();
@@ -206,19 +221,24 @@ function Other() {
         unfollow({
             variables: {
                 myname,
-                othername: user.search.users[0]['username']
+                othername: username
             }
         });
         window.location.reload();
     };
     const { data: followers } = gqlQuery(SEE_FOLLOWERS_QUERY, {
         variables: {
-            username: user?.search?.users[0]['username']
+            username: username
         },
     });
     const { data: following } = gqlQuery(SEE_FOLLOWING_QUERY, {
         variables: {
-            username: user?.search?.users[0]['username']
+            username: username
+        },
+    });
+    const { data: posts } = gqlQuery(SEE_POSTS_QUERY, {
+        variables: {
+            userId: user?.search?.users[0]['id']
         },
     });
     const [areFollowing, setAreFollowing] = useState(false);
@@ -245,7 +265,7 @@ function Other() {
                     <InfoBox>
                         <ItemBox>
                             <Item><div>게시물</div></Item>
-                            <Item>0</Item>
+                            <Item>{posts?.seePosts?.totalPosts}</Item>
                         </ItemBox>
                         <ItemBoxNew onClick={() => { setShowFollowers(!showFollowers) }}>
                             <Item><div>팔로워</div></Item>
@@ -292,16 +312,14 @@ function Other() {
                 </UserInfo>
             </InnerContainer>
             <ContentContainer>
-                <PhotoBox>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                    <Photo></Photo>
-                </PhotoBox>
+
+                {posts?.seePosts?.totalPosts !== 0 ?
+                    <PhotoBox>
+                        {posts?.seePosts?.posts.map((data: any) => (
+                            <Photo />
+                        ))}
+                    </PhotoBox> : <NothingSpan>게시물 없음</NothingSpan>}
+
             </ContentContainer>
         </>
     );
