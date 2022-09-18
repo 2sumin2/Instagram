@@ -91,6 +91,7 @@ function EditUser() {
             alert(error);
         }
         if (ok) {
+            const username = state.username;
             navigate(`/user/${username}`);
             window.location.reload();
         }
