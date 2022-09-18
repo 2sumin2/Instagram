@@ -10,19 +10,23 @@ import { useRecoilValue } from "recoil";
 import { useState } from "react";
 
 interface IContainer {
-    'flex-direction': string;
+    flexDirection: string;
     width: string;
+    height?: string;
     maxwidth: string;
+    minHeight?: string;
 }
 const Container = styled.div<IContainer>`
     background-color: ${props => props.theme.bgColor};
     width:${props => props.width};
     max-width:${props => props.maxwidth};
-    height:550px;
+    height:${props => props.height};
+    min-width:${props => props.minHeight};
+    min-height:max-content;
     border: 2px solid ${props => props.theme.textColor};
     color: black;
     display:flex;
-    flex-direction:${props => props["flex-direction"]};
+    flex-direction:${props => props.flexDirection};
     border-radius:20px;
     overflow: hidden;
     margin:20px;
@@ -37,11 +41,13 @@ const ImgContainer = styled.div`
     align-items: center;
 `;
 interface ISideContainer {
-    'maxWidth': string,
-    'height': string
+    maxWidth: string,
+    height: string,
+    minHeight?: string,
 }
 const SideContainer = styled.div<ISideContainer>`
     max-width:${props => props.maxWidth};
+    min-height:${props => props.minHeight};
     width: 100%;
     height: ${props => props.height};
     display: flex;
@@ -54,7 +60,7 @@ const UserInfoBox = styled.div`
     width:100%;
     align-items: center;
     padding:10px;
-    border-left: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
     .event{
         
         animation: scale 1s alternate;
@@ -78,12 +84,12 @@ const UserName = styled.div`
     color: ${props => props.theme.textColor};
 `;
 const PhotoInfoBox = styled.div`
-    background-color: ${props => props.theme.bgColor};
+    background-color: inherit;
     color: ${props => props.theme.textColor};
-    border: 1px solid lightgray;
     padding: 5px;
     width:100%;
     height:100%;
+    min-height:max-content;
     display:flex;
     flex-direction: column;    
 `;
@@ -96,7 +102,7 @@ const TagBox = styled.div`
     padding: 5px;
     height: max-content;
     padding-bottom: 10px;
-    border-bottom:1px solid rgba(211, 211, 211, 0.562);
+    border-bottom:1px solid rgba(151, 150, 150, 0.362);
 `;
 const Icon = styled.img`
     height:20px;
@@ -106,18 +112,23 @@ const LikeIcon = styled(Icon)`
     cursor:pointer;    
 `;
 const Form = styled.form`
-    border: 1px solid lightgray;
-    height:50px;
+    border: 1px solid rgba(151, 150, 150, 0.362);
     display: flex;
     border-radius: 15px;
-    overflow: hidden;
+    min-height:max-content;
+    margin-bottom:5px;
 `;
 const Input = styled.input`
-    background-color: ${props => props.theme.bgColor};
+    background-color: inherit;
     color: ${props => props.theme.textColor};
-    padding: 10px 10px;
+    padding: 0 10px;
+    height:35px;
     border:0;
     width:100%;
+    outline:none;
+    &:focus{
+        outline:none;
+    }
 `;
 const Button = styled.button`
     background-color:transparent;
@@ -157,7 +168,7 @@ function Feed({ file, caption, username }: iFeed) {
         <>
             {width ?
                 width > 1050 ? (
-                    <Container flex-direction={`row`} width="100%" maxwidth="900px">
+                    <Container flexDirection="row" width="100%" maxwidth="900px" height="550px">
                         <ImgContainer>(image: {file})</ImgContainer>
                         <SideContainer maxWidth="320px" height="100%">
                             <UserInfoBox>
@@ -178,14 +189,14 @@ function Feed({ file, caption, username }: iFeed) {
                         </SideContainer>
                     </Container>
                 ) : (
-                    <Container flex-direction={`column`} width="100%" maxwidth="420px">
+                    <Container flexDirection="column" width="100%" maxwidth="420px" height="600px">
                         <UserInfoBox>
                             <UserImg />
                             <UserName>{username}</UserName>
                             <LikeIcon className={event} src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={onClick} />
                         </UserInfoBox>
                         <ImgContainer>(image:  {file})</ImgContainer>
-                        <SideContainer maxWidth="100%" height="200px">
+                        <SideContainer maxWidth="100%" height="250px" minHeight="max-content">
                             <PhotoInfoBox>
                                 {caption ? <TagBox>{caption}</TagBox> : null}
                                 <CommentBox>
@@ -199,7 +210,8 @@ function Feed({ file, caption, username }: iFeed) {
                         </SideContainer>
                     </Container>
                 )
-                : null}
+                : null
+            }
         </>
     );
 }
