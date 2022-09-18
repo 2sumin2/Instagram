@@ -237,7 +237,7 @@ function UploadFeed() {
                 variables: { userId: myId, file: "", caption: "" }
             });
         }
-        console.log(formState?.files, caption);
+        window.location.reload();
     };
     return (
         <>

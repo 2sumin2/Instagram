@@ -103,7 +103,7 @@ function Me() {
     return (
         <>
             <InnerContainer>
-                <UserImg>UserImg</UserImg>
+                <UserImg></UserImg>
                 <UserInfo>
                     <InfoBox>
                         <div>

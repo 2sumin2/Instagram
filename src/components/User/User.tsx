@@ -31,6 +31,7 @@ export const InnerContainer = styled(Container)`
     flex-direction:row;
     background-color: inherit;
     border-bottom: 2px solid #9e9e9e;
+    align-items: center;
 `;
 export const UserImg = styled.div`
     width:28vw;

@@ -53,7 +53,6 @@ const UserInfoBox = styled.div`
     width:100%;
     align-items: center;
     padding:10px;
-    justify-content: flex-start;
     border-left: 1px solid lightgray;
     .event{
         
@@ -68,11 +67,11 @@ const UserInfoBox = styled.div`
 const UserImg = styled.div`
     height:30px;
     width:30px;
+    margin-right:15px;
     background-color:lightgray;
     border-radius: 50%;
 `;
 const UserName = styled.div`
-    padding-left: 15px;
     width:100%;
     font-size: 20px;
     color: ${props => props.theme.textColor};
@@ -95,12 +94,13 @@ const TagBox = styled.div`
     display: flex;
     padding: 5px;
     height: max-content;
-    border-bottom:1px solid rgba(138, 124, 124, 0.562);
+    padding-bottom: 10px;
+    border-bottom:1px solid rgba(211, 211, 211, 0.562);
 `;
 const Icon = styled.img`
     height:20px;
     width:20px;
-    margin-right:10px;
+    margin-right:15px;
 `;
 const LikeIcon = styled(Icon)`
     cursor:pointer;    
@@ -166,9 +166,7 @@ function Feed({ file, caption, username }: iFeed) {
                                 <LikeIcon className={event} src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={onClick} />
                             </UserInfoBox>
                             <PhotoInfoBox>
-                                <TagBox>
-                                    {caption}
-                                </TagBox>
+                                {caption ? <TagBox>{caption}</TagBox> : null}
                                 <CommentBox>
                                     comment area
                                 </CommentBox>
@@ -180,7 +178,7 @@ function Feed({ file, caption, username }: iFeed) {
                         </SideContainer>
                     </Container>
                 ) : (
-                    <Container flex-direction={`column`} width="500px">
+                    <Container flex-direction={`column`} width="420px">
                         <UserInfoBox>
                             <UserImg />
                             <UserName>{username}</UserName>
@@ -189,9 +187,7 @@ function Feed({ file, caption, username }: iFeed) {
                         <ImgContainer>(image:  {file})</ImgContainer>
                         <SideContainer maxWidth="100%" height="200px">
                             <PhotoInfoBox>
-                                <TagBox>
-                                    {caption}
-                                </TagBox>
+                                {caption ? <TagBox>{caption}</TagBox> : null}
                                 <CommentBox>
                                     comment area
                                 </CommentBox>
