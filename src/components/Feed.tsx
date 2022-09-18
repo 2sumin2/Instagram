@@ -18,7 +18,7 @@ const Container = styled.div<IContainer>`
     background-color: ${props => props.theme.bgColor};
     width:${props => props.width};
     max-width:${props => props.maxwidth};
-    height:650px;
+    height:550px;
     border: 2px solid ${props => props.theme.textColor};
     color: black;
     display:flex;
@@ -157,7 +157,7 @@ function Feed({ file, caption, username }: iFeed) {
         <>
             {width ?
                 width > 1050 ? (
-                    <Container flex-direction={`row`} width="100%" maxwidth="1050px">
+                    <Container flex-direction={`row`} width="100%" maxwidth="900px">
                         <ImgContainer>(image: {file})</ImgContainer>
                         <SideContainer maxWidth="320px" height="100%">
                             <UserInfoBox>
