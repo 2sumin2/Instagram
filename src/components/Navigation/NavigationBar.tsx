@@ -46,6 +46,7 @@ const Title = styled.span`
     font-size: 37px;
     color:white;
     cursor:pointer;
+    user-select:none;
 `;
 export const Icon = styled.img`
     height:25px;
@@ -54,49 +55,14 @@ export const Icon = styled.img`
     :nth-child(2n+1){
         cursor: pointer;
     }
+    user-select:none;
 `;
-const Input = styled.input`
-    align-self: stretch;
-    padding-left:15px;
-    height: 37px;
-    width: 250px;;
-    background-color: #ececec;
-    color:black;
-    border: 0;
-    border-radius: 5px;
-`;
-
-const SerachingBox = styled.div`
-    background:#b3b3b3;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px 1px #b3b3b3;
-    color:${props => props.theme.textColor};
-    width: 250px;
-    max-height: 300px;
-    overflow: auto;
-    position:fixed;
-    z-index: 5;
-    top:60px;
-    display:grid;
-    grid-row: auto;
-    gap:1px;
-    -ms-overflow-style: none;
-    scrollbar-width: none; 
-    &::-webkit-scrollbar {
-    display: none; 
-    }
-`;
-
 const ResultBox = styled.button`
     width: 100%;
     height: 50px;
     background:inherit;
     border:0;
     background:${props => props.theme.bgColor};
-`;
-
-const ResultNone = styled(ResultBox)`
-    cursor:default;
 `;
 
 const SEARCH_QUERY = gql`

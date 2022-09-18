@@ -101,6 +101,7 @@ const TagBox = styled.div`
 const Icon = styled.img`
     height:20px;
     width:20px;
+    user-select:none;
 `;
 const LikeIcon = styled(Icon)`
     cursor:pointer;    
