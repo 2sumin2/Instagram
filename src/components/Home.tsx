@@ -10,6 +10,11 @@ const FeedContainer = styled.div`
     align-items: center;
     padding: 100px;
 `;
+const NothingSpan = styled.span`
+    color: ${props => props.theme.textColor};
+    font-size:13px;
+    padding:100px;
+`;
 
 const SEE_POSTS_QUERY = gql`
     query SeePosts {
@@ -35,7 +40,7 @@ function Home() {
             <GetToken />
             <NavigationBar />
             <FeedContainer>
-                {posts?.seePosts?.posts.map((data: any, index: any) => (
+                {postsLoading ? <NothingSpan>Loading...</NothingSpan> : posts?.seePosts?.posts.map((data: any, index: any) => (
                     <Feed key={index} file={data?.file} caption={data?.caption} username={data?.username} />
                 ))}
             </FeedContainer>
