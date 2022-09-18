@@ -47,9 +47,9 @@ interface iInnerContainer {
     width?: string;
 }
 const InnerContainer = styled.div<iInnerContainer>`
-    max-height: 700px;
+    max-height: 600px;
     height: 75vw;
-    max-width:700px;
+    max-width:600px;
     width:65%;
 
     max-height: ${props => props.maxHeight};
@@ -142,6 +142,10 @@ const TextArea = styled.textarea`
         outline:none;
     }
 `;
+const Form = styled.form`
+    width:100%;
+    height:100%;
+`;
 const TagSearch = styled.div`
     background:${props => props.theme.bgColor};
     border-top:1px solid rgba(138, 124, 124, 0.562);
@@ -203,7 +207,9 @@ function UploadFeed() {
             }
         }
     };
-    const toggleUploadBox = () => {
+    const closedBtn = () => {
+        reset();
+        setWord("");
         setUploadbox(!uploadbox);
     };
     const onClickBtn = () => {
@@ -244,7 +250,7 @@ function UploadFeed() {
             {
                 uploadbox ? (
                     <>
-                        <CloseBtn onClick={toggleUploadBox}>X</CloseBtn>
+                        <CloseBtn onClick={closedBtn}>X</CloseBtn>
                         <Full></Full>
                         <Container>
                             {!submit ?
@@ -268,7 +274,7 @@ function UploadFeed() {
                                     height="75vw"
                                     maxWidth="800px"
                                     width="85%">
-                                    <form onSubmit={handleSubmit(UploadPost)}>
+                                    <Form onSubmit={handleSubmit(UploadPost)}>
                                         <TopBox flexDirection="row">
                                             <Span marginLeft="80px">새 게시물 만들기</Span>
                                             <UploadBtn>업로드</UploadBtn>
@@ -283,7 +289,7 @@ function UploadFeed() {
                                                 {word !== "" ? <TagSearch>{word}</TagSearch> : null}
                                             </FlexBox>
                                         </SecondBox>
-                                    </form>
+                                    </Form>
 
                                 </InnerContainer>
                             }
