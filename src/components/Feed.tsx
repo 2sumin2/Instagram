@@ -12,11 +12,12 @@ import { useState } from "react";
 interface IContainer {
     'flex-direction': string;
     width: string;
+    maxwidth: string;
 }
 const Container = styled.div<IContainer>`
     background-color: ${props => props.theme.bgColor};
-    max-width:1050px;
     width:${props => props.width};
+    max-width:${props => props.maxwidth};
     height:650px;
     border: 2px solid ${props => props.theme.textColor};
     color: black;
@@ -48,7 +49,7 @@ const SideContainer = styled.div<ISideContainer>`
     overflow: hidden;
 `;
 const UserInfoBox = styled.div`
-    height:50px;
+    height:45px;
     display: flex;
     width:100%;
     align-items: center;
@@ -73,7 +74,7 @@ const UserImg = styled.div`
 `;
 const UserName = styled.div`
     width:100%;
-    font-size: 20px;
+    font-size: 17px;
     color: ${props => props.theme.textColor};
 `;
 const PhotoInfoBox = styled.div`
@@ -100,7 +101,6 @@ const TagBox = styled.div`
 const Icon = styled.img`
     height:20px;
     width:20px;
-    margin-right:15px;
 `;
 const LikeIcon = styled(Icon)`
     cursor:pointer;    
@@ -157,7 +157,7 @@ function Feed({ file, caption, username }: iFeed) {
         <>
             {width ?
                 width > 1050 ? (
-                    <Container flex-direction={`row`} width="100%">
+                    <Container flex-direction={`row`} width="100%" maxwidth="1050px">
                         <ImgContainer>(image: {file})</ImgContainer>
                         <SideContainer maxWidth="320px" height="100%">
                             <UserInfoBox>
@@ -178,7 +178,7 @@ function Feed({ file, caption, username }: iFeed) {
                         </SideContainer>
                     </Container>
                 ) : (
-                    <Container flex-direction={`column`} width="420px">
+                    <Container flex-direction={`column`} width="100%" maxwidth="420px">
                         <UserInfoBox>
                             <UserImg />
                             <UserName>{username}</UserName>

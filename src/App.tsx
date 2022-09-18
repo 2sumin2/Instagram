@@ -26,6 +26,7 @@ time, mark, audio, video {
   border: 0;
   font-size: 100%;
   font: inherit;
+  font-size:14px;
   vertical-align: baseline;
   font-family: 'Source Sans Pro', sans-serif;
 }
@@ -44,6 +45,10 @@ body{
 }
 button{
   cursor: pointer;
+  font-size:12px;
+}
+input{
+  font-size:13px;
 }
 `;
 

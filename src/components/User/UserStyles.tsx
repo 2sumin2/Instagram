@@ -53,12 +53,15 @@ export const Form = styled.form`
     grid-template-rows: repeat(5, minmax(max-content, 50px));
     gap:20px;
 `;
-
-export const ItemSpan = styled.span`
+interface iItemSpan {
+    fontsize?: string;
+}
+export const ItemSpan = styled.span<iItemSpan>`
     text-align: right;
     height:40px;
     align-self: center;
     min-width:max-content;
+    font-size:${props => props.fontsize};
 `;
 
 export const ItemInput = styled.input`

@@ -47,7 +47,7 @@ export const UserInfo = styled.div`
     max-width:500px;
     display:flex;
     flex-direction: column;
-    padding: 10px 50px 50px 5vw;
+    padding: 50px 50px 50px 5vw;
 `;
 export const InfoBox = styled.div`
     display:flex;
@@ -66,16 +66,16 @@ export const ItemBoxNew = styled(ItemBox)`
 export const Item = styled.span`
     padding-bottom:10px;
     padding-right:10px;
-    font-size: 15px;
     min-width:max-content;
     width: 50px;
     div{
         font-weight:600;
     }
+    font-size: 16px;
 `;
 export const Username = styled(Item)`
     padding-right:20px;
-    font-size: 28px;
+    font-size: 23px;
 `;
 export const PhotoBox = styled.div`
     height: max-content;
@@ -115,7 +115,7 @@ export const Logo = styled(InnerContainer)`
 `;
 export const NothingSpan = styled.span`
     color: ${props => props.theme.textColor};
-    font-size:13px;
+    font-size:12px;
     padding:100px;
 `;
 

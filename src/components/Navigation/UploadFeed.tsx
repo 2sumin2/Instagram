@@ -89,7 +89,6 @@ const Span = styled.span<iSpan>`
     padding-bottom:10px;
     margin-top:10px;
     margin-left:${props => props.marginLeft};
-    font-size:18px;
     text-align: center;
 `;
 const UploadBtn = styled.button`

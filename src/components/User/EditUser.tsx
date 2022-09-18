@@ -18,7 +18,6 @@ const MenuItem = styled.button<IMenuItem>`
     padding-top:20px;
     width:100%;
     text-align: center;
-    font-size:15px;
     font-weight: ${props => props.fontWeight};
     &:hover {
         opacity: 50%;
@@ -165,7 +164,7 @@ function EditUser() {
                             <GridBox>
                                 <UserImg></UserImg>
                                 <div>
-                                    <ItemSpan>{username}</ItemSpan>
+                                    <ItemSpan fontsize="20px">{username}</ItemSpan>
                                     <input
                                         ref={fileRef}
                                         style={{ display: "none" }}

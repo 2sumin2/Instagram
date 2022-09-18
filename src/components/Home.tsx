@@ -8,11 +8,11 @@ const FeedContainer = styled.div`
     display:flex;
     flex-direction: column;
     align-items: center;
-    padding: 100px;
+    padding: 100px 0;
 `;
 const NothingSpan = styled.span`
     color: ${props => props.theme.textColor};
-    font-size:13px;
+    font-size:10px;
     padding:100px;
 `;
 

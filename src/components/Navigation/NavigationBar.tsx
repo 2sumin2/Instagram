@@ -58,7 +58,6 @@ export const Icon = styled.img`
 const Input = styled.input`
     align-self: stretch;
     padding-left:15px;
-    font-size:15px;
     height: 37px;
     width: 250px;;
     background-color: #ececec;
