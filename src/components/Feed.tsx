@@ -10,59 +10,56 @@ import { useRecoilValue } from "recoil";
 import { useState } from "react";
 
 interface IContainer {
-    flexDirection: string;
-    width: string;
-    height?: string;
+    flexDirection?: string;
+    width?: string;
     maxwidth: string;
-    minHeight?: string;
+    height?: string;
 }
-const Container = styled.div<IContainer>`
-    background-color: ${props => props.theme.bgColor};
+const Flex = styled.div`
+    display:flex;
+    flex-direction:column;
+`;
+const Container = styled(Flex) <IContainer>`
+    background-color: inherit;
+
     width:${props => props.width};
     max-width:${props => props.maxwidth};
     height:${props => props.height};
-    min-width:${props => props.minHeight};
     min-height:max-content;
+
     border: 2px solid ${props => props.theme.textColor};
-    color: black;
-    display:flex;
     flex-direction:${props => props.flexDirection};
     border-radius:20px;
-    overflow: hidden;
     margin:20px;
 `;
 
-const ImgContainer = styled.div`
+const ImgContainer = styled(Flex)`
     background-color: lightgray;
     min-height:400px;
     width:100%;
-    display: flex;
     justify-content: center;
     align-items: center;
 `;
 interface ISideContainer {
-    maxWidth: string,
-    height: string,
+    maxWidth?: string,
+    height?: string,
     minHeight?: string,
 }
-const SideContainer = styled.div<ISideContainer>`
-    max-width:${props => props.maxWidth};
-    min-height:${props => props.minHeight};
+const SideContainer = styled(Flex) <ISideContainer>`
     width: 100%;
+    max-width:${props => props.maxWidth};
     height: ${props => props.height};
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    min-height:max-content;
 `;
-const UserInfoBox = styled.div`
+const UserInfoBox = styled(Flex)`
     height:45px;
-    display: flex;
     width:100%;
+
+    flex-direction:row;
     align-items: center;
-    padding:10px;
+    padding: 0 10px;
     border-bottom: 1px solid lightgray;
     .event{
-        
         animation: scale 1s alternate;
     }
     @keyframes scale{
@@ -74,34 +71,31 @@ const UserInfoBox = styled.div`
 const UserImg = styled.div`
     height:30px;
     width:30px;
-    margin-right:15px;
     background-color:lightgray;
     border-radius: 50%;
 `;
 const UserName = styled.div`
+    padding-left:15px;
     width:100%;
-    font-size: 17px;
+    font-size: 16px;
     color: ${props => props.theme.textColor};
 `;
-const PhotoInfoBox = styled.div`
+const PhotoInfoBox = styled(Flex)`
     background-color: inherit;
     color: ${props => props.theme.textColor};
     padding: 5px;
     width:100%;
     height:100%;
-    min-height:max-content;
-    display:flex;
-    flex-direction: column;    
+    min-height:max-content; 
 `;
 const CommentBox = styled.div`
-    padding: 5px;
+    padding: 10px 5px;
     height: 100%;
+    min-height:max-content;
 `;
-const TagBox = styled.div`
-    display: flex;
-    padding: 5px;
+const TagBox = styled(Flex)`
     height: max-content;
-    padding-bottom: 10px;
+    padding: 10px 5px;
     border-bottom:1px solid rgba(151, 150, 150, 0.362);
 `;
 const Icon = styled.img`
@@ -169,7 +163,7 @@ function Feed({ file, caption, username }: iFeed) {
             {width ?
                 width > 1050 ? (
                     <Container flexDirection="row" width="100%" maxwidth="900px" height="550px">
-                        <ImgContainer>(image: {file})</ImgContainer>
+                        <ImgContainer>{file}</ImgContainer>
                         <SideContainer maxWidth="320px" height="100%">
                             <UserInfoBox>
                                 <UserImg />
@@ -178,9 +172,7 @@ function Feed({ file, caption, username }: iFeed) {
                             </UserInfoBox>
                             <PhotoInfoBox>
                                 {caption ? <TagBox>{caption}</TagBox> : null}
-                                <CommentBox>
-                                    comment area
-                                </CommentBox>
+                                <CommentBox>comment...</CommentBox>
                                 <Form>
                                     <Input placeholder="댓글 달기" />
                                     <Button>게시</Button>
@@ -189,19 +181,17 @@ function Feed({ file, caption, username }: iFeed) {
                         </SideContainer>
                     </Container>
                 ) : (
-                    <Container flexDirection="column" width="100%" maxwidth="420px" height="600px">
+                    <Container flexDirection="column" width="100%" maxwidth="420px">
                         <UserInfoBox>
                             <UserImg />
                             <UserName>{username}</UserName>
                             <LikeIcon className={event} src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={onClick} />
                         </UserInfoBox>
-                        <ImgContainer>(image:  {file})</ImgContainer>
-                        <SideContainer maxWidth="100%" height="250px" minHeight="max-content">
+                        <ImgContainer>{file}</ImgContainer>
+                        <SideContainer maxWidth="100%" >
                             <PhotoInfoBox>
                                 {caption ? <TagBox>{caption}</TagBox> : null}
-                                <CommentBox>
-                                    comment area
-                                </CommentBox>
+                                <CommentBox>comment...</CommentBox>
                                 <Form>
                                     <Input placeholder="댓글 달기" />
                                     <Button>게시</Button>

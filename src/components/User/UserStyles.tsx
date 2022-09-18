@@ -88,9 +88,9 @@ export const Textarea = styled.textarea`
 //max - width: 450px;
 export const Submit = styled.button`
     background: ${props => props.theme.accentColor};
-    margin-top:50px;
-    height:35px;
-    width:100px;
+    margin-top:10px;
+    height:30px;
+    width:60px;
     color: ${props => props.theme.bgColor};
     justify-self: right;
     font-weight:600;

@@ -19,6 +19,7 @@ const MenuItem = styled.button<IMenuItem>`
     width:100%;
     text-align: center;
     font-weight: ${props => props.fontWeight};
+    font-size:13px;
     &:hover {
         opacity: 50%;
     }
