@@ -52,12 +52,12 @@ const SideContainer = styled(Flex) <ISideContainer>`
     min-height:max-content;
 `;
 const UserInfoBox = styled(Flex)`
-    height:45px;
+    height:50px;
     width:100%;
 
     flex-direction:row;
     align-items: center;
-    padding: 0 10px;
+    padding: 13px;
     border-bottom: 1px solid lightgray;
     .event{
         animation: scale 1s alternate;
@@ -68,16 +68,21 @@ const UserInfoBox = styled(Flex)`
         100%  { transform: scale(1) }
     }
 `;
-const UserImg = styled.div`
-    height:30px;
-    width:30px;
+const Icon = styled.img`
+    height:20px;
+    width:20px;
+    user-select:none;
+`;
+const UserImg = styled(Icon)`
+    height:32px;
+    width:32px;
     background-color:lightgray;
     border-radius: 50%;
 `;
 const UserName = styled.div`
-    padding-left:15px;
-    width:100%;
-    font-size: 16px;
+    margin-left:15px;
+    width:77%;
+    font-size: 15px;
     color: ${props => props.theme.textColor};
 `;
 const PhotoInfoBox = styled(Flex)`
@@ -97,11 +102,6 @@ const TagBox = styled.div`
     height: max-content;
     padding: 10px 5px;
     border-bottom:1px solid rgba(151, 150, 150, 0.362);
-`;
-const Icon = styled.img`
-    height:20px;
-    width:20px;
-    user-select:none;
 `;
 const LikeIcon = styled(Icon)`
     cursor:pointer;    
