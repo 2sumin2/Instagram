@@ -126,8 +126,13 @@ const Button = styled.button`
     color: ${props => props.theme.accentColor};
     font-weight: 600;
 `;
+interface iFeed {
+    file?: string;
+    caption?: string;
+    username?: string;
+};
 
-function Feed() {
+function Feed({ file, caption, username }: iFeed) {
     const [like, setLike] = useState(false);
     const isLight = useRecoilValue(isLightAtom);
     const getWidth = () => {
@@ -153,16 +158,16 @@ function Feed() {
             {width ?
                 width > 1050 ? (
                     <Container flex-direction={`row`} width="100%">
-                        <ImgContainer>(image: example)</ImgContainer>
+                        <ImgContainer>(image: {file})</ImgContainer>
                         <SideContainer maxWidth="320px" height="100%">
                             <UserInfoBox>
                                 <UserImg />
-                                <UserName>username</UserName>
+                                <UserName>{username}</UserName>
                                 <LikeIcon className={event} src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={onClick} />
                             </UserInfoBox>
                             <PhotoInfoBox>
                                 <TagBox>
-                                    #postInfo #area
+                                    {caption}
                                 </TagBox>
                                 <CommentBox>
                                     comment area
@@ -178,14 +183,14 @@ function Feed() {
                     <Container flex-direction={`column`} width="500px">
                         <UserInfoBox>
                             <UserImg />
-                            <UserName>username</UserName>
+                            <UserName>{username}</UserName>
                             <LikeIcon className={event} src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={onClick} />
                         </UserInfoBox>
-                        <ImgContainer>(image: example)</ImgContainer>
+                        <ImgContainer>(image:  {file})</ImgContainer>
                         <SideContainer maxWidth="100%" height="200px">
                             <PhotoInfoBox>
                                 <TagBox>
-                                    #postInfo #area
+                                    {caption}
                                 </TagBox>
                                 <CommentBox>
                                     comment area

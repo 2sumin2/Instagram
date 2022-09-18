@@ -314,8 +314,8 @@ function Other() {
             <ContentContainer>
                 {postsLoading ? <NothingSpan>Loading...</NothingSpan> : posts?.seePosts?.totalPosts !== 0 ?
                     <PhotoBox>
-                        {posts?.seePosts?.posts.map((data: any) => (
-                            <Photo />
+                        {posts?.seePosts?.posts.map((data: any, index: any) => (
+                            <Photo key={index} />
                         ))}
                     </PhotoBox> : <NothingSpan>게시물 없음</NothingSpan>}
 

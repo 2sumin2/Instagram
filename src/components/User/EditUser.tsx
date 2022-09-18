@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import styled from "styled-components";
-import UserName, { UserStatement, UserEmail, UserIntro, UserWebSite } from "./FindMe";
+import UserName, { UserStatement, UserEmail, UserIntro, UserWebSite, UserId } from "./FindMe";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +38,7 @@ interface IForm {
 
 const MODIFY_MUTATION = gql`
     mutation modify(
-        $email:String!, 
+        $id:Int!, 
         $statement:String, 
         $username:String, 
         $intro:String, 
@@ -46,7 +46,7 @@ const MODIFY_MUTATION = gql`
         $password:String,
         $newpassword:String){
         modify(
-            email:$email, 
+            id:$id, 
             username:$username, 
             statement:$statement, 
             intro:$intro, 
@@ -63,6 +63,7 @@ function EditUser() {
     const [option, setOption] = useState(0);
     const fileRef = useRef<HTMLInputElement>(null);
     const userstatement = UserStatement();
+    const userId = UserId();
     var username = UserName();
     const useremail = UserEmail();
     const userintro = UserIntro();
@@ -115,18 +116,18 @@ function EditUser() {
             }
             else {
                 modify({
-                    variables: { email: useremail, password, newpassword }
+                    variables: { id: userId, password, newpassword }
                 });
             }
         }
         else if (name && name !== username) {
             modify({
-                variables: { email: useremail, username: name, statement, intro, website }
+                variables: { id: userId, username: name, statement, intro, website }
             });
         }
         else {
             modify({
-                variables: { email: useremail, statement, intro, website }
+                variables: { id: userId, statement, intro, website }
             });
         }
 
