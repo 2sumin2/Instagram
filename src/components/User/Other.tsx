@@ -74,6 +74,7 @@ export const UserItem = styled.button`
     background:inherit;
     border:0;
     background:${props => props.theme.bgColor};
+    font-size:13px;
 `;
 
 const SEARCH_QUERY = gql`

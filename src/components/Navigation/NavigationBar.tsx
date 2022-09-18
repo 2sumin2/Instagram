@@ -6,7 +6,7 @@ import sendIcon from "../../image/send.png";
 import Upload from "./UploadFeed";
 import { Link } from "react-router-dom";
 import { useQuery as useReactQuery } from "react-query";
-import { Key, ReactChild, ReactFragment, ReactPortal, useState } from "react";
+import { useState } from "react";
 import UserName from "../User/FindMe";
 import { gql, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";

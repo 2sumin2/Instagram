@@ -48,6 +48,7 @@ const ResultBox = styled.button`
     background:inherit;
     border:0;
     background:${props => props.theme.bgColor};
+    font-size:13px;
 `;
 const ResultNone = styled(ResultBox)`
     cursor:default;

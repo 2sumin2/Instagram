@@ -31,6 +31,7 @@ const Container = styled(Flex) <IContainer>`
     flex-direction:${props => props.flexDirection};
     border-radius:20px;
     margin:20px;
+    overflow: hidden;
 `;
 
 const ImgContainer = styled(Flex)`
@@ -82,8 +83,9 @@ const UserImg = styled(Icon)`
 const UserName = styled.div`
     margin-left:15px;
     width:77%;
-    font-size: 15px;
+    font-size: 20px;
     color: ${props => props.theme.textColor};
+    font-family: 'BenchNine', sans-serif;
 `;
 const PhotoInfoBox = styled(Flex)`
     background-color: inherit;
@@ -206,10 +208,10 @@ function Feed({ file, caption, username }: iFeed) {
                         <SideContainer maxWidth="100%" >
                             <PhotoInfoBox>
                                 {caption ?
-                                    caption.length < 30 ? <TagBox>{caption}</TagBox> :
+                                    caption.length < 35 ? <TagBox>{caption}</TagBox> :
                                         more ?
                                             <TagBox> {caption}<More onClick={onClickMore}>...간략히</More></TagBox> :
-                                            <TagBox> {caption.slice(0, 30)}<More onClick={onClickMore}>...더보기</More></TagBox>
+                                            <TagBox> {caption.slice(0, 35)}<More onClick={onClickMore}>...더보기</More></TagBox>
                                     : null}
                                 <CommentBox>comment...</CommentBox>
                                 <Form>

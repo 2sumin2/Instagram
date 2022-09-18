@@ -75,7 +75,8 @@ export const Item = styled.span`
 `;
 export const Username = styled(Item)`
     padding-right:20px;
-    font-size: 23px;
+    font-size: 26px;
+    font-family: 'BenchNine', sans-serif;
 `;
 export const PhotoBox = styled.div`
     height: max-content;
