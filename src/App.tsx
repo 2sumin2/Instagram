@@ -47,6 +47,7 @@ button{
   cursor: pointer;
   font-size:11px;
   border:0;
+  background:inherit;
 }
 input{
   font-size:12px;

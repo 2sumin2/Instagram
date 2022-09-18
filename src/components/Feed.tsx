@@ -93,7 +93,7 @@ const CommentBox = styled.div`
     height: 100%;
     min-height:max-content;
 `;
-const TagBox = styled(Flex)`
+const TagBox = styled.div`
     height: max-content;
     padding: 10px 5px;
     border-bottom:1px solid rgba(151, 150, 150, 0.362);
@@ -127,9 +127,14 @@ const Input = styled.input`
 const Button = styled.button`
     background-color:transparent;
     min-width: max-content;
-    border: 0;
     color: ${props => props.theme.accentColor};
     font-weight: 600;
+`;
+const More = styled.button`
+    background-color:transparent;
+    width: max-content;
+    opacity:60%;
+    user-select:none;
 `;
 interface iFeed {
     file?: string;
@@ -158,6 +163,10 @@ function Feed({ file, caption, username }: iFeed) {
         setLike(!like);
         event === "event" ? setEvent("") : setEvent("event");
     }
+    const [more, setMore] = useState(false);
+    const onClickMore = () => {
+        setMore(!more);
+    };
     return (
         <>
             {width ?
@@ -171,7 +180,12 @@ function Feed({ file, caption, username }: iFeed) {
                                 <LikeIcon className={event} src={like ? redHeart : (isLight ? blackHeart : whiteHeart)} onClick={onClick} />
                             </UserInfoBox>
                             <PhotoInfoBox>
-                                {caption ? <TagBox>{caption}</TagBox> : null}
+                                {caption ?
+                                    caption.length < 30 ? <TagBox>{caption}</TagBox> :
+                                        more ?
+                                            <TagBox> {caption}<More onClick={onClickMore}>...간략히</More></TagBox> :
+                                            <TagBox> {caption.slice(0, 30)}<More onClick={onClickMore}>...더보기</More></TagBox>
+                                    : null}
                                 <CommentBox>comment...</CommentBox>
                                 <Form>
                                     <Input placeholder="댓글 달기" />
@@ -190,7 +204,12 @@ function Feed({ file, caption, username }: iFeed) {
                         <ImgContainer>{file}</ImgContainer>
                         <SideContainer maxWidth="100%" >
                             <PhotoInfoBox>
-                                {caption ? <TagBox>{caption}</TagBox> : null}
+                                {caption ?
+                                    caption.length < 30 ? <TagBox>{caption}</TagBox> :
+                                        more ?
+                                            <TagBox> {caption}<More onClick={onClickMore}>...간략히</More></TagBox> :
+                                            <TagBox> {caption.slice(0, 30)}<More onClick={onClickMore}>...더보기</More></TagBox>
+                                    : null}
                                 <CommentBox>comment...</CommentBox>
                                 <Form>
                                     <Input placeholder="댓글 달기" />
