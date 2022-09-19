@@ -26,7 +26,7 @@ time, mark, audio, video {
   border: 0;
   font-size: 100%;
   font: inherit;
-  font-size:13px;
+  font-size:14px;
   vertical-align: baseline;
   font-family: 'Source Sans Pro', sans-serif;
 }
@@ -45,12 +45,12 @@ body{
 }
 button{
   cursor: pointer;
-  font-size:11px;
+  font-size:12px;
   border:0;
   background:inherit;
 }
 input{
-  font-size:12px;
+  font-size:13px;
 }
 `;
 

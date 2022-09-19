@@ -68,14 +68,14 @@ export const Item = styled.span`
     padding-right:10px;
     min-width:max-content;
     width: 50px;
+    font-size: 16px;
     div{
         font-weight:600;
     }
-    font-size: 16px;
 `;
 export const Username = styled(Item)`
     padding-right:20px;
-    font-size: 26px;
+    font-size: 30px;
     font-family: 'BenchNine', sans-serif;
 `;
 export const PhotoBox = styled.div`

@@ -41,7 +41,7 @@ function Home() {
             <NavigationBar />
             <FeedContainer>
                 {postsLoading ? <NothingSpan>Loading...</NothingSpan> : posts?.seePosts?.posts.map((data: any, index: any) => (
-                    <Feed key={index} file={data?.file} caption={data?.caption} username={data?.username} />
+                    <Feed key={index} id={data?.id} file={data?.file} caption={data?.caption} username={data?.username} />
                 ))}
             </FeedContainer>
         </div>
