@@ -218,16 +218,16 @@ function Feed({ id, file, caption, username }: iFeed) {
                                     caption.length < 30 ?
                                         <>
                                             <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                            <TagBox>{caption}</TagBox>
+                                            <TagBox> <Like>{username}</Like> {caption}</TagBox>
                                         </> :
                                         more ?
                                             <>
                                                 <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                                <TagBox>{caption}<More onClick={onClickMore}>...간략히</More></TagBox>
+                                                <TagBox><Like>{username}</Like> {caption}<More onClick={onClickMore}>...간략히</More></TagBox>
                                             </> :
                                             <>
                                                 <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                                <TagBox>{caption.slice(0, 30)}<More onClick={onClickMore}>...더보기</More></TagBox>
+                                                <TagBox><Like>{username}</Like> {caption.slice(0, 30)}<More onClick={onClickMore}>...더보기</More></TagBox>
                                             </>
                                     : null}
                                 <CommentBox>comment...</CommentBox>
@@ -257,15 +257,15 @@ function Feed({ id, file, caption, username }: iFeed) {
                                     caption.length < 35 ?
                                         <>
                                             <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                            <TagBox>{caption}</TagBox></> :
+                                            <TagBox><Like>{username}</Like> {caption}</TagBox></> :
                                         more ?
                                             <>
                                                 <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                                <TagBox>{caption}<More onClick={onClickMore}>...간략히</More></TagBox>
+                                                <TagBox><Like>{username}</Like> {caption}<More onClick={onClickMore}>...간략히</More></TagBox>
                                             </> :
                                             <>
                                                 <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                                <TagBox>{caption.slice(0, 35)}<More onClick={onClickMore}>...더보기</More></TagBox>
+                                                <TagBox><Like>{username}</Like> {caption.slice(0, 35)}<More onClick={onClickMore}>...더보기</More></TagBox>
                                             </>
                                     : null}
                                 <CommentBox>comment...</CommentBox>
