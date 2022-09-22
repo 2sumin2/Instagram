@@ -8,7 +8,7 @@ import { useQuery } from "react-query";
 import { isLightAtom } from "../atoms";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
-import { gql, useQuery as gqlQuery } from "@apollo/client";
+import { gql, useQuery as gqlQuery, useMutation } from "@apollo/client";
 import { UserId } from "./User/FindMe";
 
 interface IContainer {
@@ -153,16 +153,25 @@ interface iFeed {
     username?: string;
 };
 const SEE_LIKES_QUERY = gql`
-    query SeeLikes($postId: Int!) {
-    seeLikes(postId: $postId) {
-        ok
-        error
-        likes {
-            id
+    query SeeLikes($postId: Int!, $userId: Int) {
+        seeLikes(postId: $postId, userId: $userId) {
+            ok
+            error
+            likes {
+                id
+            }
+            totalLikes
+            myLike
         }
-        totalLikes
-  }
-}
+    }
+`;
+const TOGGLE_LIKE_MUTATION = gql`
+    mutation ToggleLike($postId: Int!, $userId: Int!) {
+        toggleLike(postId: $postId, userId: $userId) {
+            ok
+            error
+        }
+    }
 `;
 
 function Feed({ id, file, caption, username }: iFeed) {
@@ -179,23 +188,48 @@ function Feed({ id, file, caption, username }: iFeed) {
             refetchInterval: 100,
         }
     );
-    const toggleLike = () => {
-        setLike(!like);
-    };
     const [event, setEvent] = useState("");
-    const onClick = () => {
-        setLike(!like);
-        event === "event" ? setEvent("") : setEvent("event");
-    }
     const [more, setMore] = useState(false);
     const onClickMore = () => {
         setMore(!more);
     };
-    const { data: likes } = gqlQuery(SEE_LIKES_QUERY, {
+    const { data: likes, loading: loadingLikes } = gqlQuery(SEE_LIKES_QUERY, {
         variables: {
-            postId: id
+            postId: id,
+            userId
         }
     });
+    const onCompleted = (data: any) => {
+        const {
+            toggleLike: { ok, error },
+        } = data;
+        if (!ok) {
+            alert(error);
+        }
+    };
+    const [toggleLike] = useMutation(TOGGLE_LIKE_MUTATION, {
+        onCompleted,
+    });
+    const [number, setNumber] = useState(0);
+    const onClick = () => {
+        setLike(!like);
+        event === "event" ? setEvent("") : setEvent("event");
+        toggleLike({
+            variables: { postId: id, userId }
+        });
+        if (like) {
+            setNumber(number - 1);
+        } else {
+            setNumber(number + 1);
+        }
+    }
+    useEffect(
+        () => {
+            if (likes?.seeLikes?.myLike) {
+                setLike(true);
+            }
+        }, [likes]
+    );
     return (
         <>
             {width ?
@@ -208,27 +242,18 @@ function Feed({ id, file, caption, username }: iFeed) {
                                 <UserName>{username}</UserName>
                                 <LikeIcon
                                     className={event}
-                                    src={like || likes?.seeLikes?.likes.map((data: any) => data.id).includes(userId)
+                                    src={like
                                         ? redHeart :
                                         (isLight ? blackHeart : whiteHeart)}
                                     onClick={onClick} />
                             </UserInfoBox>
                             <PhotoInfoBox>
+                                <Like>좋아요 {loadingLikes ? 0 : likes?.seeLikes?.totalLikes + number}개 </Like>
                                 {caption ?
                                     caption.length < 30 ?
-                                        <>
-                                            <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                            <TagBox> <Like>{username}</Like> {caption}</TagBox>
-                                        </> :
-                                        more ?
-                                            <>
-                                                <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                                <TagBox><Like>{username}</Like> {caption}<More onClick={onClickMore}>...간략히</More></TagBox>
-                                            </> :
-                                            <>
-                                                <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                                <TagBox><Like>{username}</Like> {caption.slice(0, 30)}<More onClick={onClickMore}>...더보기</More></TagBox>
-                                            </>
+                                        <TagBox> <Like>{username}</Like> {caption}</TagBox> : more ?
+                                            <TagBox><Like>{username}</Like> {caption}<More onClick={onClickMore}>...간략히</More></TagBox> :
+                                            <TagBox><Like>{username}</Like> {caption.slice(0, 30)}<More onClick={onClickMore}>...더보기</More></TagBox>
                                     : null}
                                 <CommentBox>comment...</CommentBox>
                                 <Form>
@@ -245,7 +270,7 @@ function Feed({ id, file, caption, username }: iFeed) {
                             <UserName>{username}</UserName>
                             <LikeIcon
                                 className={event}
-                                src={like || likes?.seeLikes?.likes.map((data: any) => data.id).includes(userId)
+                                src={like
                                     ? redHeart :
                                     (isLight ? blackHeart : whiteHeart)}
                                 onClick={onClick} />
@@ -253,20 +278,12 @@ function Feed({ id, file, caption, username }: iFeed) {
                         <ImgContainer>{file}</ImgContainer>
                         <SideContainer maxWidth="100%" >
                             <PhotoInfoBox>
+                                <Like>좋아요 {loadingLikes ? 0 : likes?.seeLikes?.totalLikes + number}개 </Like>
                                 {caption ?
                                     caption.length < 35 ?
-                                        <>
-                                            <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                            <TagBox><Like>{username}</Like> {caption}</TagBox></> :
-                                        more ?
-                                            <>
-                                                <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                                <TagBox><Like>{username}</Like> {caption}<More onClick={onClickMore}>...간략히</More></TagBox>
-                                            </> :
-                                            <>
-                                                <Like>좋아요 {likes?.seeLikes?.totalLikes}개 </Like>
-                                                <TagBox><Like>{username}</Like> {caption.slice(0, 35)}<More onClick={onClickMore}>...더보기</More></TagBox>
-                                            </>
+                                        <TagBox><Like>{username}</Like> {caption}</TagBox> : more ?
+                                            <TagBox><Like>{username}</Like> {caption}<More onClick={onClickMore}>...간략히</More></TagBox> :
+                                            <TagBox><Like>{username}</Like> {caption.slice(0, 35)}<More onClick={onClickMore}>...더보기</More></TagBox>
                                     : null}
                                 <CommentBox>comment...</CommentBox>
                                 <Form>
@@ -282,4 +299,5 @@ function Feed({ id, file, caption, username }: iFeed) {
         </>
     );
 }
+
 export default Feed;
