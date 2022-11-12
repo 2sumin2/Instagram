@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Content, EditImg, Form, GridBox, ItemInput, ItemInputDisabled, ItemSpan, Menu, Submit, Textarea, UserImg } from "./UserStyles";
 import GetToken from "../GetToken";
-import { create } from 'ipfs-http-client'
 
 interface IMenuItem {
     fontWeight?: string;

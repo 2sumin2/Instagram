@@ -3,7 +3,6 @@ import Feed from "./Feed";
 import GetToken from "./GetToken";
 import NavigationBar from "./Navigation/NavigationBar";
 import { gql, useQuery as gqlQuery } from "@apollo/client";
-
 const FeedContainer = styled.div`
     display:flex;
     flex-direction: column;

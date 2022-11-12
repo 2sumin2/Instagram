@@ -167,7 +167,7 @@ function Me() {
                 {postsLoading ? <NothingSpan>Loading...</NothingSpan> : posts?.seePosts?.totalPosts !== 0 ?
                     <PhotoBox>
                         {posts?.seePosts?.posts.map((data: any, index: any) => (
-                            <Photo key={index} />
+                            <Photo key={index} id={data?.id} file={data?.file} caption={data?.caption} username={data?.username} />
                         ))}
                     </PhotoBox> : <NothingSpan>게시물 없음</NothingSpan>}
             </ContentContainer>

@@ -8,11 +8,22 @@ const Img = styled.div`
     background-color: #8b8b8b;
     border-radius:5px;
     overflow: hidden;
+    img{
+        height:100%;
+        width:100%;
+        object-fit: cover;
+    }
 `;
+interface iPhoto {
+    id?: number;
+    file?: string;
+    caption?: string;
+    username?: string;
+};
 
-function Photo() {
+function Photo({ id, file, caption, username }: iPhoto) {
     return (
-        <Img></Img>
+        <Img><img src={file} /></Img>
     );
 };
 

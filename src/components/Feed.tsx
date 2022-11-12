@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import tagIcon from "../image/tag.png";
-import commentIcon from "../image/comment.png";
 import blackHeart from "../image/blackheart.png";
 import whiteHeart from "../image/whiteheart.png";
 import redHeart from "../image/redheart.png";
@@ -23,7 +21,6 @@ const Flex = styled.div`
 `;
 const Container = styled(Flex) <IContainer>`
     background-color: inherit;
-
     width:${props => props.width};
     max-width:${props => props.maxwidth};
     height:${props => props.height};
@@ -42,6 +39,12 @@ const ImgContainer = styled(Flex)`
     width:100%;
     justify-content: center;
     align-items: center;
+    img{
+        min-height:400px;
+        height:100%;
+        width:100%;
+        object-fit: cover;
+    }
 `;
 interface ISideContainer {
     maxWidth?: string,
@@ -235,7 +238,7 @@ function Feed({ id, file, caption, username }: iFeed) {
             {width ?
                 width > 1050 ? (
                     <Container flexDirection="row" width="100%" maxwidth="900px" height="550px">
-                        <ImgContainer>{file}</ImgContainer>
+                        <ImgContainer><img src={file} /></ImgContainer>
                         <SideContainer maxWidth="320px" height="100%">
                             <UserInfoBox>
                                 <UserImg />
@@ -275,7 +278,7 @@ function Feed({ id, file, caption, username }: iFeed) {
                                     (isLight ? blackHeart : whiteHeart)}
                                 onClick={onClick} />
                         </UserInfoBox>
-                        <ImgContainer>{file}</ImgContainer>
+                        <ImgContainer><img src={file} /></ImgContainer>
                         <SideContainer maxWidth="100%" >
                             <PhotoInfoBox>
                                 <Like>좋아요 {loadingLikes ? 0 : likes?.seeLikes?.totalLikes + number}개 </Like>

@@ -57,13 +57,6 @@ export const Icon = styled.img`
     }
     user-select:none;
 `;
-const ResultBox = styled.button`
-    width: 100%;
-    height: 50px;
-    background:inherit;
-    border:0;
-    background:${props => props.theme.bgColor};
-`;
 
 const SEARCH_QUERY = gql`
     query Search(
@@ -88,7 +81,6 @@ const SEARCH_QUERY = gql`
 `;
 
 function NavigationBar() {
-    const navigate = useNavigate();
     const username = UserName();
     const getWidth = () => {
         return window.innerWidth;
@@ -101,16 +93,6 @@ function NavigationBar() {
         }
     );
     const [keyword, setKeyword] = useState("");
-    const [keywordChange, setKeywordChange] = useState(false);
-    const onChangeKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setKeyword(event.target.value);
-        setKeywordChange(true);
-    };
-    const { data } = useQuery(SEARCH_QUERY, {
-        variables: {
-            keyword
-        },
-    });
     return (
         <>
             <ContainerBox>

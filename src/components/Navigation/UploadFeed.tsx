@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import plusIcon from "../../image/plus.png";
 import { Icon } from "./NavigationBar";
 import styled from "styled-components";
@@ -172,24 +172,32 @@ const CREATE_POST_MUTATION = gql`
 
 function UploadFeed() {
     const myId = UserId();
+    const myname = UserName();
     const [uploadbox, setUploadbox] = useState(false);
     const [submit, setSubmit] = useState(false);
     const fileRef = useRef<HTMLInputElement>(null);
     const onClick = () => {
         fileRef.current?.click();
     };
+
     const [formState, setFormState] = useState<iForm>();
+    const [imgUrl, setImgUrl] = useState("");
+    const now = new Date().getTime();
+    const fileName = myname + now;
     const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files?.length) {
             return;
         }
+        const fileUrl = URL.createObjectURL(event.target.files[0]);
+        console.log(fileUrl);
+        setImgUrl(fileUrl);
         setFormState((formData: any) => ({
             ...formData,
-            files: event.target.files
+            files: imgUrl
         }));
         setSubmit(true);
     }
-    const myname = UserName();
+
     var [word, setWord] = useState("");
     const onChange = (event: { target: { value: any; }; }) => {
         var localWord = "";
@@ -234,15 +242,14 @@ function UploadFeed() {
         reset();
         if (caption) {
             createPost({
-                variables: { userId: myId, file: "", caption }
+                variables: { userId: myId, file: fileName, caption }
             });
         }
         else {
             createPost({
-                variables: { userId: myId, file: "", caption: "" }
+                variables: { userId: myId, file: fileName, caption: "" }
             });
         }
-        window.location.reload();
     };
     return (
         <>
@@ -263,7 +270,7 @@ function UploadFeed() {
                                             ref={fileRef}
                                             style={{ display: "none" }}
                                             type="file"
-                                            accept=".png, .jpeg, .jpg"
+                                            accept=".png"
                                             onChange={onChangeInput} />
                                         <Btn onClick={onClick}>파일 선택</Btn>
                                     </Box>
@@ -277,10 +284,10 @@ function UploadFeed() {
                                     <Form onSubmit={handleSubmit(UploadPost)}>
                                         <TopBox flexDirection="row">
                                             <Span marginLeft="80px">새 게시물 만들기</Span>
-                                            <UploadBtn>업로드</UploadBtn>
+                                            <UploadBtn type="submit"><a href={imgUrl} download={fileName} onClick={UploadPost}>업로드</a></UploadBtn>
                                         </TopBox>
                                         <SecondBox>
-                                            <Img />
+                                            <Img src={imgUrl} />
                                             <FlexBox>
                                                 <NameTage>{myname}</NameTage>
                                                 <TextArea {...register("caption")}
@@ -302,3 +309,7 @@ function UploadFeed() {
 };
 
 export default UploadFeed;
+
+function axios(arg0: { baseURL: any; url: string; method: string; data: FileList; headers: { 'Content-Type': string; }; }) {
+    throw new Error("Function not implemented.");
+}
